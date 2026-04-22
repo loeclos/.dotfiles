@@ -1,5 +1,9 @@
-{ ... }:
+{ pkgs, ... }:
 {
+	home.packages = with pkgs; [
+		nemo
+	];
+	
 	imports = [
 		./hyprland.nix
 		./neovim.nix
