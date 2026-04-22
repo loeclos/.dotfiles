@@ -20,7 +20,7 @@ in
 			env = ["XCURSOR_SIZE, 24"];
 
 			exec-once = [
-				"hyprctl setcursor bibata-modern-ice 24"
+				"hyprctl setcursor Bibata-Modern-Ice 24"
 			];
 			
 			inherit monitor;
