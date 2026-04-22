@@ -32,6 +32,7 @@ in
 				"$mod, B, exec, firefox"
 				"$mod SHIFT, Q, killactive"
 				"$mod, F, fullscreen"
+				"$mod, SPACE, exec, rofi -show drun"
 				"$mod, 1, workspace, 1"
 			];
 
