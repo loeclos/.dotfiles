@@ -1,6 +1,9 @@
 { pkgs, ... }:
 {
-	home.packages = with pkgs; [
-		bibata-cursors
-	];
+	home.pointerCursor = {
+		package = pkgs.bibata-cursors;
+		name = "Bibata";
+		size = 24;
+		gtk.enable = true;
+	};
 }

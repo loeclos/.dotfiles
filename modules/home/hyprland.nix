@@ -20,7 +20,7 @@ in
 			env = ["XCURSOR_SIZE, 24"];
 
 			exec-once = [
-				"hyprctl setcursor Bibata-modern-ice 24"
+				"hyprctl setcursor bibata-modern-ice 24"
 			];
 			
 			inherit monitor;
@@ -51,10 +51,6 @@ in
 				force_default_wallpaper = 0;
 				disable_hyprland_logo = true;
 			};
-
-			layerrule = [
-				"noanim, selection"
-			];
 		};
 	};
 }
