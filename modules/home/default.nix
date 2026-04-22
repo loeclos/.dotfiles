@@ -6,6 +6,7 @@
 		./base.nix
 		./hyprpaper.nix
 		./ghostty.nix
+		./cursors.nix
 		./rofi.nix
 	];
 }

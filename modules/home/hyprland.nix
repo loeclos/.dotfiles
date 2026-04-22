@@ -17,6 +17,12 @@ in
 		systemd.enable = true;
 
 		settings = {
+			env = ["XCURSOR_SIZE, 24"];
+
+			exec-once = [
+				"hyprctl setcursor Bibata-modern-ice 24"
+			];
+			
 			inherit monitor;
 
 			"$mod" = "SUPER";
@@ -32,7 +38,7 @@ in
 				"$mod, B, exec, firefox"
 				"$mod SHIFT, Q, killactive"
 				"$mod, F, fullscreen"
-				"$mod, SPACE, exec, rofi -show drun"
+				"$mod, SPACE, exec, pkill rofi || rofi -show drun"
 				"$mod, 1, workspace, 1"
 			];
 
@@ -45,6 +51,10 @@ in
 				force_default_wallpaper = 0;
 				disable_hyprland_logo = true;
 			};
+
+			layerrule = [
+				"noanim, selection"
+			];
 		};
 	};
 }
