@@ -8,11 +8,8 @@
 	environment.systemPackages = with pkgs; [
 		greetd
 		tuigreet
-		firefox
 		ghostty
-		git
 		unzip
-		gh
 	];
 
 	environment.shellAliases = {
