@@ -39,7 +39,10 @@ in
 				"$mod, B, exec, firefox"
 				"$mod, Q, killactive"
 				"$mod, F, fullscreen"
+
 				"$mod, SPACE, exec, pkill rofi || rofi -show drun"
+				"$mod SHIFT, SPACE, exec, pkill waybar || waybar"
+
 				"$mod, 1, workspace, 1"
 				"$mod, 2, workspace, 2"
 				"$mod, 3, workspace, 3"
@@ -56,10 +59,10 @@ in
 				"$mod, K, movefocus, u"
 				"$mod, J, movefocus, d"
 
-				"$mod SHFIT, H, swapwindow, l"
-				"$mod SHFIT, L, swapwindow, r"
-				"$mod SHFIT, K, swapwindow, u"
-				"$mod SHFIT, J, swapwindow, d"
+				"$mod SHIFT, H, swapwindow, l"
+				"$mod SHIFT, L, swapwindow, r"
+				"$mod SHIFT, K, swapwindow, u"
+				"$mod SHIFT, J, swapwindow, d"
 			];
 
 			bindm = [
