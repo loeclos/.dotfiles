@@ -21,6 +21,7 @@ in
 
 			exec-once = [
 				"hyprctl setcursor Bibata-Modern-Ice 24"
+				"waybar"
 			];
 			
 			inherit monitor;
