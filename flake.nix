@@ -15,11 +15,8 @@
 			url = "github:loeclos/plymouth-theme";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
-
-		nvf = {
-			url = "github:NotAShelf/nvf";
-      			inputs.nixpkgs.follows = "nixpkgs";
-    		};
+		
+		nvf.url = "github:notashelf/nvf";
 	};
 
 	outputs = { 
@@ -40,9 +37,9 @@
 				inherit system;
 				specialArgs = { inherit inputs; };
 				modules = [
+					nvf.nixosModules.default
 					./host/desktop/configuration.nix
 					home-manager.nixosModules.home-manager
-					nvf.nixosModules.default
 					({ config, pkgs, ... }:{
 						home-manager = {
 							useGlobalPkgs = true;
@@ -66,9 +63,9 @@
 				inherit system;
 				specialArgs = { inherit inputs; };
 				modules = [
+					nvf.nixosModules.default
 					./hosts/laptop/configuration.nix
 					home-manager.nixosModules.home-manager
-					nvf.nixosModules.default
 					({ config, pkgs, ... }: {
 						home-manager = {
 							useGlobalPkgs = true;
