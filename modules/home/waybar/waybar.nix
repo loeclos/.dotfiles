@@ -4,7 +4,7 @@
   programs.waybar = {
     enable = true;
 
-    style = "/home/loeclos/.dotfiles/modules/home/waybar/style.css";
+    style = /home/loeclos/.dotfiles/modules/home/waybar/style.css;
 
     settings = {
       mainBar = {
