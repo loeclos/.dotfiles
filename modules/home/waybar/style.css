@@ -3,6 +3,7 @@
   padding: 0px;
   min-height: 0;
   font-family: "JetBrains Mono Nerd Font";
+  color: white;
   transition: background-color .3s ease-out;
   font-weight: bold;
   font-size: 12px;
