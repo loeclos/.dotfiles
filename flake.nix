@@ -3,17 +3,23 @@
 
 	inputs = {
 		nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
 		home-manager = {
 			url = "github:nix-community/home-manager";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
+
 		nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
 		mac-style-plymouth = {
 			url = "github:loeclos/plymouth-theme";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
-		lazyvim.url = "github:pfassina/lazyvim-nix";
+		nvf = {
+			url = "github:NotAShelf/nvf";
+      			inputs.nixpkgs.follows = "nixpkgs";
+    		};
 	};
 
 	outputs = { 
@@ -22,7 +28,7 @@
 		home-manager, 
 		nixos-hardware,
 		mac-style-plymouth,
-		lazyvim,
+		nvf,
 		... 
 	} @ inputs: 
 	let 
@@ -36,6 +42,7 @@
 				modules = [
 					./host/desktop/configuration.nix
 					home-manager.nixosModules.home-manager
+					nvf.nixosModules.default
 					({ config, pkgs, ... }:{
 						home-manager = {
 							useGlobalPkgs = true;
@@ -61,6 +68,7 @@
 				modules = [
 					./hosts/laptop/configuration.nix
 					home-manager.nixosModules.home-manager
+					nvf.nixosModules.default
 					({ config, pkgs, ... }: {
 						home-manager = {
 							useGlobalPkgs = true;

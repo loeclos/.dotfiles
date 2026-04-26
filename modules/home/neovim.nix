@@ -1,8 +1,5 @@
-{ pkgs, lazyvim, ... }:
+{ pkgs, ... }:
 {
-	imports = [ lazyvim.homeManagerModules.default ];
-	programs.lazyvim.enable = true;
-
 	programs.neovim = {
 		enable = true;
 		defaultEditor = true;
