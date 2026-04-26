@@ -37,10 +37,29 @@ in
 			bind = [
 				"$mod, Return, exec, ghostty"
 				"$mod, B, exec, firefox"
-				"$mod SHIFT, Q, killactive"
+				"$mod, Q, killactive"
 				"$mod, F, fullscreen"
 				"$mod, SPACE, exec, pkill rofi || rofi -show drun"
 				"$mod, 1, workspace, 1"
+				"$mod, 2, workspace, 2"
+				"$mod, 3, workspace, 3"
+				"$mod, 4, workspace, 4"
+				"$mod, 5, workspace, 5"
+				"$mod, 6, workspace, 6"
+				"$mod, 7, workspace, 7"
+				"$mod, 8, workspace, 8"
+				"$mod, 9, workspace, 9"
+				"$mod, 0, workspace, 10"
+
+				"$mod, H, movefocus, l"
+				"$mod, L, movefocus, r"
+				"$mod, K, movefocus, u"
+				"$mod, J, movefocus, d"
+
+				"$mod SHFIT, H, swapwindow, l"
+				"$mod SHFIT, L, swapwindow, r"
+				"$mod SHFIT, K, swapwindow, u"
+				"$mod SHFIT, J, swapwindow, d"
 			];
 
 			bindm = [
