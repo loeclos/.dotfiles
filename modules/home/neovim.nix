@@ -21,10 +21,6 @@
 			which-key-nvim
 		];
 	};
-
-	environment.systemPackages = with pkgs; [
-		vimPlugins.LazyVim
-	];
 }
 
 
