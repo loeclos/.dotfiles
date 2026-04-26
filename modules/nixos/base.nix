@@ -10,7 +10,6 @@
 		tuigreet
 		ghostty
 		unzip
-		vimPlugins.LazyVim
 	];
 
 	environment.shellAliases = {

@@ -12,6 +12,8 @@
 			url = "github:loeclos/plymouth-theme";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
+
+		lazyvim.url = "github:pfassina/lazyvim-nix";
 	};
 
 	outputs = { 
@@ -20,6 +22,7 @@
 		home-manager, 
 		nixos-hardware,
 		mac-style-plymouth,
+		lazyvim,
 		... 
 	} @ inputs: 
 	let 
