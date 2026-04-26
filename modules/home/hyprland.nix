@@ -46,8 +46,40 @@ in
 				"$mod, mouse:272, movewindow"
 				"$mod, mouse:273, resizewindow"
 			];
+
+			animations = {
+				enabled = true;
+
+				bezier = [
+					"smooth,0.25,0.9,0.35,1.0"
+				];
+
+				animation = [
+					"windows,1,5,smooth,slide"
+					"windowsIn,1,5,smooth,slide"
+					"windowsOut,1,4,smooth,slide"
+
+					"fade,1,4,smooth"
+					"fadeIn,1,4,smooth"
+					"fadeOut,1,3,smooth"
+					
+					"workspaces,1,6,smooth,slide"
+					"layers,1,4,smooth,fade"
+				];
+			};
+
+			decoration = {
+				blur = {
+					enabled = true;
+					size = 6;
+					passes = 2;
+				};
+			};
+
 			
 			misc = {
+				animate_manual_resizes = true;
+				animate_mouse_windowdragging = true;
 				force_default_wallpaper = 0;
 				disable_hyprland_logo = true;
 			};

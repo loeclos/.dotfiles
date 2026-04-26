@@ -1,0 +1,191 @@
+* {
+  border: none;
+  padding: 0px;
+  min-height: 0;
+  font-family: "JetBrains Mono Nerd Font";
+  transition: background-color .3s ease-out;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+window#waybar {
+  background-color: transparent;
+}
+
+#waybar > box {
+  border-radius: 0px;
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.1);
+  margin: 0px 0px 2px 0px;
+  background-color: @background;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 1);
+  min-height: 20px;
+  transition-property: background-color;
+  transition-duration: .5s;
+}
+
+.modules-left {
+  margin-left: 4px;
+}
+
+.modules-right {
+  margin-right: 4px;
+}
+
+#workspaces {
+  margin: 0px 0px;
+  transition: 0.1s ease-in-out;
+  padding: 0px 0px;
+}
+
+#workspaces button {
+  all: initial;
+  padding: 0px 4px;
+  margin: 0px 2px;
+  color: @foreground;
+  border: none;
+  opacity: 1;
+  font-weight: 900;
+  transition: all 150ms ease;
+}
+
+#workspaces button.active {
+  color: @background;
+  background-color: @foreground;
+  padding: 1px 4px;
+  opacity: 1.0;
+}
+
+#workspaces button.empty:hover,
+#workspaces button:hover {
+  background: transparent;
+  color: alpha(@foreground, 1);
+  transition: all 150ms ease;
+  opacity: 0.75;
+}
+
+#workspaces button.empty {
+  opacity: 0.4;
+  color: alpha(@foreground, 0.45);
+}
+
+#workspaces button.empty.active {
+  opacity: 1;
+  background-color: @foreground;
+  color: @background;
+}
+
+/* Modules styling */
+#memory,
+#mpris,
+#custom-expand-icon,
+#tray,
+#cpu,
+#clock,
+#battery,
+#network,
+#pulseaudio,
+#power-profiles-daemon,
+#custom-seperator {
+  min-width: 12px;
+  padding: 0 4px;
+  margin: 1px 3px 1px 3px;
+  opacity: 0.6;
+}
+
+#tray {
+  opacity: 1;
+}
+
+#custom-expand-icon {
+  margin-right: 0px;
+  opacity: 0.25;
+  font-size: 10px;
+}
+
+#network {
+  margin-left: 0;
+}
+
+#custom-seperator {
+  opacity: 0.2;
+  padding-top: 2px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#power-profiles-daemon,
+#power-profiles-daemon.performance,
+#power-profiles-daemon.balanced,
+#power-profiles-daemon.power-saver {
+  margin: 0 4px;
+}
+
+/* Tooltip styling */
+tooltip {
+  padding: 4px;
+  background: @background;
+  font-size: 10px;
+  border: 1.5px solid alpha(@foreground, 0.6);
+  border-radius: 8px;
+}
+
+tooltip label {
+  color: alpha(@foreground, 0.65);
+  font-weight: normal;
+}
+
+/* Hover effects */
+#clock:hover,
+#tray:hover,
+#custom-expand-icon:hover,
+#cpu:hover,
+#memory:hover,
+#mpris:hover,
+#battery:hover,
+#power-profiles-daemon:hover,
+#network:hover,
+#pulseaudio:hover {
+  border-radius: 0px;
+  opacity: 1;
+  background-color: transparent;
+  color: @foreground;
+}
+
+/* Battery states */
+#battery.warning {
+  color: #c95d0f;
+}
+
+#battery.critical:not(.charging) {
+  background-color: transparent;
+  color: #e6d8ba;
+  animation-name: blink2;
+  animation-duration: 0.5s;
+  animation-timing-function: steps(12);
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes blink2 {
+  to {
+    background-color: transparent;
+    color: #f53c3c;
+  }
+}
+
+/* mpris subtle animation */
+#mpris {
+  opacity: 1;
+  color: @foreground;
+  animation-name: blink;
+  animation-duration: 3s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes blink {
+  to {
+    color: #4a4a4a;
+  }
+}

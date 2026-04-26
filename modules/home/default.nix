@@ -2,6 +2,7 @@
 {
 	home.packages = with pkgs; [
 		nemo
+		fastfetch
 	];
 	
 	imports = [
@@ -12,5 +13,6 @@
 		./ghostty.nix
 		./cursors.nix
 		./rofi.nix
+		./waybar/waybar.nix
 	];
 }

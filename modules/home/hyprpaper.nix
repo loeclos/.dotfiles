@@ -9,7 +9,7 @@
       wallpaper = [
         {
           monitor = "";
-          path = "~/.config/wallpapers/black-hole.png";
+          path = "~/.config/wallpapers/coding-3.png";
           fit_mode = "cover";
         }
       ];
