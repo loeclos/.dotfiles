@@ -31,7 +31,7 @@ in
 				gaps_in = 1;
 				gaps_out = 1;
 				border_size = 1;
-				"col.active_border" = "rgba(199, 120, 0, 0.8)";
+				"col.active_border" = "rgba(1991200)";
 			};
 
 			bind = [
