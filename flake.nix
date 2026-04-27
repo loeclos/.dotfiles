@@ -48,7 +48,10 @@
 								osConfig = config;
 							};
               						backupFileExtension = "backup";
-							users.loeclos.imports = [ ./users/loeclos/home.nix ];
+							users.loeclos.imports = [ 
+								inputs.nvf.homeManagerModules.default
+								./users/loeclos/home.nix 
+							];
 						};
 
 						nixpkgs.overlays = [
@@ -73,7 +76,10 @@
 								osConfig = config;
 							};
               						backupFileExtension = "backup";
-							users.loeclos.imports = [ ./users/loeclos/home.nix ];
+							users.loeclos.imports = [
+								inputs.nvf.homeManagerModules.default
+								./users/loeclos/home.nix
+							];
 						};
 
 						nixpkgs.overlays = [
