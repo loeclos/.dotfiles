@@ -37,7 +37,6 @@
 				inherit system;
 				specialArgs = { inherit inputs; };
 				modules = [
-					nvf.homeManagerModules.default
 					./host/desktop/configuration.nix
 					home-manager.nixosModules.home-manager
 					({ config, pkgs, ... }:{
@@ -63,7 +62,6 @@
 				inherit system;
 				specialArgs = { inherit inputs; };
 				modules = [
-					nvf.homeManagerModules.default
 					./hosts/laptop/configuration.nix
 					home-manager.nixosModules.home-manager
 					({ config, pkgs, ... }: {
