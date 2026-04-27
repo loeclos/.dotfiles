@@ -14,6 +14,6 @@
 		./cursors.nix
 		./rofi.nix
 		./waybar/waybar.nix
-		# ./nvf.nix
+		./nvf.nix
 	];
 }
