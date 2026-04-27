@@ -1,5 +1,7 @@
-{ ... }:
+{ nvf, ... }:
 {
+	imports = [ inputs.nvf.nixosModules.default ];
+
 	programs.nvf = {
 		enable = true;
 		# Your settings need to go into the settings attribute set
