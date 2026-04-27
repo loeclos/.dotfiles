@@ -12,6 +12,15 @@
 			vim.lsp = {
 				enable = true;
 			};
+
+                        vim.dashboard.alpha = {
+                                theme = "theta";
+                        };
+
+                        vim.theme = {
+                                enable = true;
+                                name = "gruvbox";
+                        };
 		};
 	};
 }
