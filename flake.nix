@@ -16,7 +16,10 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 		
-		nvf.url = "github:notashelf/nvf";
+                nixvim = {
+                        url = "github:loeclos/nixvim";
+                        inputs.nixpkgs.follows = "nixpkgs";
+                };
 	};
 
 	outputs = { 
@@ -77,8 +80,8 @@
 							};
               						backupFileExtension = "backup";
 							users.loeclos.imports = [
-								inputs.nvf.homeManagerModules.default
-								./users/loeclos/home.nix
+        							inputs.nixvim.packages.x86_64-linux.default	
+                                                                ./users/loeclos/home.nix
 							];
 						};
 

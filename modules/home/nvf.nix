@@ -15,7 +15,7 @@
 
                         vim.dashboard.alpha = {
                                 enable = true;
-                                theme = "theta";
+                                theme = "startify";
                         };
 
                         vim.theme = {
