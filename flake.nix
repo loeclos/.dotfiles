@@ -28,6 +28,7 @@
 		home-manager, 
 		nixos-hardware,
 		mac-style-plymouth,
+		nixvim,
 		... 
 	} @ inputs: 
 	let 
