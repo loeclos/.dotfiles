@@ -49,11 +49,18 @@
 								inherit inputs;
 								osConfig = config;
 							};
+
               						backupFileExtension = "backup";
-							users.loeclos.imports = [ 
-								inputs.nvf.homeManagerModules.default
-								./users/loeclos/home.nix 
-							];
+                                                        
+							users.loeclos = {
+                                                                imports = [
+                                                                        ./users/loeclos/home.nix
+	        						];
+
+                                                                home.packages = [
+        							        inputs.nixvim.packages.x86_64-linux.default	
+                                                                ];
+                                                        };
 						};
 
 						nixpkgs.overlays = [
@@ -77,11 +84,18 @@
 								inherit inputs;
 								osConfig = config;
 							};
+
               						backupFileExtension = "backup";
-							users.loeclos.imports = [
-        							inputs.nixvim.packages.x86_64-linux.default	
-                                                                ./users/loeclos/home.nix
-							];
+
+							users.loeclos = {
+                                                                imports = [
+                                                                        ./users/loeclos/home.nix
+	        						];
+
+                                                                home.packages = [
+        							        inputs.nixvim.packages.x86_64-linux.default	
+                                                                ];
+                                                        };
 						};
 
 						nixpkgs.overlays = [
