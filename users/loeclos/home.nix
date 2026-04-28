@@ -9,6 +9,7 @@
 	home.stateVersion = "26.05";
 
 	home.packages = with pkgs; [
+		inputs.nixvim.packages.${pkgs.system}.default
 		telegram-desktop
 		git
 		gh

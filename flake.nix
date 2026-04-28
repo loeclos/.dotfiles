@@ -56,10 +56,6 @@
                                                                 imports = [
                                                                         ./users/loeclos/home.nix
 	        						];
-
-                                                                home.packages = [
-        							        inputs.nixvim.packages.x86_64-linux.default	
-                                                                ];
                                                         };
 						};
 
@@ -91,10 +87,6 @@
                                                                 imports = [
                                                                         ./users/loeclos/home.nix
 	        						];
-
-                                                                home.packages = [
-        							        inputs.nixvim.packages.x86_64-linux.default	
-                                                                ];
                                                         };
 						};
 
