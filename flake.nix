@@ -28,7 +28,6 @@
 		home-manager, 
 		nixos-hardware,
 		mac-style-plymouth,
-		nvf,
 		... 
 	} @ inputs: 
 	let 
