@@ -9,7 +9,7 @@
       wallpaper = [
         {
           monitor = "";
-          path = "~/.config/wallpapers/coding-3.png";
+          path = "~/.config/wallpapers/gruvbox-road.png";
           fit_mode = "cover";
         }
       ];
