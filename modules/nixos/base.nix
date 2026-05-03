@@ -1,21 +1,21 @@
 { pkgs, ... }:
 {
-	# nix.settings.expiremental-features = [
-	# 	"nix-commnad"
-	# 	"flakes"
-	# ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
-	environment.systemPackages = with pkgs; [
-		greetd
-		tuigreet
-		ghostty
-		unzip
-	];
+  environment.systemPackages = with pkgs; [
+    greetd
+    tuigreet
+    ghostty
+    unzip
+  ];
 
-	environment.shellAliases = {
-		dots = "cd ~/.dotfiles";
-		rebuild = "dots && sudo nixos-rebuild switch --flake";
-	};
+  environment.shellAliases = {
+    dots = "cd ~/.dotfiles";
+    rebuild = "dots && sudo nixos-rebuild switch --flake";
+  };
 
-	system.stateVersion = "26.05";
+  system.stateVersion = "26.05";
 }
