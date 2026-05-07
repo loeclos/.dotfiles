@@ -11,5 +11,7 @@
     genact
     nautilus
     fastfetch
+    iwd
+    impala
   ];
 }
