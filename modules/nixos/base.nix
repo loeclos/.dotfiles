@@ -1,15 +1,8 @@
-{ pkgs, ... }:
+{ ... }:
 {
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
-  ];
-
-  environment.systemPackages = with pkgs; [
-    greetd
-    tuigreet
-    ghostty
-    unzip
   ];
 
   environment.shellAliases = {
