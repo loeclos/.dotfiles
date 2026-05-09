@@ -6,5 +6,8 @@
     ghostty
     unzip
     iwd
+    brightnessctl
+    moka-icon-theme
+    pamixer # audio control
   ];
 }

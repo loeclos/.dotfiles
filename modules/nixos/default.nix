@@ -10,5 +10,6 @@
     ./plymouth.nix
     ./fonts.nix
     ./packages.nix
+    ./zsh.nix
   ];
 }

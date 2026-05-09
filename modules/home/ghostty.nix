@@ -1,15 +1,18 @@
 { ... }:
 {
-	programs.ghostty = {
-		enable = true;
+  programs.ghostty = {
+    enable = true;
 
-		installVimSyntax = true;
-		
-		settings = {
-			theme = "Gruvbox Material Dark";
-			font-family = "MartionMono Nerd Font";
+    installVimSyntax = true;
 
-			window-padding-x = 3;
-		};
-	};
+    enableZshIntegration = true;
+
+    settings = {
+      theme = "Gruvbox Material Dark";
+      font-family = "MartionMono Nerd Font";
+
+      window-padding-x = 3;
+      window-padding-y = 3;
+    };
+  };
 }

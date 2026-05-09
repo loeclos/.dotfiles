@@ -1,14 +1,10 @@
-{ ... }:
+{ pkgs, ... }:
 {
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
   ];
 
-  environment.shellAliases = {
-    dots = "cd ~/.dotfiles";
-    rebuild = "dots && sudo nixos-rebuild switch --flake";
-  };
-
+  users.defaultUserShell = pkgs.zsh;
   system.stateVersion = "26.05";
 }

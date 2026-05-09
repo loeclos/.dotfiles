@@ -1,111 +1,123 @@
-{ config, pkgs, lib, osConfig, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  osConfig,
+  ...
+}:
 
 let
-	hostname = osConfig.networking.hostName or "unknown";
+  hostname = osConfig.networking.hostName or "unknown";
 
-	monitor = if hostname == "desktop" then
-		"DP-1,3840x2160@60,0x0,1"
-	else if hostname == "laptop" then
-		"eDP-1,1920x1080@60,0x0,1"
-	else
-		",preferred,auto,1";
+  monitor =
+    if hostname == "desktop" then
+      "DP-1,3840x2160@60,0x0,1"
+    else if hostname == "laptop" then
+      "eDP-1,1920x1080@60,0x0,1"
+    else
+      ",preferred,auto,1";
 
 in
 {
-	wayland.windowManager.hyprland = {
-		enable = true;
-		systemd.enable = true;
+  wayland.windowManager.hyprland = {
+    enable = true;
+    systemd.enable = true;
 
-		settings = {
-			env = ["XCURSOR_SIZE, 24"];
+    settings = {
+      env = [ "XCURSOR_SIZE, 24" ];
 
-			exec-once = [
-				"hyprctl setcursor Bibata-Modern-Ice 24"
-				"waybar"
-			];
-			
-			inherit monitor;
+      exec-once = [
+        "hyprctl setcursor Bibata-Modern-Ice 24"
+        "waybar"
+      ];
 
-			"$mod" = "SUPER";
-			general = {
-				gaps_in = 1;
-				gaps_out = 1;
-				border_size = 1;
-				"col.active_border" = "rgba(33d17d00)";
-			};
+      inherit monitor;
 
-			bind = [
-				"$mod, Return, exec, ghostty"
-				"$mod, B, exec, firefox"
-				"$mod, Q, killactive"
-				"$mod, F, fullscreen"
+      "$mod" = "SUPER";
+      "$func" = "XF86WakeUp";
 
-				"$mod, SPACE, exec, pkill rofi || rofi -show drun"
-				"$mod SHIFT, SPACE, exec, pkill waybar || waybar"
+      general = {
+        gaps_in = 1;
+        gaps_out = 1;
+        border_size = 1;
+        "col.active_border" = "rgba(33d17d00)";
+      };
 
-				"$mod, 1, workspace, 1"
-				"$mod, 2, workspace, 2"
-				"$mod, 3, workspace, 3"
-				"$mod, 4, workspace, 4"
-				"$mod, 5, workspace, 5"
-				"$mod, 6, workspace, 6"
-				"$mod, 7, workspace, 7"
-				"$mod, 8, workspace, 8"
-				"$mod, 9, workspace, 9"
-				"$mod, 0, workspace, 10"
+      bind = [
+        "$mod, Return, exec, ghostty"
+        "$mod, B, exec, firefox"
+        "$mod, Q, killactive"
+        "$mod, F, fullscreen"
+        ", F6, exec, brightnessctl set +5%"
+        ", F5, exec, brightnessctl set 5%-"
+        ", F3, exec, pamixer -i 5"
+        ", F2, exec, pamixer -d 5"
 
-				"$mod, H, movefocus, l"
-				"$mod, L, movefocus, r"
-				"$mod, K, movefocus, u"
-				"$mod, J, movefocus, d"
+        "$mod, SPACE, exec, pkill rofi || rofi -show drun"
+        "$mod SHIFT, SPACE, exec, pkill waybar || waybar"
 
-				"$mod SHIFT, H, swapwindow, l"
-				"$mod SHIFT, L, swapwindow, r"
-				"$mod SHIFT, K, swapwindow, u"
-				"$mod SHIFT, J, swapwindow, d"
-			];
+        "$mod, 1, workspace, 1"
+        "$mod, 2, workspace, 2"
+        "$mod, 3, workspace, 3"
+        "$mod, 4, workspace, 4"
+        "$mod, 5, workspace, 5"
+        "$mod, 6, workspace, 6"
+        "$mod, 7, workspace, 7"
+        "$mod, 8, workspace, 8"
+        "$mod, 9, workspace, 9"
+        "$mod, 0, workspace, 10"
 
-			bindm = [
-				"$mod, mouse:272, movewindow"
-				"$mod, mouse:273, resizewindow"
-			];
+        "$mod, H, movefocus, l"
+        "$mod, L, movefocus, r"
+        "$mod, K, movefocus, u"
+        "$mod, J, movefocus, d"
 
-			animations = {
-				enabled = true;
+        "$mod SHIFT, H, swapwindow, l"
+        "$mod SHIFT, L, swapwindow, r"
+        "$mod SHIFT, K, swapwindow, u"
+        "$mod SHIFT, J, swapwindow, d"
+      ];
 
-				bezier = [
-					"smooth,0.25,0.9,0.35,1.0"
-				];
+      bindm = [
+        "$mod, mouse:272, movewindow"
+        "$mod, mouse:273, resizewindow"
+      ];
 
-				animation = [
-					"windows,1,5,smooth,slide"
-					"windowsIn,1,5,smooth,slide"
-					"windowsOut,1,4,smooth,slide"
+      animations = {
+        enabled = true;
 
-					"fade,1,4,smooth"
-					"fadeIn,1,4,smooth"
-					"fadeOut,1,3,smooth"
-					
-					"workspaces,1,6,smooth,slide"
-					"layers,1,4,smooth,fade"
-				];
-			};
+        bezier = [
+          "smooth,0.25,0.9,0.35,1.0"
+        ];
 
-			decoration = {
-				blur = {
-					enabled = true;
-					size = 6;
-					passes = 2;
-				};
-			};
+        animation = [
+          "windows,1,5,smooth,slide"
+          "windowsIn,1,5,smooth,slide"
+          "windowsOut,1,4,smooth,slide"
 
-			
-			misc = {
-				animate_manual_resizes = true;
-				animate_mouse_windowdragging = true;
-				force_default_wallpaper = 0;
-				disable_hyprland_logo = true;
-			};
-		};
-	};
+          "fade,1,4,smooth"
+          "fadeIn,1,4,smooth"
+          "fadeOut,1,3,smooth"
+
+          "workspaces,1,6,smooth,slide"
+          "layers,1,4,smooth,fade"
+        ];
+      };
+
+      decoration = {
+        blur = {
+          enabled = true;
+          size = 6;
+          passes = 2;
+        };
+      };
+
+      misc = {
+        animate_manual_resizes = true;
+        animate_mouse_windowdragging = true;
+        force_default_wallpaper = 0;
+        disable_hyprland_logo = true;
+      };
+    };
+  };
 }

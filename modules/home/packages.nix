@@ -12,5 +12,10 @@
     nautilus
     fastfetch
     impala
+    # discord
+    (discord.override {
+      withOpenASAR = true;
+      # withVencord = true; # can do this here too
+    })
   ];
 }

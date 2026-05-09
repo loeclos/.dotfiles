@@ -36,6 +36,9 @@
       system = "x86_64-linux";
     in
     {
+      # allow unfree software
+
+      # hosts configuration
       nixosConfigurations = {
         desktop = nixpkgs.lib.nixosSystem {
           inherit system;
@@ -46,6 +49,7 @@
             (
               { config, pkgs, ... }:
               {
+                nixpkgs.config.allowUnfree = true;
                 home-manager = {
                   useGlobalPkgs = true;
                   useUserPackages = true;
@@ -80,6 +84,7 @@
             (
               { config, pkgs, ... }:
               {
+                nixpkgs.config.allowUnfree = true;
                 home-manager = {
                   useGlobalPkgs = true;
                   useUserPackages = true;
