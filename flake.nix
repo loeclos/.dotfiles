@@ -20,6 +20,11 @@
       url = "github:loeclos/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # helium = {
+    #   url = "github:loeclos/helium-flake";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
   };
 
   outputs =
@@ -30,6 +35,7 @@
       nixos-hardware,
       mac-style-plymouth,
       nixvim,
+      # helium,
       ...
     }@inputs:
     let

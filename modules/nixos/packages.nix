@@ -1,8 +1,9 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   environment.systemPackages = with pkgs; [
-    greetd
-    tuigreet
+    inputs.nixvim.packages.${pkgs.system}.default
+    # greetd
+    # tuigreet
     ghostty
     unzip
     iwd
