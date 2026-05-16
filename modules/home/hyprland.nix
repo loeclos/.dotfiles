@@ -21,7 +21,7 @@ in
 {
   wayland.windowManager.hyprland = {
     enable = true;
-    systemd.enable = true;
+    systemd.enable = false;
 
     settings = {
       env = [ "XCURSOR_SIZE, 24" ];
@@ -54,7 +54,10 @@ in
         ", F2, exec, pamixer -d 5"
 
         "$mod, SPACE, exec, pkill rofi || rofi -show drun"
+        "$mod, ESCAPE, exec, pkill rofi-powermenu || rofi-powermenu"
         "$mod SHIFT, SPACE, exec, pkill waybar || waybar"
+
+        "$mod SHIFT, W, exec, ghostty --class=ghostty.walt -e walt"
 
         "$mod, 1, workspace, 1"
         "$mod, 2, workspace, 2"
@@ -76,6 +79,17 @@ in
         "$mod SHIFT, L, swapwindow, r"
         "$mod SHIFT, K, swapwindow, u"
         "$mod SHIFT, J, swapwindow, d"
+      ];
+
+      windowrule = [
+        "match:class ^(ghostty\\.walt)$, float on"
+        "match:class ^(ghostty\\.walt)$, size 850 550"
+        "match:class ^(ghostty\\.walt)$, center on"
+        "match:class ^(ghostty\\.walt)$, focus_on_activate on"
+
+        "match:class ^(com.github.gitfudge0.walt)$, float on"
+        "match:class ^(com.github.gitfudge0.walt)$, size 900 650"
+        "match:class ^(com.github.gitfudge0.walt)$, center on"
       ];
 
       bindm = [

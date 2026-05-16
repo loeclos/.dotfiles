@@ -21,6 +21,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    walt.url = "github:gitfudge0/walt";
+
     # helium = {
     #   url = "github:loeclos/helium-flake";
     #   inputs.nixpkgs.follows = "nixpkgs";
@@ -35,6 +37,7 @@
       nixos-hardware,
       mac-style-plymouth,
       nixvim,
+      walt,
       # helium,
       ...
     }@inputs:

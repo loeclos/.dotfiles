@@ -6,13 +6,13 @@
     settings = {
       splash = false;
 
-      wallpaper = [
-        {
-          monitor = "";
-          path = "~/.config/wallpapers/gruvbox-road.png";
-          fit_mode = "cover";
-        }
-      ];
+      # wallpaper = [
+      #   {
+      #     monitor = "";
+      #     path = "~/.config/wallpapers/gruvbox-road.png";
+      #     fit_mode = "cover";
+      #   }
+      # ];
     };
   };
 }

@@ -11,7 +11,7 @@
       edit = "sudo -e";
       update = "sudo nixos-rebuild switch";
       dots = "cd ~/.dotfiles";
-      rebuild = "dots && sudo nixos-rebuild switch --flake";
+      rbld = "dots && sudo nixos-rebuild switch --flake";
     };
 
     histSize = 10000;
