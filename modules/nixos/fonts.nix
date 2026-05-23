@@ -1,16 +1,18 @@
 { pkgs, ... }:
 {
-	fonts = {
-		packages = with pkgs; [
-			nerd-fonts.martian-mono
-		];
+  fonts = {
+    packages = with pkgs; [
+      nerd-fonts.martian-mono
+      inter
+      alice
+    ];
 
-		fontconfig = {
-			defaultFonts = {
-				monospace = [ "MartianMono Nerd Font" ];
-				sansSerif = [ "MartianMono Nerd Font" ];
-				serif = [ "MartianMono Nerd Font" ];
-			};
-		};
-	};
+    fontconfig = {
+      defaultFonts = {
+        monospace = [ "MartianMono Nerd Font" ];
+        sansSerif = [ "Inter" ];
+        serif = [ "Alice" ];
+      };
+    };
+  };
 }

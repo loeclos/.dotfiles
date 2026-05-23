@@ -21,12 +21,20 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    walt.url = "github:gitfudge0/walt";
+    walt = {
+      url = "github:gitfudge0/walt";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    # helium = {
-    #   url = "github:loeclos/helium-flake";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    hermes-agent = {
+      url = "github:NousResearch/hermes-agent";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    helium = {
+      url = "github:loeclos/helium-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

@@ -7,13 +7,13 @@
 }:
 
 let
-  hostname = osConfig.networking.hostName or "unknown";
+  hostname = osConfig.networking.hostname or "unknown";
 
   monitor =
     if hostname == "desktop" then
-      "DP-1,3840x2160@60,0x0,1"
+      "dp-1,3840x2160@60,0x0,1"
     else if hostname == "laptop" then
-      "eDP-1,1920x1080@60,0x0,1"
+      "edp-1,1920x1080@60,0x0,1"
     else
       ",preferred,auto,1";
 
@@ -24,37 +24,49 @@ in
     systemd.enable = false;
 
     settings = {
-      env = [ "XCURSOR_SIZE, 24" ];
+      env = [ "xcursor_size, 24" ];
 
       exec-once = [
-        "hyprctl setcursor Bibata-Modern-Ice 24"
+        "hyprctl setcursor bibata-modern-ice 24"
         "waybar"
+        "hyprpaper"
       ];
 
       inherit monitor;
 
-      "$mod" = "SUPER";
-      "$func" = "XF86WakeUp";
-
       general = {
         gaps_in = 1;
         gaps_out = 1;
-        border_size = 1;
+        border_size = 0;
         "col.active_border" = "rgba(33d17d00)";
       };
 
-      bind = [
-        "$mod, Return, exec, ghostty"
-        "$mod, B, exec, firefox"
-        "$mod, Q, killactive"
-        "$mod, F, fullscreen"
-        ", F6, exec, brightnessctl set +5%"
-        ", F5, exec, brightnessctl set 5%-"
-        ", F3, exec, pamixer -i 5"
-        ", F2, exec, pamixer -d 5"
+      decoration = {
+        active_opacity = 0.93;
+        inactive_opacity = 0.90;
 
-        "$mod, SPACE, exec, pkill rofi || rofi -show drun"
-        "$mod, ESCAPE, exec, pkill rofi-powermenu || rofi-powermenu"
+        blur = {
+          enabled = true;
+          size = 6;
+          passes = 2;
+        };
+      };
+
+      "$mod" = "super";
+      "$func" = "xf86wakeup";
+
+      bind = [
+        "$mod, return, exec, ghostty"
+        "$mod, b, exec, firefox"
+        "$mod, q, killactive"
+        "$mod, f, fullscreen"
+        ", f6, exec, brightnessctl set +5%"
+        ", f5, exec, brightnessctl set 5%-"
+        ", f3, exec, pamixer -i 5"
+        ", f2, exec, pamixer -d 5"
+
+        "$mod, space, exec, pkill rofi || rofi -show drun"
+        "$mod, escape, exec, pkill wlogout || wlogout"
         "$mod SHIFT, SPACE, exec, pkill waybar || waybar"
 
         "$mod SHIFT, W, exec, ghostty --class=ghostty.walt -e walt"
@@ -116,14 +128,6 @@ in
           "workspaces,1,6,smooth,slide"
           "layers,1,4,smooth,fade"
         ];
-      };
-
-      decoration = {
-        blur = {
-          enabled = true;
-          size = 6;
-          passes = 2;
-        };
       };
 
       misc = {

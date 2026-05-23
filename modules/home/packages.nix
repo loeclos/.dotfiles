@@ -5,21 +5,43 @@
 }:
 {
   home.packages = with pkgs; [
-    # inputs.nixvim.packages.${pkgs.system}.default
-    telegram-desktop
+    # dev tools
     git
     gh
-    firefox
-    btop
+
+    # misc
     hollywood
     genact
+
+    # utilities
+    impala
+    btop
+    gnome-sound-recorder
     nautilus
     fastfetch
-    impala
-    # discord
+
+    # general
+    obsidian
+
+    # chat clients
+    telegram-desktop
     (discord.override {
       withOpenASAR = true;
-      # withVencord = true; # can do this here too
+      # withVencord = true;
     })
+    element-desktop
+
+    # browsers
+    firefox
+    # google-chrome
+    # chromium
+    # brave
+
+    # ai tools
+    opencode
+    # codex
+    # gemini-cli
+    crush
+    code-cursor
   ];
 }
