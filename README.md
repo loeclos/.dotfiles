@@ -1,6 +1,6 @@
 # .dotfiles - NixOS Configuration
 
-A complete declarative NixOS system configuration using Flakes and Home Manager, managing both system-level and user-level settings across multiple hosts with a focus on a modern Wayland-based desktop environment.
+A complete declarative NixOS system configuration using Flakes and Home Manager, managing both system-level and user-level settings across multiple hosts with a focus on a modern Wayland-based desk[...]
 
 ## 📋 Overview
 
@@ -315,8 +315,8 @@ Then integrate the new hardware config into `hosts/*/hardware-configuration.nix`
 ## 📦 Language Composition
 
 This repository is composed of:
-- **Nix**: 79.7% (configuration language)
-- **CSS**: 20.3% (Waybar styling)
+- **Nix**: 82.6% (configuration language)
+- **CSS**: 17.4% (Waybar styling)
 
 ---
 
