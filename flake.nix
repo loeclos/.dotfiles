@@ -30,11 +30,6 @@
       url = "github:NousResearch/hermes-agent";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    helium = {
-      url = "github:loeclos/helium-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -46,14 +41,12 @@
       mac-style-plymouth,
       nixvim,
       walt,
-      # helium,
       ...
     }@inputs:
     let
       system = "x86_64-linux";
     in
     {
-      # allow unfree software
 
       # hosts configuration
       nixosConfigurations = {

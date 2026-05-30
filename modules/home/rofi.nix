@@ -1,10 +1,10 @@
 { ... }:
 {
-	programs.rofi = {
-		enable = true;
-		
-		font = "MartionMono Nerd Font";
+  programs.rofi = {
+    enable = true;
 
-		theme = "gruvbox-dark-hard";
-	};
+    font = "MartianMono Nerd Font";
+
+    theme = "gruvbox-dark-hard";
+  };
 }

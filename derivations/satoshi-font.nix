@@ -3,21 +3,17 @@ pkgs.stdenv.mkDerivation {
   pname = "satoshi-typeface";
   version = "1.009";
 
-  src = "../assets/fonts/satoshi.zip";
-
-  unpackPhase = ''
-    runHook preUnpack
-    $pkgs.unzip}/bin/unzip $src
-
-    runHook postUnpack
-  '';
-
+  src = ../assets/fonts/satoshi;
+  #
+  # unpackPhase = ''
+  #   runHook preUnpack
+  #   ${pkgs.unzip}/bin/unzip $src
+  #
+  #   runHook postUnpack
+  # '';
+  #
   installPhase = ''
-    runHook preInstall 
-
-
-    install -Dm644 satochi-mono-patched/*.ttf -t $out/share/fonts/truetype
-
-    runHook postInstall
+        mkdir -p $out/share/fonts/truetype/
+    cp -r $src/*.{ttf,otf} $out/share/fonts/truetype/
   '';
 }

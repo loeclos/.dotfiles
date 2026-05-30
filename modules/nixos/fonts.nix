@@ -1,17 +1,19 @@
 { pkgs, ... }:
+
+# let
+#   satoshi = pkgs.callPackage ../../derivations/satoshi-font.nix { };
+# in
 {
   fonts = {
     packages = with pkgs; [
       nerd-fonts.martian-mono
-      inter
-      alice
     ];
 
     fontconfig = {
       defaultFonts = {
         monospace = [ "MartianMono Nerd Font" ];
-        sansSerif = [ "Inter" ];
-        serif = [ "Alice" ];
+        sansSerif = [ "MartianMono Nerd Font" ];
+        serif = [ "MartianMono Nerd Font" ];
       };
     };
   };

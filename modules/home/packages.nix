@@ -1,5 +1,4 @@
 {
-  # inputs,
   pkgs,
   ...
 }:
@@ -33,7 +32,8 @@
 
     # browsers
     firefox
-    # google-chrome
+    google-chrome
+    vivaldi
     # chromium
     # brave
 
