@@ -54,7 +54,7 @@
           inherit system;
           specialArgs = { inherit inputs; };
           modules = [
-            ./host/desktop/configuration.nix
+            ./hosts/desktop/configuration.nix
             home-manager.nixosModules.home-manager
             (
               { config, pkgs, ... }:
