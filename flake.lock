@@ -699,13 +699,16 @@
       },
       "locked": {
         "lastModified": 1780549657,
-        "narHash": "sha256-6KHZq8Q9Y/QVGskW7EldMjrvCsTm5jiCOJP3ChKljBg=",
-        "path": "/home/loeclos/Desktop/nixvim",
-        "type": "path"
+        "narHash": "sha256-dfSzrhpt1Swk2mEglqOMmZDStn6gFnHVpWTaVR/S5B4=",
+        "owner": "loeclos",
+        "repo": "nixvim",
+        "rev": "1227c9ef26cc5d13658ff0c2ebd070976de8f9cc",
+        "type": "github"
       },
       "original": {
-        "path": "/home/loeclos/Desktop/nixvim",
-        "type": "path"
+        "owner": "loeclos",
+        "repo": "nixvim",
+        "type": "github"
       }
     },
     "nixvim_2": {

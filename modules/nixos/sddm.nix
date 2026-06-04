@@ -15,36 +15,39 @@ in
 {
   # ── Display-manager / SDDM ────────────────────────────────────────────────
 
-  services.displayManager.sddm = {
-    enable = true;
+  services.displayManager = {
+    sddm = {
+      enable = true;
 
-    # Explicitly use the Qt 6 build of SDDM (required by the theme).
-    package = pkgs.kdePackages.sddm;
+      # Explicitly use the Qt 6 build of SDDM (required by the theme).
+      package = pkgs.kdePackages.sddm;
 
-    # Register the theme by the name SDDM discovers under /share/sddm/themes/.
-    theme = "sddm-astronaut-theme";
+      # Register the theme by the name SDDM discovers under /share/sddm/themes/.
+      theme = "sddm-astronaut-theme";
 
-    # Wayland greeter — remove or set to false if you only use X11.
-    wayland.enable = true;
+      # Wayland greeter — remove or set to false if you only use X11.
+      wayland.enable = true;
 
-    # Qt/QML packages that the greeter process must be able to load at runtime,
-    # plus the theme package itself so its share/ tree is on the search path.
-    #   kdePackages.qtmultimedia    → animated wallpaper (pixel_sakura needs this)
-    #   kdePackages.qtsvg           → SVG rendering used throughout the theme
-    #   kdePackages.qtvirtualkeyboard → on-screen keyboard
-    extraPackages = with pkgs.kdePackages; [
-      sddm-astronaut-pixel-sakura
-      qtmultimedia
-      qtsvg
-      qtvirtualkeyboard
-    ];
+      # Qt/QML packages that the greeter process must be able to load at runtime,
+      # plus the theme package itself so its share/ tree is on the search path.
+      #   kdePackages.qtmultimedia    → animated wallpaper (pixel_sakura needs this)
+      #   kdePackages.qtsvg           → SVG rendering used throughout the theme
+      #   kdePackages.qtvirtualkeyboard → on-screen keyboard
+      extraPackages = with pkgs.kdePackages; [
+        sddm-astronaut-pixel-sakura
+        qtmultimedia
+        qtsvg
+        qtvirtualkeyboard
+      ];
 
-    # Enable the virtual keyboard in SDDM's greeter.
-    settings = {
-      General = {
-        InputMethod = "qtvirtualkeyboard";
+      # Enable the virtual keyboard in SDDM's greeter.
+      settings = {
+        General = {
+          InputMethod = "qtvirtualkeyboard";
+        };
       };
     };
+    sessionPackages = [ pkgs.hyprland ];
   };
 
   # ── Theme package ─────────────────────────────────────────────────────────
@@ -60,4 +63,5 @@ in
   fonts.packages = [
     sddm-astronaut-pixel-sakura
   ];
+
 }
