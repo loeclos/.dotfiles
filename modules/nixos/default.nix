@@ -12,6 +12,5 @@
     ./packages.nix
     ./zsh.nix
     ./sddm.nix
-    ./eza.nix
   ];
 }
