@@ -31,6 +31,11 @@
       url = "github:NousResearch/hermes-agent";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -41,6 +46,7 @@
       nixos-hardware,
       mac-style-plymouth,
       nixvim,
+      hyprland,
       walt,
       ...
     }@inputs:

@@ -2,12 +2,15 @@
 {
   imports = [
     ./hyprland.nix
-    ./neovim.nix
     ./packages.nix
     ./hyprpaper.nix
     ./ghostty.nix
     ./cursors.nix
     ./rofi.nix
     ./waybar/waybar.nix
+    ./github.nix
+    ./git.nix
+    # ./hermes-agent.nix
+    # ./gtk.nix
   ];
 }
