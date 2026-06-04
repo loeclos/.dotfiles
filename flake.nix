@@ -17,7 +17,8 @@
     };
 
     nixvim = {
-      url = "github:loeclos/nixvim";
+      # url = "github:loeclos/nixvim";
+      url = "path:/home/loeclos/Desktop/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -60,6 +61,7 @@
               { config, pkgs, ... }:
               {
                 nixpkgs.config.allowUnfree = true;
+
                 home-manager = {
                   useGlobalPkgs = true;
                   useUserPackages = true;

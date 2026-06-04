@@ -6,6 +6,7 @@
   home.packages = with pkgs; [
     # dev tools
     git
+    gh
 
     # misc
     hollywood
@@ -31,8 +32,8 @@
 
     # browsers
     firefox
-    google-chrome
-    vivaldi
+    # google-chrome
+    #    vivaldi
     # chromium
     # brave
 
