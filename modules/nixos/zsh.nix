@@ -5,7 +5,6 @@
     enableCompletion = true;
     autosuggestions.enable = true;
     syntaxHighlighting.enable = true;
-    enableLsColors = true;
 
     shellAliases = {
       ll = "ls -l";
