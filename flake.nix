@@ -17,8 +17,7 @@
     };
 
     nixvim = {
-      # url = "github:loeclos/nixvim";
-      url = "path:/home/loeclos/Desktop/nixvim";
+      url = "github:loeclos/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

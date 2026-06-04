@@ -5,7 +5,7 @@
 {
   home.packages = with pkgs; [
     # dev tools
-    git
+    #    git
     gh
 
     # misc
