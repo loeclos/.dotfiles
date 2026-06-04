@@ -27,7 +27,7 @@ in
       local hostname = "${hostname}"
 
       if hostname == "desktop" then
-        hl.monitor({ output = "DP-1", mode = "1920x1080@60", position = "0x0", scale = "0.95" })
+        hl.monitor({ output = "DP-1", mode = "1920x1080@60", position = "0x0", scale = "1" })
       elseif hostname == "laptop" then
         hl.monitor({ output = "edp-1", mode = "1920x1080@60", position = "0x0", scale = "1" })
       else
