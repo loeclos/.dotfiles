@@ -6,7 +6,6 @@
   home.packages = with pkgs; [
     # dev tools
     git
-    gh
 
     # misc
     hollywood
