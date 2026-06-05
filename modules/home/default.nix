@@ -11,6 +11,7 @@
     ./github.nix
     ./git.nix
     # ./hermes-agent.nix
-    # ./gtk.nix
+    ./gtk.nix
+    ./eza.nix
   ];
 }

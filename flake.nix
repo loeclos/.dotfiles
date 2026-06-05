@@ -35,6 +35,12 @@
       url = "github:hyprwm/Hyprland";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    eza = {
+      url = "github:eza-community/eza";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
@@ -47,6 +53,7 @@
       nixvim,
       hyprland,
       walt,
+      eza,
       ...
     }@inputs:
     let

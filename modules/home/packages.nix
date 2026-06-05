@@ -31,11 +31,11 @@
     element-desktop
 
     # browsers
-    firefox
+    # firefox
     # google-chrome
     #    vivaldi
     # chromium
-    # brave
+    brave
 
     # ai tools
     opencode

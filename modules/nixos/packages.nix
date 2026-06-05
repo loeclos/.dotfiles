@@ -3,6 +3,7 @@
   environment.systemPackages = with pkgs; [
     inputs.nixvim.packages.${pkgs.system}.default
     inputs.walt.packages.${pkgs.system}.default
+    eza
     sddm-astronaut
     ghostty
     unzip
