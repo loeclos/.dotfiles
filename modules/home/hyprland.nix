@@ -24,15 +24,7 @@ in
       local mod = "SUPER"
 
       -- monitor
-      local hostname = "${hostname}"
-
-      if hostname == "desktop" then
-        hl.monitor({ output = "DP-1", mode = "1920x1080@60", position = "0x0", scale = "1" })
-      elseif hostname == "laptop" then
-        hl.monitor({ output = "edp-1", mode = "1920x1080@60", position = "0x0", scale = "1" })
-      else
         hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "1" })
-      end
 
       -- env
       hl.env("xcursor_size", "24")
