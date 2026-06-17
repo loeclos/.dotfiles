@@ -27,5 +27,21 @@
     ];
   };
 
-  services.xserver.dpi = 144;
+  # hardware.graphics = {
+  #   enable = true;
+  #   enable32Bit = true;
+  # };
+  #
+  # hardware.nvidia = {
+  #   # Change this from true to false
+  #   open = false;
+  #
+  #   # Ensure modesetting is on
+  #   modesetting.enable = true;
+  # };
+
+  services.xserver = {
+    # videoDrivers = [ "nvidia" ];
+    dpi = 144;
+  };
 }

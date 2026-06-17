@@ -2,7 +2,7 @@
 {
   gtk = {
     enable = true;
-    iconTheme.name = "Whitesur-icon-theme";
+    iconTheme.name = "WhiteSur-icon-theme";
 
     theme = {
       name = "Adwaita-dark";

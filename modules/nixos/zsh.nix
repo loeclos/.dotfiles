@@ -7,7 +7,9 @@
     syntaxHighlighting.enable = true;
 
     shellAliases = {
-      ll = "ls -l";
+      ls = "eza --icons";
+      ll = "eza -l --icons";
+      la = "eza -a --icons";
       edit = "sudo -e";
       update = "sudo nixos-rebuild switch";
       dots = "cd ~/.dotfiles";

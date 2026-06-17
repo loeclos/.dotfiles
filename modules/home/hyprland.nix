@@ -24,7 +24,7 @@ in
       local mod = "SUPER"
 
       -- monitor
-        hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "1" })
+      -- hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "1" })
 
       -- env
       hl.env("xcursor_size", "24")
@@ -32,8 +32,8 @@ in
       -- general, decoration, misc → hl.config() merges multiple calls
       hl.config({
         general = {
-          gaps_in = 1,
-          gaps_out = 1,
+          gaps_in = 2,
+          gaps_out = 3,
           border_size = 0,
           col = {
             active_border = "rgba(33d17d00)",
@@ -42,6 +42,7 @@ in
         decoration = {
           active_opacity = 0.93,
           inactive_opacity = 0.90,
+          rounding = 10;
           blur = {
             enabled = true,
             size = 6,
@@ -81,6 +82,7 @@ in
       hl.bind(mod .. " + b", hl.dsp.exec_cmd("brave"))
       hl.bind(mod .. " + q", hl.dsp.window.close())
       hl.bind(mod .. " + f", hl.dsp.window.fullscreen({mode = "fullscreen", action = "toggle"}))
+      hl.bind(mod .. " + w", hl.dsp.window.float({ action = "toggle", window = "activewindow" }))
 
       hl.bind("f6", hl.dsp.exec_cmd("brightnessctl set +5%"))
       hl.bind("f5", hl.dsp.exec_cmd("brightnessctl set 5%-"))
@@ -109,7 +111,7 @@ in
 
       -- cycle layout
       hl.bind(mod .. " + Tab", function()
-        local layouts = { "dwindle", "scrolling", "master", "monocle" }
+        local layouts = { "dwindle", "scrolling"}
         local ws = hl.get_active_workspace()
         for i, l in ipairs(layouts) do
           if l == ws.tiled_layout then
@@ -122,19 +124,11 @@ in
       hl.bind(mod .. " + mouse:272", hl.dsp.window.drag(), {mouse = true})
       hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), {mouse = true})
 
-      -- window rules
-      hl.window_rule({
-        name  = "walt-ghostty",
-        match = { class = "^ghostty%.walt$" },
-        float = true,
-        size = {850, 550},
-        center = true,
-        -- focus_on_activate = true,  -- TODO: verify Lua effect name
-      })
+
 
       hl.window_rule({
         name  = "walt-native",
-        match = { class = "^com%.github%.gitfudge0%.walt$" },
+        match = { class = "ghostty.walt" },
         float = true,
         size = {900, 650},
         center = true,
@@ -145,6 +139,7 @@ in
         hl.exec_cmd("hyprctl setcursor bibata-modern-ice 24")
         hl.exec_cmd("waybar")
         hl.exec_cmd("hyprpaper")
+        hl.exec_cmd("walt random")
       end)
     '';
 

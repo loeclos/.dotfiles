@@ -13,5 +13,6 @@
     # ./hermes-agent.nix
     ./gtk.nix
     ./eza.nix
+    ./dunst.nix
   ];
 }

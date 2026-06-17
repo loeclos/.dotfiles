@@ -11,6 +11,8 @@
     # misc
     hollywood
     genact
+    cava
+    tty-clock
 
     # utilities
     impala
@@ -18,15 +20,20 @@
     gnome-sound-recorder
     nautilus
     fastfetch
+    vlc
+    ffmpeg
 
     # general
     obsidian
+    kdePackages.kdenlive
+    openshot-qt
+    spotify
 
     # chat clients
     telegram-desktop
     (discord.override {
       withOpenASAR = true;
-      # withVencord = true;
+      withVencord = true;
     })
     element-desktop
 
