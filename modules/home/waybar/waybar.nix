@@ -13,7 +13,7 @@
         margin-top = 0;
         margin-bottom = 0;
         spacing = 0;
-        height = 0;  # auto height when set to 0
+        height = 0; # auto height when set to 0
 
         modules-left = [
           "hyprland/workspaces"
@@ -40,19 +40,19 @@
         "hyprland/workspaces" = {
           disable-scroll = true;
           all-outputs = true;
-          cursor = true;  # or "default" if you prefer
+          cursor = true; # or "default" if you prefer
           format = "{icon}";
 
           persistent-workspaces = {
-            "1" = [];
-            "2" = [];
-            "3" = [];
-            "4" = [];
-            "5" = [];
-            "6" = [];
-            "7" = [];
-            "8" = [];
-            "9" = [];
+            "1" = [ ];
+            "2" = [ ];
+            "3" = [ ];
+            "4" = [ ];
+            "5" = [ ];
+            "6" = [ ];
+            "7" = [ ];
+            "8" = [ ];
+            "9" = [ ];
           };
         };
 
@@ -84,7 +84,7 @@
 
         "clock" = {
           format = "{:%d/%m - %H:%M}";
-          format-alt = "{:L%d %B W%V %Y}";  # use format-alt if you want toggle
+          format-alt = "{:L%d %B W%V %Y}"; # use format-alt if you want toggle
           tooltip-format = "<span>{calendar}</span>";
           calendar = {
             mode = "month";
@@ -117,7 +117,11 @@
           format = "{icon} {volume}%";
           format-muted = "";
           format-icons = {
-            default = [ "" "" "" ];
+            default = [
+              ""
+              ""
+              ""
+            ];
           };
           tooltip-format = "{desc}\nVolume: {volume}%";
           scroll-step = 5;
@@ -127,8 +131,27 @@
         "battery" = {
           format = "{capacity}% {icon}";
           format-icons = {
-            default = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
-            charging = [ "󰂄" "󰂅" "󰂆" "󰂇" "󰂈" "󰂉" "󰢟" ];
+            default = [
+              "󰁺"
+              "󰁻"
+              "󰁼"
+              "󰁽"
+              "󰁾"
+              "󰁿"
+              "󰂀"
+              "󰂁"
+              "󰂂"
+              "󰁹"
+            ];
+            charging = [
+              "󰂄"
+              "󰂅"
+              "󰂆"
+              "󰂇"
+              "󰂈"
+              "󰂉"
+              "󰢟"
+            ];
           };
           states = {
             warning = 30;
@@ -140,8 +163,8 @@
         "mpris" = {
           format = "{player_icon} {status_icon} {artist} - {title}";
           format-paused = "{player_icon} {status_icon} {artist} - {title}";
-          max-length = 50;  # adjust as needed
-          player = "playerctld";  # or "*" / specific players
+          max-length = 50; # adjust as needed
+          player = "playerctld"; # or "*" / specific players
           player-icons = {
             default = "";
             spotify = "";
@@ -174,7 +197,7 @@
         };
 
         "tray" = {
-          icon-size = 16;   # or 12-20 depending on your theme
+          icon-size = 16; # or 12-20 depending on your theme
           spacing = 8;
           show-passive-items = true;
         };

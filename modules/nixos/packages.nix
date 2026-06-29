@@ -16,6 +16,7 @@
     iwd
     brightnessctl
     pamixer
+    pkgs.bluetuith
 
     # UI
     inputs.walt.packages.${pkgs.system}.default

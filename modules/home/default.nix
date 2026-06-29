@@ -14,5 +14,6 @@
     ./gtk.nix
     ./eza.nix
     ./dunst.nix
+    ./hyprshot.nix
   ];
 }

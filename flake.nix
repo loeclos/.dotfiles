@@ -138,6 +138,43 @@
             )
           ];
         };
+
+        live = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit inputs; };
+          modules = [
+            (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
+            ./hosts/laptop/configuration.nix
+            home-manager.nixosModules.home-manager
+            (
+              { config, pkgs, ... }:
+              {
+                nixpkgs.config.allowUnfree = true;
+                home-manager = {
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  extraSpecialArgs = {
+                    inherit inputs;
+                    osConfig = config;
+                  };
+
+                  backupFileExtension = "backup";
+
+                  users.loeclos = {
+                    imports = [
+                      ./users/loeclos/home.nix
+                    ];
+                  };
+                };
+
+                nixpkgs.overlays = [
+                  inputs.mac-style-plymouth.overlays.default
+                ];
+              }
+            )
+          ];
+        };
+
       };
     };
 }

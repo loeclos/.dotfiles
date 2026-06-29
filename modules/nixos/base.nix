@@ -13,4 +13,9 @@
 
   users.defaultUserShell = pkgs.zsh;
   system.stateVersion = "26.05";
+
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
 }

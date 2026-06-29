@@ -22,6 +22,8 @@
     fastfetch
     vlc
     ffmpeg
+    cachix
+    gnome-clocks
 
     # general
     obsidian
