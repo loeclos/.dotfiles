@@ -1,65 +1,28 @@
-# .dotfiles - NixOS Configuration
+.dotfiles — NixOS configuration
+===============================
 
-A complete declarative NixOS system configuration using Flakes and Home Manager, managing both system-level and user-level settings across multiple hosts with a focus on a modern Wayland-based desktop and custom graphics.
+A versatile, extensible NixOS configuration (flake + home-manager) intended as a reusable starting point for multiple machines. It provides system-level NixOS modules, user/home-manager modules, fonts and assets, and per-host overlays so the same repository can manage desktop and laptop installations.
 
-## 📋 Overview
+Detailed documentation
+- Full, detailed docs: https://deepwiki.com/loeclos/.dotfiles
 
-This repository contains a reproducible NixOS configuration for multiple machines (desktop and laptop) using:
-- **Nix Flakes** for reproducible builds and dependency management
-- **Home Manager** for declarative user environment management
-- **Hyprland** as the window manager (Wayland)
-- **Custom GPU/terminal shaders** for visual polish
-- **Modular architecture** for clean separation of concerns
+Overview
+--------
 
-## 🏗️ Repository Structure and Major File Changes
+Last updated: 2026-07-10
 
-Recent restructuring includes the addition of a large GLSL shader suite and updates to several Nix/NixOS/home-manager files.
+This repository is a Nix flake that contains:
+- a flake-based NixOS configuration and home-manager setups,
+- assets and derivations used by those configurations (fonts, shaders, wallpapers),
+- per-host configuration under hosts/, and
+- reusable modules under modules/ for both NixOS and home-manager.
 
-```
-.
-├── assets/
-│   ├── fonts/
-│   │   └── satoshi.zip                   # Satoshi font (added)
-│   └── ghostty/
-│       └── shaders/                      # ✨ NEW: GPU cursor/trail shaders
-│           ├── README.md                 # Shader docs
-│           ├── cursor_warp.glsl
-│           ├── cursor_sweep.glsl
-│           ├── cursor_tail.glsl
-│           ├── rectangle_boom_cursor.glsl
-│           ├── ripple_cursor.glsl
-│           ├── ripple_rectangle_cursor.glsl
-│           ├── sonic_boom_cursor.glsl
-│           └── .gitignore
-├── derivations/
-│   └── satoshi-font.nix                  # Package for Satoshi font (added)
-├── flake.nix                             # Updated with new inputs (hermes-agent, helium)
-├── flake.lock                            # Updated
-├── hosts/                                # Host-specific configs
-├── modules/
-│   ├── home/
-│   │   ├── ghostty.nix                   # ☑️ Now enables custom shaders
-│   │   ├── hermes-agent.nix              # New module
-│   │   ├── hyprland.nix                  # Keybinding/monitor/visual tweaks
-│   │   ├── hyprpaper.nix                 # Wallpaper logic improvements
-│   │   ├── packages.nix                  # New/removed apps (see below)
-│   │   └── ...
-│   └── nixos/
-│       ├── fonts.nix                     # Now also installs Inter & Alice fonts
-│       ├── packages.nix                  # Updated to include/exclude various pkgs
-│       └── ...
-├── users/loeclos/
-└── ...
-```
+The flake builds and composes machine configurations; home-manager modules expose per-user configuration. The repository keeps a small number of derivations (e.g., packaging a font) and local assets required by the configuration.
 
-### Notable File Changes (Latest Commit)
-- **assets/ghostty/shaders/**: Added 8+ custom GLSL shaders for advanced cursor/terminal effects and a README explaining use and customization.
-- **assets/fonts/satoshi.zip**: Added font zip for Satoshi.
-- **derivations/satoshi-font.nix**: New Nix expression to install Satoshi font.
-- **flake.nix/flake.lock**: Now includes `hermes-agent` and `helium` flakes as inputs.
-- **modules/home/ghostty.nix**: Configures custom Ghostty shader for terminal, improving graphics.
-- **modules/home/hermes-agent.nix**: Added new module for Hermes agent.
-- **modules/home/hyprland.nix**: More robust monitor detection and control tweaks; naming made lowercase.
+Repository structure
+--------------------
+
+Top-level tree (annotated):
 - **modules/home/hyprpaper.nix**: Wallpaper config code uncommented and fixed.
 - **modules/home/packages.nix**: More dev tools, chat apps, utilities, AI tools added (obsidian, element-desktop, opencode, crush, code-cursor, etc). Cleaned up sections.
 - **modules/nixos/fonts.nix**: Now also pulls `inter` and `alice` fonts for improved look.
