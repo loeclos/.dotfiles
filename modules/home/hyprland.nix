@@ -21,22 +21,34 @@ in
       inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
 
     settings = {
-      mod = { _var = "SUPER"; };
+      mod = {
+        _var = "SUPER";
+      };
 
-      env = { _args = ["xcursor_size" "24"]; };
+      env = {
+        _args = [
+          "xcursor_size"
+          "24"
+        ];
+      };
 
       config = {
         general = {
-          gaps_in = 2;
-          gaps_out = 3;
-          border_size = 0;
-          col.active_border = "rgba(33d17d00)";
+          gaps_in = 0;
+          gaps_out = 0;
+          border_size = 2;
+          col.active_border = "rgb(d4be98)";
+          col.inactive_border = "rgb(282828)";
         };
         decoration = {
           active_opacity = 0.93;
           inactive_opacity = 0.90;
-          rounding = 10;
-          blur = { enabled = true; size = 6; passes = 2; };
+          rounding = 0;
+          blur = {
+            enabled = true;
+            size = 6;
+            passes = 2;
+          };
         };
         dwindle.preserve_split = true;
         cursor.no_hardware_cursors = 1;
@@ -51,26 +63,86 @@ in
       curve = {
         _args = [
           "smooth"
-          { type = "bezier"; points = [[0.25 0.9] [0.35 1.0]]; }
+          {
+            type = "bezier";
+            points = [
+              [
+                0.25
+                0.9
+              ]
+              [
+                0.35
+                1.0
+              ]
+            ];
+          }
         ];
       };
 
       animation = [
-        { leaf = "windows";    enabled = true; speed = 5; bezier = "smooth"; style = "slide"; }
-        { leaf = "windowsIn";  enabled = true; speed = 5; bezier = "smooth"; style = "slide"; }
-        { leaf = "windowsOut"; enabled = true; speed = 4; bezier = "smooth"; style = "slide"; }
-        { leaf = "fade";       enabled = true; speed = 4; bezier = "smooth"; }
-        { leaf = "fadeIn";     enabled = true; speed = 4; bezier = "smooth"; }
-        { leaf = "fadeOut";    enabled = true; speed = 3; bezier = "smooth"; }
-        { leaf = "workspaces"; enabled = true; speed = 6; bezier = "smooth"; style = "slide"; }
-        { leaf = "layers";     enabled = true; speed = 4; bezier = "smooth"; style = "fade"; }
+        {
+          leaf = "windows";
+          enabled = true;
+          speed = 5;
+          bezier = "smooth";
+          style = "slide";
+        }
+        {
+          leaf = "windowsIn";
+          enabled = true;
+          speed = 5;
+          bezier = "smooth";
+          style = "slide";
+        }
+        {
+          leaf = "windowsOut";
+          enabled = true;
+          speed = 4;
+          bezier = "smooth";
+          style = "slide";
+        }
+        {
+          leaf = "fade";
+          enabled = true;
+          speed = 4;
+          bezier = "smooth";
+        }
+        {
+          leaf = "fadeIn";
+          enabled = true;
+          speed = 4;
+          bezier = "smooth";
+        }
+        {
+          leaf = "fadeOut";
+          enabled = true;
+          speed = 3;
+          bezier = "smooth";
+        }
+        {
+          leaf = "workspaces";
+          enabled = true;
+          speed = 6;
+          bezier = "smooth";
+          style = "slide";
+        }
+        {
+          leaf = "layers";
+          enabled = true;
+          speed = 4;
+          bezier = "smooth";
+          style = "fade";
+        }
       ];
 
       bind =
         let
           wsBindings = builtins.concatLists (
-            builtins.genList (i:
-              let n = toString (i + 1); in
+            builtins.genList (
+              i:
+              let
+                n = toString (i + 1);
+              in
               [
                 {
                   _args = [
@@ -99,6 +171,12 @@ in
             _args = [
               (mkLuaInline "mod .. \" + b\"")
               (mkLuaInline "hl.dsp.exec_cmd(\"brave\")")
+            ];
+          }
+          {
+            _args = [
+              (mkLuaInline "mod .. \" + n\"")
+              (mkLuaInline "hl.dsp.exec_cmd(\"ghostty --class=ghostty.nvim -e nvim\")")
             ];
           }
           {
@@ -229,6 +307,12 @@ in
           }
           {
             _args = [
+              (mkLuaInline "mod .. \" + CTRL + K\"")
+              (mkLuaInline "hl.dsp.exec_cmd(\"rofi-keybinds\")")
+            ];
+          }
+          {
+            _args = [
               (mkLuaInline "mod .. \" + CTRL + SHIFT + K\"")
               (mkLuaInline "hl.dsp.window.resize({x = 0, y = -50, relative = true})")
             ];
@@ -276,7 +360,10 @@ in
       window_rule = {
         match.class = "ghostty.walt";
         float = true;
-        size = [900 650];
+        size = [
+          900
+          650
+        ];
         center = true;
       };
 

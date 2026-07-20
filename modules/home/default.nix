@@ -3,6 +3,7 @@
   imports = [
     ./hyprland.nix
     ./packages.nix
+    ./dconf.nix
     ./hyprpaper.nix
     ./ghostty.nix
     ./cursors.nix

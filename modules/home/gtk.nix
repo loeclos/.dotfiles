@@ -11,6 +11,14 @@
 
     gtk4.colorScheme = "dark";
     gtk3.colorScheme = "dark";
+
+    gtk3.extraConfig = {
+      gtk-decoration-layout = ":";
+    };
+
+    gtk4.extraConfig = {
+      gtk-decoration-layout = ":";
+    };
   };
 
 }

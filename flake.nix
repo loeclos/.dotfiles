@@ -45,6 +45,11 @@
       url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    hypr-quick-frame = {
+      url = "github:Ronin-CK/HyprQuickFrame";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -59,6 +64,7 @@
       walt,
       eza,
       spicetify-nix,
+      hypr-quick-frame,
       ...
     }@inputs:
     let

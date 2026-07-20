@@ -27,10 +27,10 @@
   border: none;
   padding: 0px;
   min-height: 0;
-  font-family: "MartianMono Nerd Font";
+  font-family: "DepartureMono Nerd Font";
   transition: background-color 0.3s ease-out;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 window#waybar {
@@ -39,21 +39,20 @@ window#waybar {
 
 #waybar > box {
   border-radius: 0px;
+  margin: 0px;
   border-bottom: 1.5px solid alpha(@foreground, 0.1);
-  margin: 0px 0px 2px 0px;
   background-color: @background;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 1);
   min-height: 20px;
   transition-property: background-color;
   transition-duration: 0.5s;
 }
 
 .modules-left {
-  margin-left: 4px;
+  margin-left: 8px;
 }
 
 .modules-right {
-  margin-right: 4px;
+  margin-right: 8px;
 }
 
 #workspaces {
