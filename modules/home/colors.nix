@@ -1,21 +1,11 @@
 { config, pkgs, ... }:
-
 {
-  dconf.enable = true;
-
-  dconf.settings = {
-    "org/gnome/desktop/interface" = {
-      color-scheme = "prefer-dark";
-    };
-  };
-
   qt = {
     enable = true;
-    platformTheme = "gnome";
-    style = "adwaita-dark";
+    platformTheme = "gtk2";
   };
 
   systemd.user.sessionVariables = {
-    GTK_THEME = "Adwaita-dark";
+    GTK_THEME = "Gruvbox-Dark";
   };
 }

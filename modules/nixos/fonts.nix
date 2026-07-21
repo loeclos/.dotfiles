@@ -20,8 +20,7 @@
     fontconfig = {
       defaultFonts = {
         monospace = [ "MartianMono Nerd Font" ];
-        sansSerif = [ "GeistMono Nerd Font" "Inter Nerd Font" "DM Sans" "Plus Jakarta Sans" "Public Sans" ];
-        serif = [ "MartianMono Nerd Font" ];
+        sansSerif = [ "GeistMono Nerd Font" "Inter Nerd Font" "DM Sans" "Plus Jakarta Sans" "Public Sans" "Work Sans" "Barlow" ];
       };
     };
   };

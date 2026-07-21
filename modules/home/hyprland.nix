@@ -14,7 +14,7 @@ in
 {
   wayland.windowManager.hyprland = {
     enable = true;
-    systemd.enable = false;
+    systemd.enable = true;
     configType = "lua";
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     portalPackage =
@@ -34,16 +34,16 @@ in
 
       config = {
         general = {
-          gaps_in = 0;
-          gaps_out = 0;
-          border_size = 2;
-          col.active_border = "rgb(d4be98)";
+          gaps_in = 3;
+          gaps_out = 3;
+          border_size = 1;
+          col.active_border = "rgb(3a3931)";
           col.inactive_border = "rgb(282828)";
         };
         decoration = {
           active_opacity = 0.93;
           inactive_opacity = 0.90;
-          rounding = 0;
+          rounding = 15;
           blur = {
             enabled = true;
             size = 6;
@@ -101,24 +101,24 @@ in
           bezier = "smooth";
           style = "slide";
         }
-        {
-          leaf = "fade";
-          enabled = true;
-          speed = 4;
-          bezier = "smooth";
-        }
-        {
-          leaf = "fadeIn";
-          enabled = true;
-          speed = 4;
-          bezier = "smooth";
-        }
-        {
-          leaf = "fadeOut";
-          enabled = true;
-          speed = 3;
-          bezier = "smooth";
-        }
+        # {
+        #   leaf = "fade";
+        #   enabled = true;
+        #   speed = 4;
+        #   bezier = "smooth";
+        # }
+        # {
+        #   leaf = "fadeIn";
+        #   enabled = true;
+        #   speed = 4;
+        #   bezier = "smooth";
+        # }
+        # {
+        #   leaf = "fadeOut";
+        #   enabled = true;
+        #   speed = 3;
+        #   bezier = "smooth";
+        # }
         {
           leaf = "workspaces";
           enabled = true;
@@ -126,13 +126,13 @@ in
           bezier = "smooth";
           style = "slide";
         }
-        {
-          leaf = "layers";
-          enabled = true;
-          speed = 4;
-          bezier = "smooth";
-          style = "fade";
-        }
+        # {
+        #   leaf = "layers";
+        #   enabled = true;
+        #   speed = 4;
+        #   bezier = "smooth";
+        #   style = "fade";
+        # }
       ];
 
       bind =
