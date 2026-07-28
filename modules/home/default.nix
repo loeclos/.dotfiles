@@ -2,6 +2,7 @@
 {
   imports = [
     ./hyprland.nix
+    ./rebuild.nix
     ./packages.nix
     ./dconf.nix
     ./hyprpaper.nix

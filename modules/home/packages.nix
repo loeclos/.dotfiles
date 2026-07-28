@@ -49,10 +49,14 @@
 
     # ai tools
     opencode
+    ollama
+    # pi-coding-agent
+    # claude-code
     # codex
     # gemini-cli
     crush
     code-cursor
+    llmfit
 
     (pkgs.writeShellScriptBin "rofi-keybinds" ''
             #!/usr/bin/env bash

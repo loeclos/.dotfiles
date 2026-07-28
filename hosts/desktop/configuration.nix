@@ -2,6 +2,7 @@
   pkgs,
   lib,
   inputs,
+  config,
   ...
 }:
 
@@ -27,33 +28,44 @@
     ];
   };
 
-  # hardware.graphics = {
-  #   enable = true;
-  #   enable32Bit = true;
-  # };
-  #
-  # hardware.nvidia = {
-  #   # Change this from true to false
-  #   open = false;
-  #
-  #   # Ensure modesetting is on
-  #   modesetting.enable = true;
-  # };
-
-  services.xserver = {
-    # videoDrivers = [ "nvidia" ];
-    dpi = 144;
+  hardware.graphics = {
+    enable = true;
   };
 
-  systemd.mounts = [{
-    what = "/dev/disk/by-uuid/5DECDB1C46C85694";
-    where = "/mnt/ssd";
-    type = "ntfs-3g";
-    options = "uid=1000,gid=100,rw,noatime";
-  }];
+  services.xserver.videoDrivers = [ "nvidia" ];
 
-  systemd.automounts = [{
-    where = "/mnt/ssd";
-    wantedBy = [ "multi-user.target" ];
-  }];
+  boot.initrd.kernelModules = [
+    "nvidia"
+    "nvidia_modeset"
+    "nvidia_uvm"
+    "nvidia_drm"
+  ];
+
+  hardware.nvidia = {
+
+    # Modesetting is required.
+    modesetting.enable = true;
+
+    open = true;
+
+    nvidiaSettings = true;
+
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
+  };
+
+  systemd.mounts = [
+    {
+      what = "/dev/disk/by-uuid/5DECDB1C46C85694";
+      where = "/mnt/ssd";
+      type = "ntfs-3g";
+      options = "uid=1000,gid=100,rw,noatime";
+    }
+  ];
+
+  systemd.automounts = [
+    {
+      where = "/mnt/ssd";
+      wantedBy = [ "multi-user.target" ];
+    }
+  ];
 }

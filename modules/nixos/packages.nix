@@ -13,6 +13,8 @@
     # tools
     eza
     unzip
+    pkgs.qemu
+    pkgs.quickemu
 
     # system
     iwd

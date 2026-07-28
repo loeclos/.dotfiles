@@ -37,13 +37,13 @@ in
           gaps_in = 3;
           gaps_out = 3;
           border_size = 1;
-          col.active_border = "rgb(3a3931)";
+          col.active_border = "rgb(7e7b6b)";
           col.inactive_border = "rgb(282828)";
         };
         decoration = {
           active_opacity = 0.93;
           inactive_opacity = 0.90;
-          rounding = 15;
+          rounding = 12;
           blur = {
             enabled = true;
             size = 6;
@@ -253,6 +253,18 @@ in
           }
           {
             _args = [
+              (mkLuaInline "mod .. \" + RIGHT\"")
+              (mkLuaInline "hl.dsp.focus({workspace = \"+1\", wrap = true})")
+            ];
+          }
+          {
+            _args = [
+              (mkLuaInline "mod .. \" + LEFT\"")
+              (mkLuaInline "hl.dsp.focus({workspace = \"-1\", wrap = true})")
+            ];
+          }
+          {
+            _args = [
               (mkLuaInline "mod .. \" + L\"")
               (mkLuaInline "hl.dsp.focus({direction = \"right\"})")
             ];
@@ -293,6 +305,7 @@ in
               (mkLuaInline "hl.dsp.window.swap({direction = \"down\"})")
             ];
           }
+
           {
             _args = [
               (mkLuaInline "mod .. \" + CTRL + SHIFT + H\"")
@@ -309,6 +322,12 @@ in
             _args = [
               (mkLuaInline "mod .. \" + CTRL + K\"")
               (mkLuaInline "hl.dsp.exec_cmd(\"rofi-keybinds\")")
+            ];
+          }
+          {
+            _args = [
+              (mkLuaInline "mod .. \" + SHIFT + R\"")
+              (mkLuaInline "hl.dsp.exec_cmd(\"rofi-nixosrebuild\")")
             ];
           }
           {
