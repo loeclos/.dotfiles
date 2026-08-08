@@ -164,7 +164,7 @@
           format = "{player_icon} {status_icon} {artist} - {title}";
           format-paused = "{player_icon} {status_icon} {artist} - {title}";
           max-length = 50; # adjust as needed
-          player = "playerctld"; # or "*" / specific players
+          player = "*"; # or "*" / specific players
           player-icons = {
             default = "";
             spotify = "";

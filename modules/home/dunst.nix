@@ -6,9 +6,9 @@
     settings = {
       global = {
         # Position and Geometry
-        width = 350;
-        height = 300;
-        origin = "top-right";
+        width = 550;
+        height = 500;
+        origin = "top-center";
         offset = "20x20";
         scale = 0;
         notification_limit = 5;
@@ -21,7 +21,7 @@
         progress_bar_max_width = 300;
 
         # Text and Font
-        font = "JetBrainsMono Nerd Font 10";
+        font = "SFProDisplay Nerd Font 11";
         line_height = 0;
         format = "<b>%s</b>\n%b";
         alignment = "left";
@@ -33,13 +33,13 @@
 
         # Border and Rounding
         frame_width = 1; # Small, subtle border
-        corner_radius = 8; # Rounded corners
+        corner_radius = 10; # Rounded corners
         gap_size = 6;
 
         # Gruvbox Dark Palette Base
-        background = "#282828"; # gruvbox bg0
-        foreground = "#ebdbb2"; # gruvbox fg0
-        frame_color = "#696969"; # gruvbox bg3 (default border)
+        background = "#fff"; # gruvbox bg0
+        foreground = "#fff"; # gruvbox fg0
+        frame_color = "#fff"; # gruvbox bg3 (default border)
 
         # Padding
         padding = 10;

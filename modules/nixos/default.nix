@@ -12,5 +12,7 @@
     ./packages.nix
     ./zsh.nix
     ./sddm.nix
+    ./udisks.nix
+    ./ollama.nix
   ];
 }

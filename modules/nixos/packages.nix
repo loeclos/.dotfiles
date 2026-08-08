@@ -2,7 +2,7 @@
 {
   environment.systemPackages = with pkgs; [
     # applications
-    inputs.nixvim.packages.${pkgs.system}.default
+    inputs.nixvim.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.hypr-quick-frame.packages.${pkgs.stdenv.hostPlatform.system}.default
     pkgs.satty
     ghostty
@@ -22,9 +22,10 @@
     pamixer
     pkgs.bluetuith
     ntfsprogs
+    # cudaPackages.nccl
 
     # UI
-    inputs.walt.packages.${pkgs.system}.default
+    inputs.walt.packages.${pkgs.stdenv.hostPlatform.system}.default
     sddm-astronaut
     moka-icon-theme
     quickshell

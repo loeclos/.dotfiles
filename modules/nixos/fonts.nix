@@ -6,7 +6,8 @@
 {
   fonts = {
     packages = with pkgs; [
-      nerd-fonts.martian-mono
+      sf-pro-nerd
+      sf-mono-nerd
       nerd-fonts.departure-mono
       nerd-fonts.geist-mono
       inter-nerdfont
@@ -19,8 +20,8 @@
 
     fontconfig = {
       defaultFonts = {
-        monospace = [ "MartianMono Nerd Font" ];
-        sansSerif = [ "GeistMono Nerd Font" "Inter Nerd Font" "DM Sans" "Plus Jakarta Sans" "Public Sans" "Work Sans" "Barlow" ];
+        monospace = [ "SFMono Nerd Font" "GeistMono Nerd Font" "DepartureMono Nerd Font" ];
+        sansSerif = [ "SFProDisplay Nerd Font" "Inter Nerd Font" "DM Sans" "Plus Jakarta Sans" "Public Sans" "Work Sans" "Barlow" ];
       };
     };
   };

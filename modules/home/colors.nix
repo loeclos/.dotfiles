@@ -6,6 +6,6 @@
   };
 
   systemd.user.sessionVariables = {
-    GTK_THEME = "Gruvbox-Dark";
+    GTK_THEME = "gruvbox-dark";
   };
 }

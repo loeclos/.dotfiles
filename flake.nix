@@ -4,6 +4,8 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    pinned-nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -50,6 +52,16 @@
       url = "github:Ronin-CK/HyprQuickFrame";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    apple-fonts = {
+      url = "github:Lyndeno/apple-fonts.nix";
+      inputs.nixpkgs.follows = "pinned-nixpkgs";
+    };
+
+    sf-pro-dmg = {
+      url = "https://devimages-cdn.apple.com/design/resources/download/SF-Pro.dmg";
+      flake = false;
+    };
   };
 
   outputs =
@@ -65,12 +77,26 @@
       eza,
       spicetify-nix,
       hypr-quick-frame,
+      apple-fonts,
       ...
     }@inputs:
     let
       system = "x86_64-linux";
+
+      pinnedPkgs = inputs.pinned-nixpkgs.legacyPackages.${system};
+
+      sf-pro-nerd = pinnedPkgs.callPackage ./derivations/sf-pro-nerd.nix {
+        src = inputs.sf-pro-dmg;
+      };
+
+      sfProNerdOverlay = _final: _prev: {
+        inherit sf-pro-nerd;
+      };
     in
     {
+      packages.${system} = {
+        inherit sf-pro-nerd;
+      };
 
       # hosts configuration
       nixosConfigurations = {
@@ -104,6 +130,8 @@
 
                 nixpkgs.overlays = [
                   inputs.mac-style-plymouth.overlays.default
+                  inputs.apple-fonts.overlays.default
+                  sfProNerdOverlay
                 ];
               }
             )
@@ -139,6 +167,8 @@
 
                 nixpkgs.overlays = [
                   inputs.mac-style-plymouth.overlays.default
+                  inputs.apple-fonts.overlays.default
+                  sfProNerdOverlay
                 ];
               }
             )
@@ -175,6 +205,8 @@
 
                 nixpkgs.overlays = [
                   inputs.mac-style-plymouth.overlays.default
+                  inputs.apple-fonts.overlays.default
+                  sfProNerdOverlay
                 ];
               }
             )

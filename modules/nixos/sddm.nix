@@ -2,7 +2,7 @@
 # Target: NixOS unstable / 25.11 with flake-based configuration
 # Import from flake.nix or configuration.nix:
 #   imports = [ ./sddm.nix ];
-{ pkgs, lib, ... }:
+{ pkgs, lib, inputs, ... }:
 
 let
   # Build the theme package with the pixel_sakura animated variant selected.
@@ -47,7 +47,7 @@ in
         };
       };
     };
-    sessionPackages = [ pkgs.hyprland ];
+    sessionPackages = [ inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland ];
   };
 
   # ── Theme package ─────────────────────────────────────────────────────────

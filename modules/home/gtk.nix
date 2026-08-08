@@ -5,8 +5,8 @@
     # iconTheme.name = "WhiteSur-icon-theme";
 
     theme = {
-      name = "Gruvbox-Dark";
-      package = pkgs.gruvbox-gtk-theme;
+      name = "gruvbox-dark";
+      package = pkgs.gruvbox-dark-gtk;
     };
 
     iconTheme = {
@@ -20,7 +20,7 @@
     };
 
     gtk4.extraConfig = {
-      gtk-theme-name = "Gruvbox-Dark";
+      gtk-theme-name = "gruvbox-dark";
       gtk-application-prefer-dark-theme = 1;
       gtk-decoration-layout = ":";
     };

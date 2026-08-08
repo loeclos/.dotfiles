@@ -56,6 +56,7 @@ in
           animate_manual_resizes = true;
           animate_mouse_windowdragging = true;
           force_default_wallpaper = 0;
+          focus_on_activate = true;
           disable_hyprland_logo = true;
         };
       };
@@ -171,6 +172,12 @@ in
             _args = [
               (mkLuaInline "mod .. \" + b\"")
               (mkLuaInline "hl.dsp.exec_cmd(\"brave\")")
+            ];
+          }
+          {
+            _args = [
+              (mkLuaInline "mod .. \" + d\"")
+              (mkLuaInline "hl.dsp.exec_cmd(\"discord\")")
             ];
           }
           {

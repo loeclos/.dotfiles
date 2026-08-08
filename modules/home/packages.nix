@@ -12,10 +12,11 @@
     hollywood
     genact
     cava
+    cliamp
     tty-clock
 
     # utilities
-    impala
+    # impala
     btop
     gnome-sound-recorder
     nautilus
@@ -24,6 +25,10 @@
     ffmpeg
     cachix
     gnome-clocks
+    jq
+    nmap
+    gnome-disk-utility
+    tree
 
     # general
     obsidian
@@ -31,6 +36,7 @@
     openshot-qt
     spotify
     gnome-text-editor
+    gnome-calculator
 
     # chat clients
     telegram-desktop
@@ -38,7 +44,7 @@
       withOpenASAR = true;
       withVencord = true;
     })
-    element-desktop
+    # element-desktop
 
     # browsers
     # firefox
@@ -49,13 +55,12 @@
 
     # ai tools
     opencode
-    ollama
     # pi-coding-agent
     # claude-code
     # codex
     # gemini-cli
-    crush
-    code-cursor
+    # crush
+    # code-cursor
     llmfit
 
     (pkgs.writeShellScriptBin "rofi-keybinds" ''

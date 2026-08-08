@@ -9,7 +9,7 @@
 
     settings = {
       theme = "Gruvbox Material Dark";
-      font-family = "MartianMono Nerd Font";
+      font-family = "SFMono Nerd Font 12";
       font-size = 12;
 
       window-padding-x = 3;

@@ -30,7 +30,7 @@
 
           background-color = mkLiteral "transparent";
           text-color = mkLiteral "@fg1";
-          font = "JetBrainsMono Nerd Font 11";
+          font = "SFProDisplay Nerd Font 12";
         };
 
         "window" = {

@@ -7,9 +7,9 @@
 
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
-      gtk-theme = "Gruvbox-Dark";
+      gtk-theme = "gruvbox-dark";
       icon-theme = "Gruvbox-Plus-Dark";
-      font-name = "GeistMono Nerd Font 11";
+      font-name = "SFProDisplay Nerd Font 12";
     };
   };
 }

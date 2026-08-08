@@ -14,6 +14,7 @@
       update = "sudo nixos-rebuild switch";
       dots = "cd ~/.dotfiles";
       rbld = "dots && sudo nixos-rebuild switch --flake";
+      projects = "cd /mnt/ssd/projects/";
     };
 
     histSize = 10000;
@@ -22,7 +23,7 @@
       "HIST_IGNORE_ALL_DUPS"
     ];
 
-    oh-my-zsh = {
+    ohMyZsh = {
       enable = true;
 
       theme = "bira";
