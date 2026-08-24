@@ -36,6 +36,7 @@ Files and contents
 ------------------
 
 Top-level files
+```
 - README.md
   - This file: title, overview, structure, file descriptions, docs link, and license.
 - flake.nix
@@ -98,6 +99,7 @@ Directories and notable files (each entry describes the directory contents and t
 - users/
   - loeclos/
     - Per-user entries (home-manager profile definitions, user-specific configuration that ties the modules into a concrete user/profile).
+```
 
 Notes and conventions
 - The repository is organized so that modules/ provides reusable building blocks and hosts/ overlays supply machine-specific differences.
