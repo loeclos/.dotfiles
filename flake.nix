@@ -28,6 +28,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    wlctl = {
+      url = "github:aashish-thapa/wlctl";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     hermes-agent = {
       url = "github:NousResearch/hermes-agent";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -53,6 +58,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    hyprsaver = {
+      url = "github:maravexa/hyprsaver";
+      flake = false;
+    };
+
     apple-fonts = {
       url = "github:Lyndeno/apple-fonts.nix";
       inputs.nixpkgs.follows = "pinned-nixpkgs";
@@ -60,6 +70,11 @@
 
     sf-pro-dmg = {
       url = "https://devimages-cdn.apple.com/design/resources/download/SF-Pro.dmg";
+      flake = false;
+    };
+
+    ollama = {
+      url = "github:ollama/ollama/v0.32.7";
       flake = false;
     };
   };
@@ -74,6 +89,7 @@
       nixvim,
       hyprland,
       walt,
+      wlctl,
       eza,
       spicetify-nix,
       hypr-quick-frame,
@@ -91,6 +107,12 @@
 
       sfProNerdOverlay = _final: _prev: {
         inherit sf-pro-nerd;
+      };
+
+      hyprsaverOverlay = _final: _prev: {
+        hyprsaver = _final.callPackage ./derivations/hyprsaver.nix {
+          src = inputs.hyprsaver;
+        };
       };
     in
     {
@@ -131,6 +153,7 @@
                 nixpkgs.overlays = [
                   inputs.mac-style-plymouth.overlays.default
                   inputs.apple-fonts.overlays.default
+                  hyprsaverOverlay
                   sfProNerdOverlay
                 ];
               }
@@ -168,6 +191,7 @@
                 nixpkgs.overlays = [
                   inputs.mac-style-plymouth.overlays.default
                   inputs.apple-fonts.overlays.default
+                  hyprsaverOverlay
                   sfProNerdOverlay
                 ];
               }
@@ -206,6 +230,7 @@
                 nixpkgs.overlays = [
                   inputs.mac-style-plymouth.overlays.default
                   inputs.apple-fonts.overlays.default
+                  hyprsaverOverlay
                   sfProNerdOverlay
                 ];
               }

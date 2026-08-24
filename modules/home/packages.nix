@@ -9,16 +9,16 @@
     gh
 
     # misc
-    hollywood
-    genact
+    # hollywood
+    # genact
     cava
     cliamp
-    tty-clock
+    # tty-clock
 
     # utilities
-    # impala
     btop
     gnome-sound-recorder
+    playerctl
     nautilus
     fastfetch
     vlc
@@ -32,9 +32,7 @@
 
     # general
     obsidian
-    kdePackages.kdenlive
-    openshot-qt
-    spotify
+    # spotify
     gnome-text-editor
     gnome-calculator
 
@@ -52,6 +50,11 @@
     #    vivaldi
     # chromium
     brave
+    qutebrowser
+
+    # screenshot
+    satty
+    slurp
 
     # ai tools
     opencode
@@ -61,13 +64,38 @@
     # gemini-cli
     # crush
     # code-cursor
-    llmfit
+    # llmfit
+
+    (pkgs.writeShellScriptBin "hypr-float-toggle" ''
+      #!/usr/bin/env bash
+      class="$1"
+      shift
+      if hyprctl clients -j | jq -e --arg c "$class" 'any(.[]; .class == $c)' >/dev/null; then
+        hyprctl dispatch closewindow "class:^$(printf '%s' "$class" | sed 's/\./\\./g')$"
+      else
+        ghostty --class="$class" -e "$@"
+      fi
+    '')
+
+    (pkgs.writeShellScriptBin "wifi-menu" ''
+      #!/usr/bin/env bash
+      exec hypr-float-toggle ghostty.wifi wlctl
+    '')
+
+    (pkgs.writeShellScriptBin "bluetooth-menu" ''
+      #!/usr/bin/env bash
+      exec hypr-float-toggle ghostty.bt bluetuith
+    '')
 
     (pkgs.writeShellScriptBin "rofi-keybinds" ''
             #!/usr/bin/env bash
 
-            binds="SUPER + ENTER                 ❯  Open Terminal
+            binds="Print                         ❯  Screenshot Region (file+clipboard to ~/Pictures/Screenshots)
+      SUPER + Print                 ❯  Screenshot Region → Satty (annotate, file+clipboard to ~/Pictures/Screenshots)
+      SUPER + ENTER                 ❯  Open Terminal
       SUPER + B                     ❯  Open Browser
+      SUPER + I                     ❯  WiFi Menu
+      SUPER + SHIFT + B             ❯  Bluetooth Menu
       SUPER + N                     ❯  Open Neovim
       SUPER + Q                     ❯  Close Window
       SUPER + F                     ❯  Toggle Fullscreen
@@ -80,6 +108,7 @@
       SUPER + ESC                   ❯  Logout Menu
       SUPER + SHIFT + SPACE         ❯  Toggle Waybar
       SUPER + SHIFT + W             ❯  Terminal (Walt)
+      SUPER + S                     ❯  Toggle Screensaver
       SUPER + H                     ❯  Focus Left
       SUPER + L                     ❯  Focus Right
       SUPER + K                     ❯  Focus Up

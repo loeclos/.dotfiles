@@ -8,7 +8,7 @@
         # Position and Geometry
         width = 550;
         height = 500;
-        origin = "top-center";
+        origin = "top-right";
         offset = "20x20";
         scale = 0;
         notification_limit = 5;
@@ -33,13 +33,16 @@
 
         # Border and Rounding
         frame_width = 1; # Small, subtle border
-        corner_radius = 10; # Rounded corners
+        corner_radius = 0;
         gap_size = 6;
 
         # Gruvbox Dark Palette Base
         background = "#fff"; # gruvbox bg0
         foreground = "#fff"; # gruvbox fg0
-        frame_color = "#fff"; # gruvbox bg3 (default border)
+        frame_color = "#7e7b6b"; # matches hyprland active window border
+
+        # Mouse
+        mouse_left_click = "do_action"; # open the caller app
 
         # Padding
         padding = 10;
@@ -54,21 +57,21 @@
       urgency_low = {
         background = "#282828";
         foreground = "#928374"; # gray
-        frame_color = "#3c3836"; # bg1
+        frame_color = "#7e7b6b";
         timeout = 4;
       };
 
       urgency_normal = {
         background = "#282828";
         foreground = "#ebdbb2"; # fg
-        frame_color = "#458588"; # blue accent border
+        frame_color = "#7e7b6b";
         timeout = 10;
       };
 
       urgency_critical = {
         background = "#282828";
         foreground = "#fb4934"; # bright red text
-        frame_color = "#cc241d"; # neutral red border
+        frame_color = "#7e7b6b";
         timeout = 0;
       };
     };

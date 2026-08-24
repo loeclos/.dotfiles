@@ -1,0 +1,9 @@
+[08:31:14 2026-08-20] FETCHING Version 2.44.0
+[08:31:14 2026-08-20] CREATING /home/loeclos/.spicetify
+[08:31:14 2026-08-20] DOWNLOADING https://github.com/spicetify/cli/releases/download/v2.44.0/spicetify-2.44.0-linux-amd64.tar.gz
+[08:31:15 2026-08-20] EXTRACTING /home/loeclos/.spicetify/spicetify.tar.gz
+[08:31:15 2026-08-20] SETTING EXECUTABLE PERMISSIONS TO /home/loeclos/.spicetify/spicetify
+[08:31:15 2026-08-20] REMOVING /home/loeclos/.spicetify/spicetify.tar.gz
+[08:31:15 2026-08-20] APPENDING /home/loeclos/.spicetify to PATH in /home/loeclos/.zshrc
+[08:31:15 2026-08-20] spicetify v2.44.0 was installed successfully to /home/loeclos/.spicetify
+[08:31:15 2026-08-20] Run 'spicetify --help' to get started

@@ -36,13 +36,13 @@
         "window" = {
           location = mkLiteral "center";
           width = mkLiteral "700px";
-          height = mkLiteral "300px";
-          padding = mkLiteral "10px";
+          height = mkLiteral "343px";
+          padding = mkLiteral "2px";
 
           # Border setup mimicking a TUI frame with rounded edges
-          border = mkLiteral "2px";
+          border = mkLiteral "3px";
           border-color = mkLiteral "@bg2";
-          border-radius = mkLiteral "12px";
+          border-radius = mkLiteral "0px";
           background-color = mkLiteral "@bg0";
         };
 
@@ -59,9 +59,9 @@
             "entry"
           ];
           background-color = mkLiteral "@bg1";
-          border-radius = mkLiteral "6px";
+          border-radius = mkLiteral "1px";
           padding = mkLiteral "6px 10px";
-          margin = mkLiteral "0px 0px 8px 0px";
+          margin = mkLiteral "0px 0px 0px 0px";
         };
 
         "prompt" = {
@@ -84,7 +84,7 @@
 
         "element" = {
           padding = mkLiteral "4px 8px";
-          border-radius = mkLiteral "6px"; # Subtly rounded inner highlights
+          border-radius = mkLiteral "0px"; # Subtly rounded inner highlights
         };
 
         "element normal.normal" = {

@@ -107,6 +107,7 @@ window#waybar {
 #clock,
 #battery,
 #network,
+#bluetooth,
 #pulseaudio,
 #power-profiles-daemon,
 #custom-seperator {
@@ -130,23 +131,32 @@ window#waybar {
 
 #network {
   margin-left: 0;
-  color: @bright-blue;
+  color: @foreground;
 }
 
 #pulseaudio {
-  color: @bright-aqua;
+  color: @foreground;
 }
 
 #cpu {
-  color: @bright-red;
+  color: @foreground;
 }
 
 #memory {
-  color: @bright-purple;
+  color: @foreground;
 }
 
 #battery {
-  color: @bright-green;
+  color: @foreground;
+}
+
+#bluetooth {
+  color: @foreground;
+}
+
+#bluetooth.on,
+#bluetooth.connected {
+  color: @bright-blue;
 }
 
 #clock {
@@ -214,6 +224,7 @@ tooltip label {
 #battery:hover,
 #power-profiles-daemon:hover,
 #network:hover,
+#bluetooth:hover,
 #pulseaudio:hover {
   border-radius: 0px;
   opacity: 1;

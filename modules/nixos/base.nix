@@ -21,6 +21,8 @@
 
   programs.appimage.enable = true;
 
+  security.pam.services.hyprlock = { };
+
   users.defaultUserShell = pkgs.zsh;
   system.stateVersion = "26.05";
 

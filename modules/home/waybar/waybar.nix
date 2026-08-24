@@ -27,6 +27,8 @@
         modules-right = [
           "group/tray-expander"
           "custom/seperator"
+          "bluetooth"
+          "network"
           "pulseaudio"
           "memory"
           "cpu"
@@ -110,7 +112,24 @@
           format-wifi = "{icon}";
           format-ethernet = "󰌗";
           format-disconnected = "󰤮";
+          tooltip-format = "{ifname} {essid}\n{ipaddr}";
+          on-click = "wifi-menu";
+          on-click-right = "nmcli radio wifi toggle";
           # Add more if you had them in the original (tooltip, interval, etc.)
+        };
+
+        "bluetooth" = {
+          format = "󰂯";
+          format-on = "󰂯";
+          format-off = "󰂲";
+          format-disabled = "󰂲";
+          format-connected = "󰂯";
+          on-click = "bluetooth-menu";
+          on-click-right = "bluetoothctl power toggle";
+          tooltip = true;
+          tooltip-format = "{status}";
+          tooltip-format-connected = "{device_enumerate}";
+          tooltip-format-enumerate-connected = "{device_alias}";
         };
 
         "pulseaudio" = {
@@ -164,7 +183,6 @@
           format = "{player_icon} {status_icon} {artist} - {title}";
           format-paused = "{player_icon} {status_icon} {artist} - {title}";
           max-length = 50; # adjust as needed
-          player = "*"; # or "*" / specific players
           player-icons = {
             default = "";
             spotify = "";

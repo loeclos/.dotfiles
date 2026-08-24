@@ -16,6 +16,10 @@
     ./gtk.nix
     ./eza.nix
     ./dunst.nix
+    ./spicetify.nix
     ./hyprshot.nix
+    ./hypridle.nix
+    ./hyprlock.nix
+    ./hyprsaver.nix
   ];
 }

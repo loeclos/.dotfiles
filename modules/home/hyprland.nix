@@ -34,8 +34,8 @@ in
 
       config = {
         general = {
-          gaps_in = 3;
-          gaps_out = 3;
+          gaps_in = 0;
+          gaps_out = 0;
           border_size = 1;
           col.active_border = "rgb(7e7b6b)";
           col.inactive_border = "rgb(282828)";
@@ -43,7 +43,7 @@ in
         decoration = {
           active_opacity = 0.93;
           inactive_opacity = 0.90;
-          rounding = 12;
+          # rounding = 12;
           blur = {
             enabled = true;
             size = 6;
@@ -51,7 +51,10 @@ in
           };
         };
         dwindle.preserve_split = true;
-        cursor.no_hardware_cursors = 1;
+        cursor = {
+          no_hardware_cursors = 1;
+          hide_on_key_press = true;
+        };
         misc = {
           animate_manual_resizes = true;
           animate_mouse_windowdragging = true;
@@ -254,6 +257,24 @@ in
           }
           {
             _args = [
+              (mkLuaInline "mod .. \" + I\"")
+              (mkLuaInline "hl.dsp.exec_cmd(\"wifi-menu\")")
+            ];
+          }
+          {
+            _args = [
+              (mkLuaInline "mod .. \" + SHIFT + B\"")
+              (mkLuaInline "hl.dsp.exec_cmd(\"bluetooth-menu\")")
+            ];
+          }
+          {
+            _args = [
+              (mkLuaInline "mod .. \" + s\"")
+              (mkLuaInline "hl.dsp.exec_cmd(\"pkill -x hyprsaver || hyprsaver\")")
+            ];
+          }
+          {
+            _args = [
               (mkLuaInline "mod .. \" + H\"")
               (mkLuaInline "hl.dsp.focus({direction = \"left\"})")
             ];
@@ -368,6 +389,12 @@ in
           }
           {
             _args = [
+              (mkLuaInline "mod .. \" + T\"")
+              (mkLuaInline "hl.dsp.layout(\"togglesplit\")")
+            ];
+          }
+          {
+            _args = [
               (mkLuaInline "mod .. \" + mouse:272\"")
               (mkLuaInline "hl.dsp.window.drag()")
               { mouse = true; }
@@ -380,18 +407,59 @@ in
               { mouse = true; }
             ];
           }
+          {
+            _args = [
+              "Print"
+              (mkLuaInline "hl.dsp.exec_cmd(\"mkdir -p ~/Pictures/Screenshots && hyprshot -m region --freeze -o ~/Pictures/Screenshots\")")
+            ];
+          }
+          {
+            _args = [
+              (mkLuaInline "mod .. \" + Print\"")
+              (mkLuaInline "hl.dsp.exec_cmd(\"mkdir -p ~/Pictures/Screenshots && hyprshot -m region --freeze --raw | satty --filename - --output-filename ~/Pictures/Screenshots/satty-$(date +%Y-%m-%d_%H-%M-%S).png --copy-command wl-copy\")")
+            ];
+          }
         ]
         ++ wsBindings;
 
-      window_rule = {
-        match.class = "ghostty.walt";
-        float = true;
-        size = [
-          900
-          650
-        ];
-        center = true;
-      };
+      window_rule = [
+        {
+          match.class = "ghostty.walt";
+          float = true;
+          size = [
+            900
+            650
+          ];
+          center = true;
+        }
+        {
+          match.class = "ghostty.wifi";
+          float = true;
+          size = [
+            1100
+            700
+          ];
+          center = true;
+        }
+        {
+          match.class = "ghostty.bt";
+          float = true;
+          size = [
+            950
+            650
+          ];
+          center = true;
+        }
+        {
+          match.class = "satty";
+          float = true;
+          size = [
+            1200
+            800
+          ];
+          center = true;
+        }
+      ];
 
       on = {
         _args = [
