@@ -4,6 +4,7 @@
     ./hyprland.nix
     ./rebuild.nix
     ./packages.nix
+    ./default-apps.nix
     ./dconf.nix
     ./hyprpaper.nix
     ./ghostty.nix
@@ -16,6 +17,7 @@
     ./gtk.nix
     ./eza.nix
     ./dunst.nix
+    ./printing.nix
     ./spicetify.nix
     ./hyprshot.nix
     ./hypridle.nix

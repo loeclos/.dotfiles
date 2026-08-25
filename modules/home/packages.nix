@@ -21,13 +21,15 @@
     playerctl
     nautilus
     fastfetch
-    vlc
+    mpv
     ffmpeg
+    yt-dlp
     cachix
     gnome-clocks
     jq
     nmap
     gnome-disk-utility
+    papers
     tree
 
     # general
@@ -94,6 +96,7 @@
       SUPER + Print                 ❯  Screenshot Region → Satty (annotate, file+clipboard to ~/Pictures/Screenshots)
       SUPER + ENTER                 ❯  Open Terminal
       SUPER + B                     ❯  Open Browser
+      SUPER + E                     ❯  Open File Manager (Nautilus)
       SUPER + I                     ❯  WiFi Menu
       SUPER + SHIFT + B             ❯  Bluetooth Menu
       SUPER + N                     ❯  Open Neovim

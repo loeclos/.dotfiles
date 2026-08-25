@@ -179,6 +179,12 @@ in
           }
           {
             _args = [
+              (mkLuaInline "mod .. \" + e\"")
+              (mkLuaInline "hl.dsp.exec_cmd(\"nautilus\")")
+            ];
+          }
+          {
+            _args = [
               (mkLuaInline "mod .. \" + d\"")
               (mkLuaInline "hl.dsp.exec_cmd(\"discord\")")
             ];
@@ -423,6 +429,15 @@ in
         ++ wsBindings;
 
       window_rule = [
+        {
+          match.class = "nautilus";
+          float = true;
+          size = [
+            1000
+            700
+          ];
+          center = true;
+        }
         {
           match.class = "ghostty.walt";
           float = true;
