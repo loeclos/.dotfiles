@@ -34,10 +34,12 @@ in
 
       config = {
         general = {
+          # gaps_in = 2;
+          # gaps_out = 2;
           gaps_in = 0;
           gaps_out = 0;
           border_size = 1;
-          col.active_border = "rgb(7e7b6b)";
+          col.active_border = "rgb(a99f8f)";
           col.inactive_border = "rgb(282828)";
         };
         decoration = {

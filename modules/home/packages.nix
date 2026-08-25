@@ -22,6 +22,7 @@
     nautilus
     fastfetch
     mpv
+    lufus
     ffmpeg
     yt-dlp
     cachix

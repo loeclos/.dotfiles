@@ -17,7 +17,6 @@
     ./gtk.nix
     ./eza.nix
     ./dunst.nix
-    ./printing.nix
     ./spicetify.nix
     ./hyprshot.nix
     ./hypridle.nix

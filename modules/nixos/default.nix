@@ -11,6 +11,7 @@
     ./fonts.nix
     ./packages.nix
     ./zsh.nix
+    ./printing.nix
     ./sddm.nix
     ./udisks.nix
     ./ollama.nix
