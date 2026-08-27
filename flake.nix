@@ -99,136 +99,23 @@
         src = inputs.sf-pro-dmg;
       };
 
-      sfProNerdOverlay = _final: _prev: {
-        inherit sf-pro-nerd;
-      };
-
-      hyprsaverOverlay = _final: _prev: {
-        hyprsaver = _final.callPackage ./derivations/hyprsaver.nix {
-          src = inputs.hyprsaver;
-        };
-      };
+      mkHost = import ./lib/mkHost.nix { inherit inputs; };
     in
     {
       packages.${system} = {
         inherit sf-pro-nerd;
       };
 
-      # hosts configuration
+      formatter.${system} = inputs.nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
+
+      # hosts — see lib/mkHost.nix and hosts/common.nix
       nixosConfigurations = {
-        desktop = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = { inherit inputs; };
-          modules = [
-            ./hosts/desktop/configuration.nix
-            home-manager.nixosModules.home-manager
-            (
-              { config, pkgs, ... }:
-              {
-                nixpkgs.config.allowUnfree = true;
-
-                home-manager = {
-                  useGlobalPkgs = true;
-                  useUserPackages = true;
-                  extraSpecialArgs = {
-                    inherit inputs;
-                    osConfig = config;
-                  };
-
-                  backupFileExtension = "backup";
-
-                  users.loeclos = {
-                    imports = [
-                      ./users/loeclos/home.nix
-                    ];
-                  };
-                };
-
-                nixpkgs.overlays = [
-                  inputs.apple-fonts.overlays.default
-                  hyprsaverOverlay
-                  sfProNerdOverlay
-                ];
-              }
-            )
-          ];
+        desktop = mkHost { hostname = "desktop"; };
+        laptop = mkHost { hostname = "laptop"; };
+        live = mkHost {
+          hostname = "live";
+          extraModules = [ (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix") ];
         };
-
-        laptop = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = { inherit inputs; };
-          modules = [
-            ./hosts/laptop/configuration.nix
-            home-manager.nixosModules.home-manager
-            (
-              { config, pkgs, ... }:
-              {
-                nixpkgs.config.allowUnfree = true;
-                home-manager = {
-                  useGlobalPkgs = true;
-                  useUserPackages = true;
-                  extraSpecialArgs = {
-                    inherit inputs;
-                    osConfig = config;
-                  };
-
-                  backupFileExtension = "backup";
-
-                  users.loeclos = {
-                    imports = [
-                      ./users/loeclos/home.nix
-                    ];
-                  };
-                };
-
-                nixpkgs.overlays = [
-                  inputs.apple-fonts.overlays.default
-                  hyprsaverOverlay
-                  sfProNerdOverlay
-                ];
-              }
-            )
-          ];
-        };
-
-        live = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = { inherit inputs; };
-          modules = [
-            (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
-            ./hosts/laptop/configuration.nix
-            home-manager.nixosModules.home-manager
-            (
-              { config, pkgs, ... }:
-              {
-                nixpkgs.config.allowUnfree = true;
-                home-manager = {
-                  useGlobalPkgs = true;
-                  useUserPackages = true;
-                  extraSpecialArgs = {
-                    inherit inputs;
-                    osConfig = config;
-                  };
-
-                  backupFileExtension = "backup";
-
-                  users.loeclos = {
-                    imports = [
-                      ./users/loeclos/home.nix
-                    ];
-                  };
-                };
-
-                nixpkgs.overlays = [
-                  inputs.apple-fonts.overlays.default
-                  hyprsaverOverlay
-                  sfProNerdOverlay
-                ];
-              }
-            )
-          ];
-        };
-
       };
     };
 }
