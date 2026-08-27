@@ -21,6 +21,15 @@ in
       inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
 
     settings = {
+      monitor = [
+        {
+          output = "";
+          mode = "preferred";
+          position = "auto";
+          scale = 1;
+        }
+      ];
+
       mod = {
         _var = "SUPER";
       };
@@ -418,13 +427,13 @@ in
           {
             _args = [
               "Print"
-              (mkLuaInline "hl.dsp.exec_cmd(\"mkdir -p ~/Pictures/Screenshots && hyprshot -m region --freeze -o ~/Pictures/Screenshots\")")
+              (mkLuaInline "hl.dsp.exec_cmd(\"mkdir -p ~/Pictures/Screenshots && hyprshot -m region -o ~/Pictures/Screenshots\")")
             ];
           }
           {
             _args = [
               (mkLuaInline "mod .. \" + Print\"")
-              (mkLuaInline "hl.dsp.exec_cmd(\"mkdir -p ~/Pictures/Screenshots && hyprshot -m region --freeze --raw | satty --filename - --output-filename ~/Pictures/Screenshots/satty-$(date +%Y-%m-%d_%H-%M-%S).png --copy-command wl-copy\")")
+              (mkLuaInline "hl.dsp.exec_cmd(\"mkdir -p ~/Pictures/Screenshots && hyprshot -m region --raw | satty --filename - --output-filename ~/Pictures/Screenshots/satty-$(date +%Y-%m-%d_%H-%M-%S).png --copy-command wl-copy\")")
             ];
           }
         ]
