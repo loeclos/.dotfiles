@@ -7,7 +7,6 @@
     ./base.nix
     ./greetd.nix
     ./bootloader.nix
-    ./plymouth.nix
     ./fonts.nix
     ./packages.nix
     ./zsh.nix

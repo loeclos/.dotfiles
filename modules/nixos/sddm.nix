@@ -2,7 +2,12 @@
 # Target: NixOS unstable / 25.11 with flake-based configuration
 # Import from flake.nix or configuration.nix:
 #   imports = [ ./sddm.nix ];
-{ pkgs, lib, inputs, ... }:
+{
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 
 let
   # Build the theme package with the pixel_sakura animated variant selected.
@@ -17,7 +22,7 @@ in
 
   services.displayManager = {
     sddm = {
-      enable = true;
+      enable = false;
 
       # Explicitly use the Qt 6 build of SDDM (required by the theme).
       package = pkgs.kdePackages.sddm;

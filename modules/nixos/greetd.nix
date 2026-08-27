@@ -1,10 +1,10 @@
 { pkgs, ... }:
 {
   services.greetd = {
-    enable = false;
+    enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd start-hyprland";
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd start-hyprland -- --config ~/.local/state/hyprland/hypr.log";
         user = "greeter";
       };
     };

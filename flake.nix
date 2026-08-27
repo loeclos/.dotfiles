@@ -13,11 +13,6 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    mac-style-plymouth = {
-      url = "github:loeclos/plymouth-theme";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nixvim = {
       url = "github:loeclos/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -85,7 +80,6 @@
       nixpkgs,
       home-manager,
       nixos-hardware,
-      mac-style-plymouth,
       nixvim,
       hyprland,
       walt,
@@ -151,7 +145,6 @@
                 };
 
                 nixpkgs.overlays = [
-                  inputs.mac-style-plymouth.overlays.default
                   inputs.apple-fonts.overlays.default
                   hyprsaverOverlay
                   sfProNerdOverlay
@@ -189,7 +182,6 @@
                 };
 
                 nixpkgs.overlays = [
-                  inputs.mac-style-plymouth.overlays.default
                   inputs.apple-fonts.overlays.default
                   hyprsaverOverlay
                   sfProNerdOverlay
@@ -228,7 +220,6 @@
                 };
 
                 nixpkgs.overlays = [
-                  inputs.mac-style-plymouth.overlays.default
                   inputs.apple-fonts.overlays.default
                   hyprsaverOverlay
                   sfProNerdOverlay
