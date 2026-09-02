@@ -8,7 +8,7 @@ Detailed documentation
 
 Overview
 --------
-<img width="1919" height="1056" alt="image" src="https://github.com/user-attachments/assets/fb782031-63df-4a5f-86bb-5bd10709e3ee" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/287533e8-b8b8-4f2c-acf1-fe9b2a95306c" />
 
 Last updated: 2026-07-10
 
