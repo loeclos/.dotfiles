@@ -52,7 +52,7 @@ modules/
     theme/{gtk.nix,cursors.nix}              # gtk+qt+dconf merged, cursors — imports theme via extraSpecialArgs
     desktop/{dunst.nix,hyprlock.nix,hypridle.nix,hyprpaper.nix,hyprshot.nix,hyprsaver.nix,rofi.nix,waybar/}
     hyprland/{default.nix,settings.nix,keybinds.nix,window-rules.nix,autostart.nix} # Lua, mkBind/mkFloatRule helpers
-    apps/{user.nix,vcs-git.nix,vcs-github.nix,ghostty.nix,shell-eza.nix,spicetify.nix}
+    apps/{ghostty.nix,shell-eza.nix,spicetify.nix,user.nix,vcs-git.nix,vcs-github.nix,xdg.nix} # xdg.nix: mimeApps
 derivations/{sf-pro-nerd.nix,hyprsaver.nix,ollama.nix}
 pkgs/scripts/{hypr-float-toggle.nix,wifi-menu.nix,bluetooth-menu.nix,rofi-keybinds.nix,rofi-nixosrebuild.nix}
 assets/wallpaper/               # one-word names only
@@ -87,12 +87,16 @@ Do the smallest diff that solves the task. Don't reformat the world, don't move 
 - `modules/nixos/apps/system.nix` = `environment.systemPackages`, `modules/home/apps/user.nix` = `home.packages` — don't create new `packages.nix`.
 - Use kebab-case, one-word where possible (wallpapers already normalized). No `default.nix` except manifests; feature files are `hyprlock.nix`, `virtualisation.nix`, not `base.nix`.
 
+### 3.5 Task Tracking
+- Always create a `TodoWrite` todo list at the start of *every* task — even one-liners / "trivial" fixes. Break work into steps, keep exactly one `in_progress` at a time, mark completed as you go. No execution without todos.
+
 ## 4. Making Changes — Checklist
 
 1. **Scope:** Host-specific? Edit `hosts/<host>/default.nix` or `hosts/<host>/nvidia.nix`. Shared? Edit `hosts/common.nix` or `modules/*`. Theme? Edit `lib/theme.nix` once.
 2. **Edit:** Keep `configType = "lua"` for Hyprland (`hyprland/default.nix:22`) — newer Hyprland requires it. Use `theme` via `extraSpecialArgs` (injected by `lib/mkHost.nix:24`), so home modules take `{ theme, ... }:` not `import ../../../lib/theme.nix`.
 3. **Scripts:** If you add a `writeShellScriptBin`, put it in `pkgs/scripts/<name>.nix` and expose via `apps/user.nix:59` (`pkgs.callPackage ../../../pkgs/scripts/<name>.nix`), don't inline in `user.nix`.
 4. **Wallpapers:** One word, lowercase, keep extension. Update `modules/home/desktop/hyprpaper.nix:12` if changing default.
+5. **Todos:** Create a `TodoWrite` todo list at the start of *every* task — even one-liners. Keep exactly one `in_progress`, mark completed as you go.
 
 ## 5. Verification (Do This Before PR)
 
@@ -105,19 +109,25 @@ sudo nixos-rebuild build --flake .#desktop --dry-run
 
 If you moved files, use `git mv` to preserve history. Ensure `lib/theme.nix` consumers use `theme.palette`/`theme.mkRgb` not hardcoded hex.
 
-## 6. Docs — You Must Update These After Every Change
+## 6. Docs — MANDATORY / BLOCKING — YOU MUST UPDATE BOTH DOCS AFTER *EVERY* CHANGE
 
-**Update BOTH files and bump the date:**
+> **BLOCKING REQUIREMENT — PRs WILL BE REJECTED AND BUILDS CONSIDERED BROKEN IF DOCS ARE STALE. NO EXCEPTIONS.**
+> **If you touched code, you touch docs. No docs = incomplete change. Do not skip even for one-line / "trivial" fixes.**
 
-- **`README.md`** — keep `Repository structure` tree, `What this repo contains`, `How it fits together`, and `Build & deploy` in sync with the actual `flake.nix:112`/`lib/mkHost.nix`/`modules/*/default.nix` state. Change the line `- Last updated: YYYY-MM-DD` to today (UTC) whenever you edit the repo. Today is `2026-08-27` as baseline.
-- **`AGENTS.md` (this file)** — if you add a category, rename a file, change `theme`/`mkHost` contract, or alter the wallpaper/derivation layout, update section 2 and 3. Keep the `lib/theme.nix` palette/fonts table accurate.
+**STOP — DO NOT SKIP THIS SECTION. For *EVERY* change you must:**
 
-**Never ship a structural change without:**
+- **`README.md` — REQUIRED** — keep `Repository structure` tree, `What this repo contains`, `How it fits together`, and `Build & deploy` in sync with the actual `flake.nix:112` / `lib/mkHost.nix` / `modules/*/default.nix` state. **MUST** bump `- Last updated: YYYY-MM-DD HH:MM UTC` to today (UTC) on every commit — today is `2026-08-27 00:00 UTC` as baseline, update to the current date and time. Date without time is rejected.
+- **`AGENTS.md` (this file) — REQUIRED** — if you add/rename/move a category or file, change the `theme`/`mkHost` contract, or alter the wallpaper/derivation/script layout, update sections 2 and 3 immediately. Keep the `lib/theme.nix` palette/fonts table accurate. Stale AGENTS.md causes future agents/humans to make wrong changes.
+- **`TodoWrite` — REQUIRED** — create a todo list at the start of *every* task (even one-liners) and keep it updated. Keep exactly one `in_progress` at a time. No todos = incomplete workflow.
+
+**NEVER SHIP — not even a 1-line fix — WITHOUT ALL FOUR (reviewers must request changes if any is missing):**
 ```bash
-# 1. README.md: update tree + Last updated: YYYY-MM-DD
-# 2. AGENTS.md: update architecture/categories if needed
-# 3. nix flake check --no-build passes
+# 1. README.md: update tree + Last updated: YYYY-MM-DD HH:MM UTC  ← REQUIRED
+# 2. AGENTS.md: update architecture/categories/principles ← REQUIRED
+# 3. TodoWrite: todos created and tracked for every task  ← REQUIRED
+# 4. nix flake check --no-build passes                   ← REQUIRED
 ```
+**Missing docs = change is NOT DONE. Treat this as a build failure.**
 
 ## 7. Common Pitfalls
 

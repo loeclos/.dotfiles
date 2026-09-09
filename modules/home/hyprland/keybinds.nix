@@ -113,8 +113,10 @@ in
           { mouse = true; }
         ];
       }
-      (mkBindRaw "Print" (exec "mkdir -p ~/Pictures/Screenshots && hyprshot -m region -o ~/Pictures/Screenshots"))
-      (mkBind "Print" (exec "mkdir -p ~/Pictures/Screenshots && hyprshot -m region --raw | satty --filename - --output-filename ~/Pictures/Screenshots/satty-$(date +%Y-%m-%d_%H-%M-%S).png --copy-command wl-copy"))
+      (mkBindRaw "Print" (exec "mkdir -p ~/Pictures/Screenshots && hyprshot -m region --freeze -o ~/Pictures/Screenshots"))
+      (mkBind "Print" (exec "mkdir -p ~/Pictures/Screenshots && hyprshot -m region --freeze --raw | satty --filename - --output-filename ~/Pictures/Screenshots/satty-$(date +%Y-%m-%d_%H-%M-%S).png --copy-command wl-copy"))
+      (mkBindRaw "SHIFT + Print" (exec "mkdir -p ~/Pictures/Screenshots && hyprshot -m output -m active -o ~/Pictures/Screenshots"))
+      (mkBind "SHIFT + Print" (exec "mkdir -p ~/Pictures/Screenshots && hyprshot -m output -m active --raw | satty --filename - --output-filename ~/Pictures/Screenshots/satty-$(date +%Y-%m-%d_%H-%M-%S).png --copy-command wl-copy"))
     ]
     ++ wsBindings;
 }

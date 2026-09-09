@@ -4,7 +4,7 @@
 A declarative, reproducible NixOS flake + home-manager setup for multiple machines. One repo builds `desktop` (NVIDIA RTX 5060 Ti), `laptop`, and `live` ISO with identical UX: Hyprland (Lua), Waybar, Ghostty, Rofi, and Gruvbox theming from a single source of truth.
 
 - Full docs: https://deepwiki.com/loeclos/.dotfiles
-- Last updated: 2026-08-27
+- Last updated: 2026-09-05 20:56 UTC
 
 What this repo contains
 -----------------------
@@ -38,7 +38,7 @@ modules/
     theme/{gtk.nix,cursors.nix}              # gtk+qt+dconf merged, cursors — imports theme via extraSpecialArgs
     desktop/{dunst.nix,hyprlock.nix,hypridle.nix,hyprpaper.nix,hyprshot.nix,hyprsaver.nix,rofi.nix,waybar/}
     hyprland/{default.nix,settings.nix,keybinds.nix,window-rules.nix,autostart.nix} # Lua, mkBind/mkFloatRule helpers
-    apps/{user.nix,vcs-git.nix,vcs-github.nix,ghostty.nix,shell-eza.nix,spicetify.nix}
+    apps/{ghostty.nix,shell-eza.nix,spicetify.nix,user.nix,vcs-git.nix,vcs-github.nix,xdg.nix} # xdg.nix: mimeApps (PDF → Papers, images → feh)
 derivations/{sf-pro-nerd.nix,hyprsaver.nix,ollama.nix}
 pkgs/scripts/{hypr-float-toggle.nix,wifi-menu.nix,bluetooth-menu.nix,rofi-keybinds.nix,rofi-nixosrebuild.nix}
 assets/wallpaper/               # one-word names only
@@ -84,6 +84,6 @@ Notes
 - `hardware.bluetooth` lives only in `hardware/bluetooth.nix` (`AGENTS.md:7`).
 - Wallpapers are one-word (`road.png`, `dock.jpg`); `assets/ghostty/shaders` and `satoshi.zip` were deleted as unused — don't re-add without wiring.
 
-Agent guide: `AGENTS.md` — must be updated alongside `README.md` after every structural change; bump `Last updated: YYYY-MM-DD` to today.
+Agent guide: `AGENTS.md` — must be updated alongside `README.md` after every structural change; bump `Last updated: YYYY-MM-DD HH:MM UTC` to today.
 
 License: MIT

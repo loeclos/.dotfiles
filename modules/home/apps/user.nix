@@ -4,22 +4,12 @@
   ...
 }:
 {
-  xdg.mimeApps = {
-    enable = true;
-    defaultApplications = {
-      "application/pdf" = "org.gnome.Papers.desktop";
-      "application/x-bzpdf" = "org.gnome.Papers.desktop";
-      "application/x-gzpdf" = "org.gnome.Papers.desktop";
-      "application/x-xzpdf" = "org.gnome.Papers.desktop";
-      "application/x-ext-pdf" = "org.gnome.Papers.desktop";
-    };
-  };
-
   home.packages =
     with pkgs;
     [
       # ai
       opencode
+      code-cursor
 
       # browsers
       brave
@@ -28,7 +18,6 @@
       # chat
       telegram-desktop
       (discord.override {
-        withOpenASAR = true;
         withVencord = true;
       })
 
@@ -39,6 +28,9 @@
       gnome-calculator
       gnome-text-editor
       obsidian
+      typora
+      zettlr
+      safeeyes
 
       # media
       cava

@@ -24,8 +24,6 @@
     ./apps/user.nix
     ./apps/vcs-git.nix
     ./apps/vcs-github.nix
-
-    # xdg / misc (merged, see apps/user.nix for mimeApps)
-    # rebuild handled via pkgs/scripts directly
+    ./apps/xdg.nix
   ];
 }
