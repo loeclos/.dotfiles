@@ -15,7 +15,6 @@
     ./services/disk.nix
     ./services/keyring.nix
     ./services/printing.nix
-    ./services/upower.nix
     ./services/virtualisation.nix
 
     # desktop

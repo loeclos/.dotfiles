@@ -19,7 +19,7 @@ sudo nixos-rebuild build --flake .#desktop
 sudo nixos-rebuild build --flake .#laptop
 sudo nixos-rebuild build --flake .#live
 
-# switch (or Super+Shift+R → quickshell rebuild menu)
+# switch (or Super+Shift+R → rofi-nixosrebuild)
 sudo nixos-rebuild switch --flake .#desktop
 
 # update inputs (pin in flake.lock)
@@ -45,15 +45,16 @@ modules/
   nixos/                        # system-level
     core/{nix.nix,bootloader.nix,shell.nix}    # nix/cachix, limine 1920x1080, zsh aliases
     hardware/{audio.nix,bluetooth.nix}
-    services/{printing.nix,disk.nix,upower.nix,virtualisation.nix,keyring.nix}
+    services/{printing.nix,disk.nix,virtualisation.nix,keyring.nix}
     desktop/{hyprland.nix,greetd.nix,fonts.nix,login/sddm.nix}
     apps/{system.nix,ollama.nix}
   home/                         # user-level (home-manager)
     theme/{gtk.nix,cursors.nix}              # gtk+qt+dconf merged, cursors — imports theme via extraSpecialArgs
-    desktop/{hyprlock.nix,hypridle.nix,hyprpaper.nix,hyprshot.nix,hyprsaver.nix,quickshell/} # quickshell: shell/Bar/BarPopups/Notifications/Launcher + per-module QML, Theme.qml generated from lib/theme.nix
-    hyprland/{default.nix,settings.nix,keybinds.nix,window-rules.nix,autostart.nix} # Lua, mkBind/mkFloatRule helpers, quickshell ipc toggles
+    desktop/{dunst.nix,hyprlock.nix,hypridle.nix,hyprpaper.nix,hyprshot.nix,hyprsaver.nix,rofi.nix,waybar/}
+    hyprland/{default.nix,settings.nix,keybinds.nix,window-rules.nix,autostart.nix} # Lua, mkBind/mkFloatRule helpers
     apps/{ghostty.nix,shell-eza.nix,spicetify.nix,user.nix,vcs-git.nix,vcs-github.nix,xdg.nix} # xdg.nix: mimeApps
 derivations/{sf-pro-nerd.nix,hyprsaver.nix,ollama.nix}
+pkgs/scripts/{hypr-float-toggle.nix,wifi-menu.nix,bluetooth-menu.nix,rofi-keybinds.nix,rofi-nixosrebuild.nix}
 assets/wallpaper/               # one-word names only
 users/loeclos/home.nix
 ```
@@ -68,15 +69,16 @@ Do the smallest diff that solves the task. Don't reformat the world, don't move 
 ### 3.2 Clean Code
 - No `with pkgs;` mixing `pkgs.qemu` vs `qemu` — either `with pkgs; [ ghostty eza ]` consistently or explicit `pkgs.` everywhere. Current code uses `with pkgs;` for package lists but `pkgs.callPackage` outside — keep that convention.
 - No dead/commented blocks — use `git log` for history, not `# foo` leftovers.
-- No duplicate constants — colors/fonts/resolutions go in `lib/theme.nix`, not hardcoded `rgb(a99f8f)` in 5 places. Hyprland gaps/borders, bootloader `resolution`, ghostty font, quickshell/hyprlock colors all derive from `theme`.
-- Helpers over copy-paste: `mkBind`/`mkExec` in `hyprland/keybinds.nix:4`, `mkFloatRule` in `window-rules.nix:4`, rebuild host×action matrix in `quickshell/Launcher.qml`.
+- No duplicate constants — colors/fonts/resolutions go in `lib/theme.nix`, not hardcoded `rgb(a99f8f)` in 5 places. Hyprland gaps/borders, bootloader `resolution`, ghostty font, dunst/hyprlock colors all derive from `theme`.
+- Helpers over copy-paste: `mkBind`/`mkExec` in `hyprland/keybinds.nix:4`, `mkFloatRule` in `window-rules.nix:4`, `lib.genAttrs (map toString (lib.range 1 9))` in `waybar.nix:48`, `lib.genAttrs` in `rofi-nixosrebuild.nix:6`.
 
 ### 3.3 Follow Structure — Fit Into Current Categories, Otherwise Create New
 1. Search existing category first:
    - System theme/display → `lib/theme.nix` + `modules/nixos/core/*`
    - Hardware (audio/bluetooth/printing/disk) → `modules/nixos/hardware/*` or `services/*`
-   - Desktop compositor/lock/bar/shell → `modules/home/desktop/*` or `hyprland/*` (all bar/notification/launcher UI is QML in `desktop/quickshell/`, see §4.3)
+   - Desktop compositor/lock/bar → `modules/home/desktop/*` or `hyprland/*`
    - User apps/packages → `modules/home/apps/*` or `modules/nixos/apps/*`
+   - Shell helpers → `pkgs/scripts/*`
 2. If nothing fits, create a new file **inside the closest existing folder** (e.g., `modules/nixos/services/mything.nix`), not a new top-level folder, unless you need a full feature group — then create a folder with its own `default.nix` (like `hyprland/`).
 3. Add the new file to the appropriate `default.nix` manifest in sorted order. Keep manifests alphabetical within each group.
 4. New hosts: add `hosts/<name>/default.nix` (import `hardware-configuration.nix` + needed `modules/nixos` bits), then wire in `flake.nix:112` via `mkHost { hostname = "<name>"; }`. See `lib/mkHost.nix:1` for overlay/home-manager injection — don't duplicate that block.
@@ -92,7 +94,7 @@ Do the smallest diff that solves the task. Don't reformat the world, don't move 
 
 1. **Scope:** Host-specific? Edit `hosts/<host>/default.nix` or `hosts/<host>/nvidia.nix`. Shared? Edit `hosts/common.nix` or `modules/*`. Theme? Edit `lib/theme.nix` once.
 2. **Edit:** Keep `configType = "lua"` for Hyprland (`hyprland/default.nix:22`) — newer Hyprland requires it. Use `theme` via `extraSpecialArgs` (injected by `lib/mkHost.nix:24`), so home modules take `{ theme, ... }:` not `import ../../../lib/theme.nix`.
-3. **Shell UI:** all bar/notification/launcher/powermenu UI lives in `modules/home/desktop/quickshell/*.qml` (one component per file, same dir so no imports needed). Colors/fonts come from the generated `Theme.qml` singleton (built from `lib/theme.nix` in `quickshell/default.nix`) — never hardcode hex in QML. Motion/shape tokens (`animFast`/`animMed`/`radius`/`popupWidth`) also live in `Theme.qml` and mirror the Hyprland `smooth` bezier with OutCubic. Toggle via `quickshell ipc call launcher toggle <apps|keybinds|rebuild|powermenu>` / `quickshell ipc call popups toggle <wifi|bluetooth>` / `quickshell ipc call bar toggle`.
+3. **Scripts:** If you add a `writeShellScriptBin`, put it in `pkgs/scripts/<name>.nix` and expose via `apps/user.nix:59` (`pkgs.callPackage ../../../pkgs/scripts/<name>.nix`), don't inline in `user.nix`.
 4. **Wallpapers:** One word, lowercase, keep extension. Update `modules/home/desktop/hyprpaper.nix:12` if changing default.
 5. **Todos:** Create a `TodoWrite` todo list at the start of *every* task — even one-liners. Keep exactly one `in_progress`, mark completed as you go.
 
@@ -130,9 +132,9 @@ If you moved files, use `git mv` to preserve history. Ensure `lib/theme.nix` con
 ## 7. Common Pitfalls
 
 - Adding `hardware.bluetooth` in two places — it lives only in `hardware/bluetooth.nix`.
+- Using `custom/seperator` — it was renamed to `custom/separator` (breaking). Don't reintroduce the typo.
 - Leaving `satoshi.zip`/`ghostty/shaders` blobs — they were deleted as unused (~6.2MB). Don't re-add without wiring them in `fonts.nix` or `ghostty.nix`.
 - Forgetting `extraSpecialArgs.theme` — home modules that need colors/fonts must declare `{ theme, ... }:`.
-- QML without a complete `qmldir` — shipping `quickshell/qmldir` disables quickshell's automatic component synthesis, so EVERY same-dir component must be declared (`singleton Theme 1.0 Theme.qml` + one line per view); an undeclared file fails with `<Name> is not a type`.
 
 ## 8. References
 
@@ -140,7 +142,7 @@ If you moved files, use `git mv` to preserve history. Ensure `lib/theme.nix` con
 - Theme source: `lib/theme.nix:1`
 - Host helper: `lib/mkHost.nix:1`
 - Hyprland split: `modules/home/hyprland/{settings,keybinds,window-rules,autostart}.nix`
-- Quickshell shell: `modules/home/desktop/quickshell/` (default.nix + shell/Bar/BarPopups/Notifications/Launcher + per-module QML); theme via generated `Theme.qml` from `lib/theme.nix`; toggles via `quickshell ipc`
+- Waybar separator & persistent workspaces: `modules/home/desktop/waybar/waybar.nix:20,48`
 - Wallpaper default: `modules/home/desktop/hyprpaper.nix:12`
 
 Keep it lean, keep it sorted, keep docs current.

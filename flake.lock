@@ -1142,7 +1142,8 @@
         "pinned-nixpkgs": "pinned-nixpkgs",
         "sf-pro-dmg": "sf-pro-dmg",
         "spicetify-nix": "spicetify-nix",
-        "walt": "walt"
+        "walt": "walt",
+        "wlctl": "wlctl"
       }
     },
     "rust-analyzer-src": {
@@ -1441,6 +1442,26 @@
       "original": {
         "owner": "gitfudge0",
         "repo": "walt",
+        "type": "github"
+      }
+    },
+    "wlctl": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1785518365,
+        "narHash": "sha256-fc4GhaEOFLmvasDubkHKKUJD8S/qEgI94HpnCGMKpkA=",
+        "owner": "aashish-thapa",
+        "repo": "wlctl",
+        "rev": "439f3c288021707695410405abaf3f45dce48cc5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "aashish-thapa",
+        "repo": "wlctl",
         "type": "github"
       }
     },

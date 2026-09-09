@@ -8,6 +8,7 @@ in
     inputs.nixvim.packages.${system}.default
     ghostty
     vifm
+    wlogout
 
     # hypr ecosystem
     inputs.hypr-quick-frame.packages.${system}.default
@@ -15,6 +16,8 @@ in
     # network / hardware
     brightnessctl
     iwd
+    bluetuith
+    inputs.wlctl.packages.${system}.default
     ntfsprogs
     pamixer
 
