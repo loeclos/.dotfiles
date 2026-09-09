@@ -6,6 +6,18 @@ A declarative, reproducible NixOS flake + home-manager setup for multiple machin
 - Full docs: https://deepwiki.com/loeclos/.dotfiles
 - Last updated: 2026-09-05 20:56 UTC
 
+Overview
+--------
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/80d30157-0acf-417c-bf24-e03aa1254a7b" />
+
+This repository is a Nix flake that contains:
+- a flake-based NixOS configuration and home-manager setups,
+- assets and derivations used by those configurations (fonts, shaders, wallpapers),
+- per-host configuration under hosts/, and
+- reusable modules under modules/ for both NixOS and home-manager.
+
+The flake builds and composes machine configurations; home-manager modules expose per-user configuration. The repository keeps a small number of derivations (e.g., packaging a font) and local assets required by the configuration.
+
 What this repo contains
 -----------------------
 - **Flake** (`flake.nix`) — pins `nixpkgs` (unstable + `pinned-nixpkgs` for Apple fonts), `home-manager`, `hyprland`, `nixvim`, `walt`, `wlctl`, etc. Outputs `nixosConfigurations.{desktop,laptop,live}` and `formatter`.
