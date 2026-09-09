@@ -1,18 +1,17 @@
 .dotfiles — NixOS configuration
 ===============================
 
-A declarative, reproducible NixOS flake + home-manager setup for multiple machines. One repo builds `desktop` (NVIDIA RTX 5060 Ti), `laptop`, and `live` ISO with identical UX: Hyprland (Lua), Waybar, Ghostty, Rofi, and Gruvbox theming from a single source of truth.
+A declarative, reproducible NixOS flake + home-manager setup for multiple machines. One repo builds `desktop` (NVIDIA RTX 5060 Ti), `laptop`, and `live` ISO with identical UX: Hyprland (Lua), Quickshell shell (bar, notifications, launcher, powermenu), Ghostty, and Gruvbox theming from a single source of truth.
 
 - Full docs: https://deepwiki.com/loeclos/.dotfiles
-- Last updated: 2026-09-05 20:56 UTC
+- Last updated: 2026-09-09 22:35 UTC
 
 What this repo contains
 -----------------------
-- **Flake** (`flake.nix`) — pins `nixpkgs` (unstable + `pinned-nixpkgs` for Apple fonts), `home-manager`, `hyprland`, `nixvim`, `walt`, `wlctl`, etc. Outputs `nixosConfigurations.{desktop,laptop,live}` and `formatter`.
+- **Flake** (`flake.nix`) — pins `nixpkgs` (unstable + `pinned-nixpkgs` for Apple fonts), `home-manager`, `hyprland`, `nixvim`, `walt`, etc. Outputs `nixosConfigurations.{desktop,laptop,live}` and `formatter`.
 - **lib/** — shared helpers: `lib/theme.nix` (Gruvbox palette, fonts, cursor, display 1920x1080) and `lib/mkHost.nix` (deduplicates host boilerplate + overlays).
 - **hosts/** — per-host + shared `hosts/common.nix` (timezone, locale, NetworkManager, user). `hosts/desktop/nvidia.nix` isolates early-KMS RTX logic. `hosts/live/default.nix` is hardware-agnostic (`not-detected.nix`, kvm-intel/amd).
-- **modules/** — reusable NixOS and home-manager modules (grouped: `core`, `hardware`, `services`, `desktop`, `apps`).
-- **pkgs/scripts/** — extracted shell helpers (`hypr-float-toggle`, `wifi-menu`, `bluetooth-menu`, `rofi-keybinds`, `rofi-nixosrebuild` generated via `lib.genAttrs`).
+- **modules/** — reusable NixOS and home-manager modules (grouped: `core`, `hardware`, `services`, `desktop`, `apps`). The entire UI shell lives in `modules/home/desktop/quickshell/` (bar, notifications, launcher incl. app/keybinds/rebuild/powermenu modes, animated wifi/bluetooth bar dropdowns).
 - **derivations/** + **assets/** — custom font packaging (`sf-pro-nerd`), `hyprsaver` build, wallpapers (one-word names, `image.png` removed, `satoshi.zip`/`ghostty/shaders` deleted as unused ~6.2MB).
 
 Repository structure
@@ -31,16 +30,15 @@ modules/
   nixos/                        # system-level
     core/{nix.nix,bootloader.nix,shell.nix}    # nix/cachix, limine 1920x1080, zsh aliases
     hardware/{audio.nix,bluetooth.nix}
-    services/{printing.nix,disk.nix,virtualisation.nix,keyring.nix}
+    services/{printing.nix,disk.nix,upower.nix,virtualisation.nix,keyring.nix}
     desktop/{hyprland.nix,greetd.nix,fonts.nix,login/sddm.nix}
     apps/{system.nix,ollama.nix}
   home/                         # user-level (home-manager)
     theme/{gtk.nix,cursors.nix}              # gtk+qt+dconf merged, cursors — imports theme via extraSpecialArgs
-    desktop/{dunst.nix,hyprlock.nix,hypridle.nix,hyprpaper.nix,hyprshot.nix,hyprsaver.nix,rofi.nix,waybar/}
-    hyprland/{default.nix,settings.nix,keybinds.nix,window-rules.nix,autostart.nix} # Lua, mkBind/mkFloatRule helpers
+    desktop/{hyprlock.nix,hypridle.nix,hyprpaper.nix,hyprshot.nix,hyprsaver.nix,quickshell/} # quickshell: shell/Bar/BarPopups/Notifications/Launcher + per-module QML, Theme.qml generated from lib/theme.nix
+    hyprland/{default.nix,settings.nix,keybinds.nix,window-rules.nix,autostart.nix} # Lua, mkBind/mkFloatRule helpers; launcher/bar/popups toggles via `quickshell ipc`
     apps/{ghostty.nix,shell-eza.nix,spicetify.nix,user.nix,vcs-git.nix,vcs-github.nix,xdg.nix} # xdg.nix: mimeApps (PDF → Papers, images → feh)
 derivations/{sf-pro-nerd.nix,hyprsaver.nix,ollama.nix}
-pkgs/scripts/{hypr-float-toggle.nix,wifi-menu.nix,bluetooth-menu.nix,rofi-keybinds.nix,rofi-nixosrebuild.nix}
 assets/wallpaper/               # one-word names only
 users/loeclos/home.nix
 ```
@@ -56,10 +54,10 @@ See `AGENTS.md` for the full contributor guide: least-change, clean-code, struct
 
 Key design choices
 -----------------
-- **Theme as data**: `lib/theme.nix:3` is the only place for `#1d2021`, `a99f8f`, `SFMono Nerd Font`, `Bibata-Modern-Ice 24`, `1920x1080`. Change once, rebuild everywhere.
-- **Generate > copy-paste**: `waybar.nix:48 lib.genAttrs (map toString (lib.range 1 9))`, `hyprland/window-rules.nix:4 mkFloatRule`, `pkgs/scripts/rofi-nixosrebuild.nix:6 genAttrs` for hosts×actions.
+- **Theme as data**: `lib/theme.nix:3` is the only place for `#1d2021`, `a99f8f`, `SFMono Nerd Font`, `Bibata-Modern-Ice 24`, `1920x1080`. Change once, rebuild everywhere (quickshell `Theme.qml` is generated from it).
+- **Generate > copy-paste**: `hyprland/window-rules.nix:4 mkFloatRule`, `quickshell/Launcher.qml` rebuild matrix for hosts×actions.
 - **Host = common + overlay**: No duplication of `networkmanager`, `timeZone`, or `home-manager` blocks.
-- **Breaking polish**: `custom/seperator` → `custom/separator` (waybar + CSS) intentionally breaking to fix typo consistently.
+- **One shell**: quickshell replaces waybar+dunst+rofi+`wifi-menu`/`bluetooth-menu`+`rofi-keybinds`/`rofi-nixosrebuild`+wlogout; toggles via `quickshell ipc call launcher toggle <mode>`, `quickshell ipc call popups toggle <wifi|bluetooth>`, and `quickshell ipc call bar toggle`.
 
 Build & deploy
 --------------
@@ -72,7 +70,7 @@ sudo nixos-rebuild build --flake .#desktop
 sudo nixos-rebuild build --flake .#laptop
 sudo nixos-rebuild build --flake .#live
 
-# switch via Rofi (Super+Shift+R) or CLI
+# switch via Quickshell rebuild menu (Super+Shift+R) or CLI
 sudo nixos-rebuild switch --flake .#desktop
 ```
 

@@ -1,5 +1,5 @@
 # lib/theme.nix — single source of truth for colors, fonts, and display
-# Consumed by hyprland, hyprlock, dunst, rofi, waybar, gtk, ghostty, etc.
+# Consumed by hyprland, hyprlock, quickshell (generated Theme.qml), gtk, ghostty, etc.
 {
   palette = {
     # Gruvbox Dark Hard
@@ -28,7 +28,7 @@
     aqua = "#689d6a";
     brightAqua = "#8ec07c";
     orange = "#d65d0e";
-    accent = "#d2bb83"; # rofi selection
+    accent = "#d2bb83"; # launcher selection
 
     # Hyprland border shorthand (without # for rgb())
     borderActiveRgb = "a99f8f";
@@ -40,7 +40,7 @@
     mono = "SFMono Nerd Font";
     monoAlt = "GeistMono Nerd Font";
     monoAlt2 = "DepartureMono Nerd Font";
-    waybar = "DepartureMono Nerd Font";
+    bar = "DepartureMono Nerd Font";
     size = 12;
     sizeSmall = 11;
     sizeLarge = 16;

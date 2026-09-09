@@ -51,6 +51,7 @@
       cachix
       gnome-disk-utility
       jq
+      libnotify # notify-send feedback (quickshell notification server)
       nautilus
       nmap
       tree
@@ -58,12 +59,5 @@
       # screenshot
       satty
       slurp
-    ]
-    ++ [
-      (pkgs.callPackage ../../../pkgs/scripts/hypr-float-toggle.nix { })
-      (pkgs.callPackage ../../../pkgs/scripts/wifi-menu.nix { })
-      (pkgs.callPackage ../../../pkgs/scripts/bluetooth-menu.nix { })
-      (pkgs.callPackage ../../../pkgs/scripts/rofi-keybinds.nix { })
-      (pkgs.callPackage ../../../pkgs/scripts/rofi-nixosrebuild.nix { })
     ];
 }

@@ -7,14 +7,12 @@
     ./theme/gtk.nix
 
     # desktop
-    ./desktop/dunst.nix
     ./desktop/hypridle.nix
     ./desktop/hyprlock.nix
     ./desktop/hyprpaper.nix
     ./desktop/hyprshot.nix
     ./desktop/hyprsaver.nix
-    ./desktop/rofi.nix
-    ./desktop/waybar/waybar.nix
+    ./desktop/quickshell
     ./hyprland
 
     # apps
