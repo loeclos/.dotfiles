@@ -30,19 +30,19 @@
 
           background-color = mkLiteral "transparent";
           text-color = mkLiteral "@fg1";
-          font = "SFProDisplay Nerd Font 12";
+          font = "DepartureMono Nerd Font 10";
         };
 
         "window" = {
           location = mkLiteral "center";
           width = mkLiteral "700px";
-          height = mkLiteral "343px";
+          height = mkLiteral "337px";
           padding = mkLiteral "2px";
 
           # Border setup mimicking a TUI frame with rounded edges
           border = mkLiteral "3px";
           border-color = mkLiteral "@bg2";
-          border-radius = mkLiteral "0px";
+          border-radius = mkLiteral "12px";
           background-color = mkLiteral "@bg0";
         };
 
@@ -59,7 +59,7 @@
             "entry"
           ];
           background-color = mkLiteral "@bg1";
-          border-radius = mkLiteral "1px";
+          border-radius = mkLiteral "8px";
           padding = mkLiteral "6px 10px";
           margin = mkLiteral "0px 0px 0px 0px";
         };
@@ -84,7 +84,7 @@
 
         "element" = {
           padding = mkLiteral "4px 8px";
-          border-radius = mkLiteral "0px"; # Subtly rounded inner highlights
+          border-radius = mkLiteral "8px"; # Subtly rounded inner highlights
         };
 
         "element normal.normal" = {

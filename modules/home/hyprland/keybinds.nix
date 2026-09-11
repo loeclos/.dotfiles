@@ -61,7 +61,7 @@ in
       (mkBind "space" (exec "pkill rofi || rofi -show drun"))
       (mkBind "escape" (exec "pkill wlogout || wlogout"))
       (mkBind "SHIFT + SPACE" (exec "pkill waybar || waybar"))
-      (mkBind "SHIFT + W" (exec "ghostty --class=ghostty.walt -e walt"))
+      (mkBind "SHIFT + W" (exec "wallpaper-picker"))
       (mkBind "I" (exec "wifi-menu"))
       (mkBind "SHIFT + B" (exec "bluetooth-menu"))
       (mkBind "s" (exec "pkill -x hyprsaver || hyprsaver"))
@@ -114,9 +114,9 @@ in
         ];
       }
       (mkBindRaw "Print" (exec "mkdir -p ~/Pictures/Screenshots && hyprshot -m region --freeze -o ~/Pictures/Screenshots"))
-      (mkBind "Print" (exec "mkdir -p ~/Pictures/Screenshots && hyprshot -m region --freeze --raw | satty --filename - --output-filename ~/Pictures/Screenshots/satty-$(date +%Y-%m-%d_%H-%M-%S).png --copy-command wl-copy"))
+      (mkBind "Print" (exec "mkdir -p ~/Pictures/Screenshots && flameshot gui -p ~/Pictures/Screenshots"))
       (mkBindRaw "SHIFT + Print" (exec "mkdir -p ~/Pictures/Screenshots && hyprshot -m output -m active -o ~/Pictures/Screenshots"))
-      (mkBind "SHIFT + Print" (exec "mkdir -p ~/Pictures/Screenshots && hyprshot -m output -m active --raw | satty --filename - --output-filename ~/Pictures/Screenshots/satty-$(date +%Y-%m-%d_%H-%M-%S).png --copy-command wl-copy"))
+      (mkBind "SHIFT + Print" (exec "mkdir -p ~/Pictures/Screenshots && flameshot screen --edit -p ~/Pictures/Screenshots"))
     ]
     ++ wsBindings;
 }

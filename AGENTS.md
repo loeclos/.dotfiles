@@ -27,7 +27,7 @@ nix flake update
 # or single: nix flake lock --update-input nixpkgs
 ```
 
-Wallpapers live in `assets/wallpaper/` as one-word names (`road.png`, `flower.jpg`, `dock.jpg` … `image.png` deleted). Hyprpaper default is `road.png` (`modules/home/desktop/hyprpaper.nix:12`). Add new wallpapers as one word (`forest.jpg`, `lake.png`).
+Wallpapers live in `assets/wallpaper/` as one-word names (`road.png`, `flower.jpg`, `dock.jpg` … `image.png` deleted), deployed to `~/.config/wallpapers/` by `modules/home/desktop/quickshell/wallpaper-picker.nix`. Boot restores the last wallpaper, else `road.png` (`wallpaper-picker --restore` in `pkgs/scripts/wallpaper-picker.nix`). Add new wallpapers as one word (`forest.jpg`, `lake.png`).
 
 ## 2. Architecture (Where Things Go)
 
@@ -50,11 +50,11 @@ modules/
     apps/{system.nix,ollama.nix}
   home/                         # user-level (home-manager)
     theme/{gtk.nix,cursors.nix}              # gtk+qt+dconf merged, cursors — imports theme via extraSpecialArgs
-    desktop/{dunst.nix,hyprlock.nix,hypridle.nix,hyprpaper.nix,hyprshot.nix,hyprsaver.nix,rofi.nix,waybar/}
+    desktop/{dunst.nix,flameshot.nix,hyprlock.nix,hypridle.nix,hyprshot.nix,hyprsaver.nix,quickshell/wallpaper-picker.nix,rofi.nix,waybar/}
     hyprland/{default.nix,settings.nix,keybinds.nix,window-rules.nix,autostart.nix} # Lua, mkBind/mkFloatRule helpers
     apps/{ghostty.nix,shell-eza.nix,spicetify.nix,user.nix,vcs-git.nix,vcs-github.nix,xdg.nix} # xdg.nix: mimeApps
-derivations/{sf-pro-nerd.nix,hyprsaver.nix,ollama.nix}
-pkgs/scripts/{hypr-float-toggle.nix,wifi-menu.nix,bluetooth-menu.nix,rofi-keybinds.nix,rofi-nixosrebuild.nix}
+derivations/{sf-pro-nerd.nix,hyprsaver.nix,ollama.nix,quickshell-multimedia.nix}
+pkgs/scripts/{hypr-float-toggle.nix,wifi-menu.nix,bluetooth-menu.nix,rofi-keybinds.nix,rofi-nixosrebuild.nix,wallpaper-picker.nix}
 assets/wallpaper/               # one-word names only
 users/loeclos/home.nix
 ```
@@ -95,7 +95,7 @@ Do the smallest diff that solves the task. Don't reformat the world, don't move 
 1. **Scope:** Host-specific? Edit `hosts/<host>/default.nix` or `hosts/<host>/nvidia.nix`. Shared? Edit `hosts/common.nix` or `modules/*`. Theme? Edit `lib/theme.nix` once.
 2. **Edit:** Keep `configType = "lua"` for Hyprland (`hyprland/default.nix:22`) — newer Hyprland requires it. Use `theme` via `extraSpecialArgs` (injected by `lib/mkHost.nix:24`), so home modules take `{ theme, ... }:` not `import ../../../lib/theme.nix`.
 3. **Scripts:** If you add a `writeShellScriptBin`, put it in `pkgs/scripts/<name>.nix` and expose via `apps/user.nix:59` (`pkgs.callPackage ../../../pkgs/scripts/<name>.nix`), don't inline in `user.nix`.
-4. **Wallpapers:** One word, lowercase, keep extension. Update `modules/home/desktop/hyprpaper.nix:12` if changing default.
+4. **Wallpapers:** One word, lowercase, keep extension. Boot default `road.png` lives in `pkgs/scripts/wallpaper-picker.nix` (`cmd_restore`) — update there if changing default.
 5. **Todos:** Create a `TodoWrite` todo list at the start of *every* task — even one-liners. Keep exactly one `in_progress`, mark completed as you go.
 
 ## 5. Verification (Do This Before PR)
@@ -135,6 +135,7 @@ If you moved files, use `git mv` to preserve history. Ensure `lib/theme.nix` con
 - Using `custom/seperator` — it was renamed to `custom/separator` (breaking). Don't reintroduce the typo.
 - Leaving `satoshi.zip`/`ghostty/shaders` blobs — they were deleted as unused (~6.2MB). Don't re-add without wiring them in `fonts.nix` or `ghostty.nix`.
 - Forgetting `extraSpecialArgs.theme` — home modules that need colors/fonts must declare `{ theme, ... }:`.
+- Wallpaper picker needs `awww-daemon` running (not hyprpaper — they fight over the wallpaper layer). No `python3` — online Wallhaven search is unsupported by design (Enter-in-search shows "Online search failed"). `~/.config/wallpapers` is a store symlink — the launcher `readlink -f`s it because `find -maxdepth` (upstream thumb sync) won't traverse a symlinked start dir.
 
 ## 8. References
 
@@ -143,6 +144,6 @@ If you moved files, use `git mv` to preserve history. Ensure `lib/theme.nix` con
 - Host helper: `lib/mkHost.nix:1`
 - Hyprland split: `modules/home/hyprland/{settings,keybinds,window-rules,autostart}.nix`
 - Waybar separator & persistent workspaces: `modules/home/desktop/waybar/waybar.nix:20,48`
-- Wallpaper default: `modules/home/desktop/hyprpaper.nix:12`
+- Wallpaper default + picker: `pkgs/scripts/wallpaper-picker.nix` (`cmd_restore`), module `modules/home/desktop/quickshell/wallpaper-picker.nix`
 
 Keep it lean, keep it sorted, keep docs current.

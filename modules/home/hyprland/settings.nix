@@ -23,20 +23,26 @@
 
   config = {
     general = {
-      gaps_in = 0;
-      gaps_out = 0;
+      gaps_in = 2;
+      gaps_out = 3;
       border_size = 1;
       col.active_border = "rgb(${theme.palette.borderActiveRgb})";
       col.inactive_border = "rgb(${theme.palette.borderInactiveRgb})";
     };
     decoration = {
-      active_opacity = 0.93;
-      inactive_opacity = 0.90;
+      active_opacity = 0.85;
+      inactive_opacity = 0.82;
+      rounding = 12;
+
       blur = {
         enabled = true;
-        size = 6;
-        passes = 2;
+        size = 9;
+        passes = 3;
+        new_optimizations = true;
+        noise = 0.02;
+        popups = true;
       };
+
     };
     dwindle.preserve_split = true;
     cursor = {

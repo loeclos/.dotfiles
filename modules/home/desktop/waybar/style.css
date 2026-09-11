@@ -38,7 +38,7 @@ window#waybar {
 }
 
 #waybar > box {
-  border-radius: 0px;
+  border-radius: 0px 0px 12px 12px;
   margin: 0px;
   border-bottom: 1.5px solid alpha(@foreground, 0.1);
   background-color: @background;

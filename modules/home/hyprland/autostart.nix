@@ -8,8 +8,8 @@
         function()
           hl.exec_cmd("hyprctl setcursor ${theme.cursor.name} ${toString theme.cursor.size}")
           hl.exec_cmd("waybar")
-          hl.exec_cmd("hyprpaper")
-          hl.exec_cmd("walt random")
+          hl.exec_cmd("awww-daemon")
+          hl.exec_cmd("wallpaper-picker --restore")
         end
       '')
     ];

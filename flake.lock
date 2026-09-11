@@ -307,24 +307,6 @@
         "type": "github"
       }
     },
-    "flake-utils_2": {
-      "inputs": {
-        "systems": "systems_5"
-      },
-      "locked": {
-        "lastModified": 1731533236,
-        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
     "gitignore": {
       "inputs": {
         "nixpkgs": [
@@ -1126,6 +1108,22 @@
         "type": "github"
       }
     },
+    "qs-wallpaper-picker": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1789084331,
+        "narHash": "sha256-+yJblzePbbkCQ9nJoi26hQm7EabQiyDi3INRBgVHod4=",
+        "owner": "loeclos",
+        "repo": "qs-wallpaper-picker",
+        "rev": "82c97abcbc6423e38229e58371bec89703af0630",
+        "type": "github"
+      },
+      "original": {
+        "owner": "loeclos",
+        "repo": "qs-wallpaper-picker",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "apple-fonts": "apple-fonts",
@@ -1140,9 +1138,9 @@
         "nixvim": "nixvim",
         "ollama": "ollama",
         "pinned-nixpkgs": "pinned-nixpkgs",
+        "qs-wallpaper-picker": "qs-wallpaper-picker",
         "sf-pro-dmg": "sf-pro-dmg",
         "spicetify-nix": "spicetify-nix",
-        "walt": "walt",
         "wlctl": "wlctl"
       }
     },
@@ -1363,21 +1361,6 @@
         "type": "github"
       }
     },
-    "systems_5": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
-    },
     "treefmt-nix": {
       "inputs": {
         "nixpkgs": [
@@ -1421,27 +1404,6 @@
       "original": {
         "owner": "pyproject-nix",
         "repo": "uv2nix",
-        "type": "github"
-      }
-    },
-    "walt": {
-      "inputs": {
-        "flake-utils": "flake-utils_2",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1774553852,
-        "narHash": "sha256-BT6ob7x6eliFAO66afOFcNni/yqKRsLCappP4pHL+6A=",
-        "owner": "gitfudge0",
-        "repo": "walt",
-        "rev": "05b106fe491984a67a1f215eeb74e923268b31aa",
-        "type": "github"
-      },
-      "original": {
-        "owner": "gitfudge0",
-        "repo": "walt",
         "type": "github"
       }
     },

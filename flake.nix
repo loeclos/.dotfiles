@@ -18,9 +18,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    walt = {
-      url = "github:gitfudge0/walt";
-      inputs.nixpkgs.follows = "nixpkgs";
+    qs-wallpaper-picker = {
+      url = "github:loeclos/qs-wallpaper-picker";
+      flake = false;
     };
 
     wlctl = {
@@ -82,7 +82,6 @@
       nixos-hardware,
       nixvim,
       hyprland,
-      walt,
       wlctl,
       eza,
       spicetify-nix,

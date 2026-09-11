@@ -3,9 +3,9 @@
 pkgs.writeShellScriptBin "rofi-keybinds" ''
   #!/usr/bin/env bash
   binds="Print                         ❯  Screenshot Region (file+clipboard to ~/Pictures/Screenshots)
-  SUPER + Print                 ❯  Screenshot Region → Satty (annotate, file+clipboard to ~/Pictures/Screenshots)
+  SUPER + Print                 ❯  Screenshot Region → Flameshot editor (annotate, file+clipboard to ~/Pictures/Screenshots)
   SHIFT + Print                 ❯  Screenshot Fullscreen (file+clipboard to ~/Pictures/Screenshots)
-  SUPER + SHIFT + Print         ❯  Screenshot Fullscreen → Satty (annotate, file+clipboard to ~/Pictures/Screenshots)
+  SUPER + SHIFT + Print         ❯  Screenshot Fullscreen → Flameshot editor (annotate, file+clipboard to ~/Pictures/Screenshots)
   SUPER + ENTER                 ❯  Open Terminal
   SUPER + B                     ❯  Open Browser
   SUPER + E                     ❯  Open File Manager (Nautilus)

@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  inputs,
   ...
 }:
 {
@@ -54,9 +55,9 @@
       nautilus
       nmap
       tree
+      zoxide
 
       # screenshot
-      satty
       slurp
     ]
     ++ [
@@ -65,5 +66,11 @@
       (pkgs.callPackage ../../../pkgs/scripts/bluetooth-menu.nix { })
       (pkgs.callPackage ../../../pkgs/scripts/rofi-keybinds.nix { })
       (pkgs.callPackage ../../../pkgs/scripts/rofi-nixosrebuild.nix { })
+      (pkgs.callPackage ../../../pkgs/scripts/wallpaper-picker.nix {
+        appSrc = inputs.qs-wallpaper-picker;
+        quickshellBin = "${
+          pkgs.callPackage ../../../derivations/quickshell-multimedia.nix { }
+        }/bin/quickshell";
+      })
     ];
 }

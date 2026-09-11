@@ -4,7 +4,7 @@
 A declarative, reproducible NixOS flake + home-manager setup for multiple machines. One repo builds `desktop` (NVIDIA RTX 5060 Ti), `laptop`, and `live` ISO with identical UX: Hyprland (Lua), Waybar, Ghostty, Rofi, and Gruvbox theming from a single source of truth.
 
 - Full docs: https://deepwiki.com/loeclos/.dotfiles
-- Last updated: 2026-09-05 20:56 UTC
+- Last updated: 2026-09-10 23:45 UTC
 
 Overview
 --------
@@ -20,7 +20,7 @@ The flake builds and composes machine configurations; home-manager modules expos
 
 What this repo contains
 -----------------------
-- **Flake** (`flake.nix`) — pins `nixpkgs` (unstable + `pinned-nixpkgs` for Apple fonts), `home-manager`, `hyprland`, `nixvim`, `walt`, `wlctl`, etc. Outputs `nixosConfigurations.{desktop,laptop,live}` and `formatter`.
+- **Flake** (`flake.nix`) — pins `nixpkgs` (unstable + `pinned-nixpkgs` for Apple fonts), `home-manager`, `hyprland`, `nixvim`, `qs-wallpaper-picker`, `wlctl`, etc. Outputs `nixosConfigurations.{desktop,laptop,live}` and `formatter`.
 - **lib/** — shared helpers: `lib/theme.nix` (Gruvbox palette, fonts, cursor, display 1920x1080) and `lib/mkHost.nix` (deduplicates host boilerplate + overlays).
 - **hosts/** — per-host + shared `hosts/common.nix` (timezone, locale, NetworkManager, user). `hosts/desktop/nvidia.nix` isolates early-KMS RTX logic. `hosts/live/default.nix` is hardware-agnostic (`not-detected.nix`, kvm-intel/amd).
 - **modules/** — reusable NixOS and home-manager modules (grouped: `core`, `hardware`, `services`, `desktop`, `apps`).
@@ -48,11 +48,11 @@ modules/
     apps/{system.nix,ollama.nix}
   home/                         # user-level (home-manager)
     theme/{gtk.nix,cursors.nix}              # gtk+qt+dconf merged, cursors — imports theme via extraSpecialArgs
-    desktop/{dunst.nix,hyprlock.nix,hypridle.nix,hyprpaper.nix,hyprshot.nix,hyprsaver.nix,rofi.nix,waybar/}
+    desktop/{dunst.nix,flameshot.nix,hyprlock.nix,hypridle.nix,hyprshot.nix,hyprsaver.nix,quickshell/wallpaper-picker.nix,rofi.nix,waybar/}
     hyprland/{default.nix,settings.nix,keybinds.nix,window-rules.nix,autostart.nix} # Lua, mkBind/mkFloatRule helpers
     apps/{ghostty.nix,shell-eza.nix,spicetify.nix,user.nix,vcs-git.nix,vcs-github.nix,xdg.nix} # xdg.nix: mimeApps (PDF → Papers, images → feh)
-derivations/{sf-pro-nerd.nix,hyprsaver.nix,ollama.nix}
-pkgs/scripts/{hypr-float-toggle.nix,wifi-menu.nix,bluetooth-menu.nix,rofi-keybinds.nix,rofi-nixosrebuild.nix}
+derivations/{hyprsaver.nix,ollama.nix,quickshell-multimedia.nix,sf-pro-nerd.nix}
+pkgs/scripts/{hypr-float-toggle.nix,wifi-menu.nix,bluetooth-menu.nix,rofi-keybinds.nix,rofi-nixosrebuild.nix,wallpaper-picker.nix}
 assets/wallpaper/               # one-word names only
 users/loeclos/home.nix
 ```
@@ -94,7 +94,7 @@ Notes
 - `boot.loader.limine.resolution` and Hyprland `gaps/borders` derive from `lib/theme.nix`.
 - Hyprland uses `configType = "lua"` (required for newer Hyprland). Keep Lua helpers `mkLuaInline`/`mkBind` in `hyprland/keybinds.nix`.
 - `hardware.bluetooth` lives only in `hardware/bluetooth.nix` (`AGENTS.md:7`).
-- Wallpapers are one-word (`road.png`, `dock.jpg`); `assets/ghostty/shaders` and `satoshi.zip` were deleted as unused — don't re-add without wiring.
+- Wallpapers are one-word (`road.png`, `dock.jpg`), deployed from `assets/wallpaper/` to `~/.config/wallpapers/`; `Super+Shift+W` opens the Quickshell picker (`awww` images, `mpvpaper` video, no online search), boot restores last wallpaper else `road.png`; `assets/ghostty/shaders` and `satoshi.zip` were deleted as unused — don't re-add without wiring.
 
 Agent guide: `AGENTS.md` — must be updated alongside `README.md` after every structural change; bump `Last updated: YYYY-MM-DD HH:MM UTC` to today.
 

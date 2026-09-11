@@ -8,11 +8,12 @@
 
     # desktop
     ./desktop/dunst.nix
+    ./desktop/flameshot.nix
     ./desktop/hypridle.nix
     ./desktop/hyprlock.nix
-    ./desktop/hyprpaper.nix
     ./desktop/hyprshot.nix
     ./desktop/hyprsaver.nix
+    ./desktop/quickshell/wallpaper-picker.nix
     ./desktop/rofi.nix
     ./desktop/waybar/waybar.nix
     ./hyprland
