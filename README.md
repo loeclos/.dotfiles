@@ -4,7 +4,7 @@
 A declarative, reproducible NixOS flake + home-manager setup for multiple machines. One repo builds `desktop` (NVIDIA RTX 5060 Ti), `laptop`, and `live` ISO with identical UX: Hyprland (Lua), Waybar, Ghostty, Rofi, and Gruvbox theming from a single source of truth.
 
 - Full docs: https://deepwiki.com/loeclos/.dotfiles
-- Last updated: 2026-09-10 23:45 UTC
+- Last updated: 2026-09-11 01:06 UTC
 
 Overview
 --------
@@ -24,7 +24,7 @@ What this repo contains
 - **lib/** — shared helpers: `lib/theme.nix` (Gruvbox palette, fonts, cursor, display 1920x1080) and `lib/mkHost.nix` (deduplicates host boilerplate + overlays).
 - **hosts/** — per-host + shared `hosts/common.nix` (timezone, locale, NetworkManager, user). `hosts/desktop/nvidia.nix` isolates early-KMS RTX logic. `hosts/live/default.nix` is hardware-agnostic (`not-detected.nix`, kvm-intel/amd).
 - **modules/** — reusable NixOS and home-manager modules (grouped: `core`, `hardware`, `services`, `desktop`, `apps`).
-- **pkgs/scripts/** — extracted shell helpers (`hypr-float-toggle`, `wifi-menu`, `bluetooth-menu`, `rofi-keybinds`, `rofi-nixosrebuild` generated via `lib.genAttrs`).
+- **pkgs/scripts/** — extracted shell helpers (`hypr-float-toggle`, `wifi-menu`, `bluetooth-menu`, `rofi-keybinds`, `rofi-nixosrebuild` generated via `lib.genAttrs`, `screen-recorder` toggle for `wl-screenrec`).
 - **derivations/** + **assets/** — custom font packaging (`sf-pro-nerd`), `hyprsaver` build, wallpapers (one-word names, `image.png` removed, `satoshi.zip`/`ghostty/shaders` deleted as unused ~6.2MB).
 
 Repository structure
@@ -52,7 +52,7 @@ modules/
     hyprland/{default.nix,settings.nix,keybinds.nix,window-rules.nix,autostart.nix} # Lua, mkBind/mkFloatRule helpers
     apps/{ghostty.nix,shell-eza.nix,spicetify.nix,user.nix,vcs-git.nix,vcs-github.nix,xdg.nix} # xdg.nix: mimeApps (PDF → Papers, images → feh)
 derivations/{hyprsaver.nix,ollama.nix,quickshell-multimedia.nix,sf-pro-nerd.nix}
-pkgs/scripts/{hypr-float-toggle.nix,wifi-menu.nix,bluetooth-menu.nix,rofi-keybinds.nix,rofi-nixosrebuild.nix,wallpaper-picker.nix}
+pkgs/scripts/{hypr-float-toggle.nix,wifi-menu.nix,bluetooth-menu.nix,rofi-keybinds.nix,rofi-nixosrebuild.nix,screen-recorder.nix,wallpaper-picker.nix}
 assets/wallpaper/               # one-word names only
 users/loeclos/home.nix
 ```

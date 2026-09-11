@@ -54,7 +54,7 @@ modules/
     hyprland/{default.nix,settings.nix,keybinds.nix,window-rules.nix,autostart.nix} # Lua, mkBind/mkFloatRule helpers
     apps/{ghostty.nix,shell-eza.nix,spicetify.nix,user.nix,vcs-git.nix,vcs-github.nix,xdg.nix} # xdg.nix: mimeApps
 derivations/{sf-pro-nerd.nix,hyprsaver.nix,ollama.nix,quickshell-multimedia.nix}
-pkgs/scripts/{hypr-float-toggle.nix,wifi-menu.nix,bluetooth-menu.nix,rofi-keybinds.nix,rofi-nixosrebuild.nix,wallpaper-picker.nix}
+pkgs/scripts/{hypr-float-toggle.nix,wifi-menu.nix,bluetooth-menu.nix,rofi-keybinds.nix,rofi-nixosrebuild.nix,screen-recorder.nix,wallpaper-picker.nix}
 assets/wallpaper/               # one-word names only
 users/loeclos/home.nix
 ```

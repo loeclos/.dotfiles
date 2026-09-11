@@ -24,6 +24,7 @@ pkgs.writeShellScriptBin "rofi-keybinds" ''
   SUPER + SHIFT + SPACE         ❯  Toggle Waybar
   SUPER + SHIFT + W             ❯  Terminal (Walt)
   SUPER + S                     ❯  Toggle Screensaver
+  SUPER + R                     ❯  Toggle Screen Recording (wl-screenrec → ~/Videos/Screenrecordings)
   SUPER + H                     ❯  Focus Left
   SUPER + L                     ❯  Focus Right
   SUPER + K                     ❯  Focus Up

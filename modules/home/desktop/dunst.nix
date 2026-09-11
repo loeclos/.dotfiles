@@ -32,7 +32,7 @@
 
         # Border and Rounding
         frame_width = 1; # Small, subtle border
-        corner_radius = 0;
+        corner_radius = 10;
         gap_size = 6;
 
         # Gruvbox Dark Palette Base

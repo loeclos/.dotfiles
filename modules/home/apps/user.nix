@@ -57,11 +57,14 @@
       tree
       zoxide
 
-      # screenshot
+      # screenshot / recording (wf-recorder is unmaintained and broken with ffmpeg 8+)
       slurp
+      wl-screenrec
+      libnotify
     ]
     ++ [
       (pkgs.callPackage ../../../pkgs/scripts/hypr-float-toggle.nix { })
+      (pkgs.callPackage ../../../pkgs/scripts/screen-recorder.nix { })
       (pkgs.callPackage ../../../pkgs/scripts/wifi-menu.nix { })
       (pkgs.callPackage ../../../pkgs/scripts/bluetooth-menu.nix { })
       (pkgs.callPackage ../../../pkgs/scripts/rofi-keybinds.nix { })

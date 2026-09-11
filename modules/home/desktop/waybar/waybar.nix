@@ -33,6 +33,7 @@
           "memory"
           "cpu"
           "battery"
+          "custom/recording"
           "custom/separator"
           "clock"
         ];
@@ -50,6 +51,13 @@
         "custom/separator" = {
           format = "|";
           tooltip = false;
+        };
+
+        "custom/recording" = {
+          exec = "pgrep -x wl-screenrec >/dev/null && echo '{\"text\":\" ⏺ REC\",\"class\":\"recording\",\"tooltip\":\"Recording — SUPER+R to stop\"}' || echo '{\"text\":\"\",\"tooltip\":\"Not recording\"}'";
+          return-type = "json";
+          interval = 2;
+          on-click = "screen-recorder";
         };
 
         "power-profile-daemon" = {

@@ -65,6 +65,7 @@ in
       (mkBind "I" (exec "wifi-menu"))
       (mkBind "SHIFT + B" (exec "bluetooth-menu"))
       (mkBind "s" (exec "pkill -x hyprsaver || hyprsaver"))
+      (mkBind "R" (exec "screen-recorder"))
       (mkBind "H" (mkLuaInline "hl.dsp.focus({direction = \"left\"})"))
       (mkBind "RIGHT" (mkLuaInline "hl.dsp.focus({workspace = \"+1\", wrap = true})"))
       (mkBind "LEFT" (mkLuaInline "hl.dsp.focus({workspace = \"-1\", wrap = true})"))
