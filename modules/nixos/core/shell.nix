@@ -11,7 +11,6 @@
       ll = "eza -l --icons";
       la = "eza -a --icons";
       edit = "sudo -e";
-      update = "sudo nix flake update ";
       dots = "cd ~/.dotfiles";
     };
 
@@ -20,18 +19,37 @@
     # notify-send runs as the user (not under sudo) so it keeps the DBUS
     # session dunst needs; failures never mask the rebuild exit code.
     interactiveShellInit = ''
-      rbld() {
-        local target="''${1:-$(hostname)}"
-        target="''${target#.}"
-        target="''${target#\#}"
-        local flake="$HOME/.dotfiles#$target"
+            rbld() {
+              local target="''${1:-$(hostname)}"
+              target="''${target#.}"
+              target="''${target#\#}"
+              local flake="$HOME/.dotfiles#$target"
+              local start=$SECONDS
+              if sudo nixos-rebuild switch --flake "$flake"; then
+                notify-send -u normal "NixOS Rebuild" "$target switched in $((SECONDS - start))s" || true
+              else
+                local rc=$?
+                notify-send -u critical "NixOS Rebuild" "$target failed (exit $rc)" || true
+                return $rc
+              fi
+            }
+
+
+      update() {
+        local flake="$HOME/.dotfiles"
         local start=$SECONDS
-        if sudo nixos-rebuild switch --flake "$flake"; then
-          notify-send -u normal "NixOS Rebuild" "$target switched in $((SECONDS - start))s" || true
+
+        if (( $# == 0 )); then
+          nix flake update
         else
-          local rc=$?
-          notify-send -u critical "NixOS Rebuild" "$target failed (exit $rc)" || true
-          return $rc
+          local target="$1"
+          if sudo nix flake update "$target" --flake "$flake"; then
+            notify-send -u normal "NixOS Update" "$target updated in $((SECONDS - start))s" || true
+          else
+            local rc=$?
+            notify-send -u critical "NixOS Update" "Updating $target failed (exit $rc)" || true
+            return $rc
+          fi
         fi
       }
     '';

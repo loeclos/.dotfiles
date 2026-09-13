@@ -19,9 +19,9 @@
 
     # desktop
     ./desktop/fonts.nix
-    ./desktop/greetd.nix
     ./desktop/hyprland.nix
-    ./desktop/login/sddm.nix
+    ./desktop/login/greetd.nix
+    ./desktop/login/hyprlock.nix
 
     # apps
     ./apps/ollama.nix

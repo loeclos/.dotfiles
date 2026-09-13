@@ -20,8 +20,8 @@
       {
         "*" = {
           # Gruvbox Dark Hard Palette
-          bg0 = mkLiteral "#1d2021"; # Hard background
-          bg1 = mkLiteral "#282828";
+          bg0 = mkLiteral "#282828"; # Hard background
+          bg1 = mkLiteral "#32302f";
           bg2 = mkLiteral "#3c3836";
           fg0 = mkLiteral "#fbf1c7"; # Bright foreground
           fg1 = mkLiteral "#ebdbb2";

@@ -33,6 +33,5 @@ in
     # ui / theming
     moka-icon-theme
     quickshell
-    sddm-astronaut
   ];
 }

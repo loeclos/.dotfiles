@@ -34,6 +34,7 @@ inputs.nixpkgs.lib.nixosSystem {
 
           nixpkgs.overlays = [
             inputs.apple-fonts.overlays.default
+            inputs.plymouth-theme.overlays.default
             (_final: prev: {
               hyprsaver = prev.callPackage ../derivations/hyprsaver.nix {
                 src = inputs.hyprsaver;
@@ -42,6 +43,11 @@ inputs.nixpkgs.lib.nixosSystem {
             (_final: prev: {
               sf-pro-nerd = prev.callPackage ../derivations/sf-pro-nerd.nix {
                 src = inputs.sf-pro-dmg;
+              };
+            })
+            (_final: prev: {
+              spun = prev.callPackage ../derivations/spun.nix {
+                src = inputs.spun;
               };
             })
           ];

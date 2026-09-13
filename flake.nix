@@ -72,6 +72,16 @@
       url = "github:ollama/ollama/v0.32.7";
       flake = false;
     };
+
+    spun = {
+      url = "github:yappologistic/Spun";
+      flake = false;
+    };
+
+    plymouth-theme = {
+      url = "github:loeclos/plymouth-theme";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

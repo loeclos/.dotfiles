@@ -22,6 +22,8 @@
     ./apps/ghostty.nix
     ./apps/shell-eza.nix
     ./apps/spicetify.nix
+    ./apps/spun.nix
+    ./apps/typora.nix
     ./apps/user.nix
     ./apps/vcs-git.nix
     ./apps/vcs-github.nix

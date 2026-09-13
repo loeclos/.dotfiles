@@ -1,4 +1,8 @@
-{ pkgs, appSrc, quickshellBin }:
+{
+  pkgs,
+  appSrc,
+  quickshellBin,
+}:
 pkgs.writeShellScriptBin "wallpaper-picker" ''
   set -euo pipefail
 

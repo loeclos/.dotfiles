@@ -29,8 +29,6 @@
       gnome-calculator
       gnome-text-editor
       obsidian
-      typora
-      zettlr
       safeeyes
 
       # media
@@ -55,7 +53,7 @@
       nautilus
       nmap
       tree
-      zoxide
+      ncdu
 
       # screenshot / recording (wf-recorder is unmaintained and broken with ffmpeg 8+)
       slurp

@@ -35,7 +35,7 @@ Wallpapers live in `assets/wallpaper/` as one-word names (`road.png`, `flower.jp
 flake.nix + flake.lock          # inputs, mkHost wiring, formatter
 lib/
   theme.nix                     # palette, fonts, cursor, display — ONLY place for #1d2021, a99f8f, SFMono, Bibata-Modern-Ice 24, 1920x1080
-  mkHost.nix                    # hostname → nixosSystem + home-manager + overlays (apple-fonts, sf-pro-nerd, hyprsaver)
+  mkHost.nix                    # hostname → nixosSystem + home-manager + overlays (apple-fonts, plymouth-theme, sf-pro-nerd, hyprsaver)
 hosts/
   common.nix                    # shared: timeZone, locale, NM, user groups
   desktop/{default.nix,nvidia.nix,hardware-configuration.nix}
@@ -43,17 +43,17 @@ hosts/
   live/default.nix              # hardware-agnostic (not-detected.nix, kvm-intel/amd)
 modules/
   nixos/                        # system-level
-    core/{nix.nix,bootloader.nix,shell.nix}    # nix/cachix, limine 1920x1080, zsh aliases
+    core/{nix.nix,bootloader.nix,shell.nix}    # nix/cachix, grub 1920x1080 + USB keyboard stack, plymouth mac-style splash (quiet splash), zsh aliases
     hardware/{audio.nix,bluetooth.nix}
     services/{printing.nix,disk.nix,virtualisation.nix,keyring.nix}
-    desktop/{hyprland.nix,greetd.nix,fonts.nix,login/sddm.nix}
+    desktop/{hyprland.nix,fonts.nix,login/{hyprlock,greetd}.nix} # login: greetd + tuigreet TTY greeter (Hyprland via UWSM), hyprlock PAM (session lock)
     apps/{system.nix,ollama.nix}
   home/                         # user-level (home-manager)
     theme/{gtk.nix,cursors.nix}              # gtk+qt+dconf merged, cursors — imports theme via extraSpecialArgs
-    desktop/{dunst.nix,flameshot.nix,hyprlock.nix,hypridle.nix,hyprshot.nix,hyprsaver.nix,quickshell/wallpaper-picker.nix,rofi.nix,waybar/}
+    desktop/{dunst.nix,flameshot.nix,hypridle.nix,hyprlock.nix,hyprshot.nix,hyprsaver.nix,quickshell/wallpaper-picker.nix,rofi.nix,waybar/}
     hyprland/{default.nix,settings.nix,keybinds.nix,window-rules.nix,autostart.nix} # Lua, mkBind/mkFloatRule helpers
-    apps/{ghostty.nix,shell-eza.nix,spicetify.nix,user.nix,vcs-git.nix,vcs-github.nix,xdg.nix} # xdg.nix: mimeApps
-derivations/{sf-pro-nerd.nix,hyprsaver.nix,ollama.nix,quickshell-multimedia.nix}
+    apps/{ghostty.nix,shell-eza.nix,spicetify.nix,typora.nix,user.nix,vcs-git.nix,vcs-github.nix,xdg.nix} # xdg.nix: mimeApps; spun.nix → pkgs.spun (local-playback CD player); typora.nix → typora + LaTeX-Typora-V2 theme
+derivations/{sf-pro-nerd.nix,hyprsaver.nix,ollama.nix,quickshell-multimedia.nix,spun.nix} # spun: PolyForm Noncommercial flake=false input, local playback (no Cider), vinyl default patched in postPatch
 pkgs/scripts/{hypr-float-toggle.nix,wifi-menu.nix,bluetooth-menu.nix,rofi-keybinds.nix,rofi-nixosrebuild.nix,screen-recorder.nix,wallpaper-picker.nix}
 assets/wallpaper/               # one-word names only
 users/loeclos/home.nix
@@ -69,8 +69,8 @@ Do the smallest diff that solves the task. Don't reformat the world, don't move 
 ### 3.2 Clean Code
 - No `with pkgs;` mixing `pkgs.qemu` vs `qemu` — either `with pkgs; [ ghostty eza ]` consistently or explicit `pkgs.` everywhere. Current code uses `with pkgs;` for package lists but `pkgs.callPackage` outside — keep that convention.
 - No dead/commented blocks — use `git log` for history, not `# foo` leftovers.
-- No duplicate constants — colors/fonts/resolutions go in `lib/theme.nix`, not hardcoded `rgb(a99f8f)` in 5 places. Hyprland gaps/borders, bootloader `resolution`, ghostty font, dunst/hyprlock colors all derive from `theme`.
-- Helpers over copy-paste: `mkBind`/`mkExec` in `hyprland/keybinds.nix:4`, `mkFloatRule` in `window-rules.nix:4`, `lib.genAttrs (map toString (lib.range 1 9))` in `waybar.nix:48`, `lib.genAttrs` in `rofi-nixosrebuild.nix:6`.
+- No duplicate constants — colors/fonts/resolutions go in `lib/theme.nix`, not hardcoded `rgb(a99f8f)` in 5 places. Hyprland gaps/borders, bootloader `resolution`, ghostty font, dunst colors all derive from `theme`.
+- Helpers over copy-paste: `mkBind`/`mkExec` in `hyprland/keybinds.nix:4`, `mkFloatRule` in `window-rules.nix:4`, `"*" = lib.range 1 9` (monitor-keyed persistent workspaces) in `waybar.nix:48`, `lib.genAttrs` in `rofi-nixosrebuild.nix:6`.
 
 ### 3.3 Follow Structure — Fit Into Current Categories, Otherwise Create New
 1. Search existing category first:
@@ -85,7 +85,7 @@ Do the smallest diff that solves the task. Don't reformat the world, don't move 
 
 ### 3.4 File Naming
 - `modules/nixos/apps/system.nix` = `environment.systemPackages`, `modules/home/apps/user.nix` = `home.packages` — don't create new `packages.nix`.
-- Use kebab-case, one-word where possible (wallpapers already normalized). No `default.nix` except manifests; feature files are `hyprlock.nix`, `virtualisation.nix`, not `base.nix`.
+- Use kebab-case, one-word where possible (wallpapers already normalized). No `default.nix` except manifests; feature files are `hypridle.nix`, `virtualisation.nix`, not `base.nix`.
 
 ### 3.5 Task Tracking
 - Always create a `TodoWrite` todo list at the start of *every* task — even one-liners / "trivial" fixes. Break work into steps, keep exactly one `in_progress` at a time, mark completed as you go. No execution without todos.
@@ -135,7 +135,10 @@ If you moved files, use `git mv` to preserve history. Ensure `lib/theme.nix` con
 - Using `custom/seperator` — it was renamed to `custom/separator` (breaking). Don't reintroduce the typo.
 - Leaving `satoshi.zip`/`ghostty/shaders` blobs — they were deleted as unused (~6.2MB). Don't re-add without wiring them in `fonts.nix` or `ghostty.nix`.
 - Forgetting `extraSpecialArgs.theme` — home modules that need colors/fonts must declare `{ theme, ... }:`.
+- GRUB USB input lives only in `core/bootloader.nix` (`extraConfig` + `extraGrubInstallArgs`) — don't duplicate `boot.loader.grub` per host (desktop keeps only `useOSProber`). Upstream GRUB has no `xhci` driver, so keyboards must use native USB2 ports under Ultra Fast Boot; mouse in GRUB menu is unsupported by design.
+- Boot splash lives only in `core/bootloader.nix` (`boot.plymouth` with `theme = "mac-style"`). The `plymouth-theme` flake input exposes `pkgs.mac-style-plymouth` via its overlay (wired in `lib/mkHost.nix`) — don't vendor a local derivation or duplicate `themePackages` per host.
 - Wallpaper picker needs `awww-daemon` running (not hyprpaper — they fight over the wallpaper layer). No `python3` — online Wallhaven search is unsupported by design (Enter-in-search shows "Online search failed"). `~/.config/wallpapers` is a store symlink — the launcher `readlink -f`s it because `find -maxdepth` (upstream thumb sync) won't traverse a symlinked start dir.
+- Waybar workspaces must use `format = "{name}"` + `sort-by = "name"` + `persistent-only = true` (see `waybar.nix:43`) — Hyprland 0.56 dropped `id` from its workspaces IPC, so Waybar sees every real workspace as id 0: `{id}` renders as `0` and real workspaces duplicate the persistent buttons. Don't revert to `{id}` / drop `persistent-only` until upstream Waybar handles the id-less IPC.
 
 ## 8. References
 
@@ -143,7 +146,8 @@ If you moved files, use `git mv` to preserve history. Ensure `lib/theme.nix` con
 - Theme source: `lib/theme.nix:1`
 - Host helper: `lib/mkHost.nix:1`
 - Hyprland split: `modules/home/hyprland/{settings,keybinds,window-rules,autostart}.nix`
-- Waybar separator & persistent workspaces: `modules/home/desktop/waybar/waybar.nix:20,48`
+- Waybar separator & persistent workspaces: `modules/home/desktop/waybar/waybar.nix:20,43`
+- Login + lock: `modules/nixos/desktop/login/greetd.nix` (greetd + tuigreet TTY greeter, `uwsm start hyprland-uwsm.desktop`), `modules/nixos/desktop/login/hyprlock.nix` (PAM for hyprlock), `/run/current-system/sw` + home `modules/home/desktop/hyprlock.nix` (blurred bg + centered password field, `hypridle` lock_cmd)
 - Wallpaper default + picker: `pkgs/scripts/wallpaper-picker.nix` (`cmd_restore`), module `modules/home/desktop/quickshell/wallpaper-picker.nix`
 
 Keep it lean, keep it sorted, keep docs current.

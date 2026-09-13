@@ -18,11 +18,6 @@
       fsType = "ext4";
     };
 
-  fileSystems."/mnt/ssd" =
-    { device = "systemd-1";
-      fsType = "autofs";
-    };
-
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/BEAB-4DC2";
       fsType = "vfat";

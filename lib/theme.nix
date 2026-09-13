@@ -1,5 +1,5 @@
 # lib/theme.nix — single source of truth for colors, fonts, and display
-# Consumed by hyprland, hyprlock, dunst, rofi, waybar, gtk, ghostty, etc.
+# Consumed by hyprland, dunst, rofi, waybar, gtk, ghostty, etc.
 {
   palette = {
     # Gruvbox Dark Hard
@@ -41,9 +41,9 @@
     monoAlt = "GeistMono Nerd Font";
     monoAlt2 = "DepartureMono Nerd Font";
     waybar = "DepartureMono Nerd Font";
-    size = 12;
-    sizeSmall = 11;
-    sizeLarge = 16;
+    size = 13;
+    sizeSmall = 12;
+    sizeLarge = 17;
   };
 
   cursor = {
