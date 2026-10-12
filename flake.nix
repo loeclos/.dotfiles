@@ -18,6 +18,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    notesy = {
+      url = "github:loeclos/notesy";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     qs-wallpaper-picker = {
       url = "github:loeclos/qs-wallpaper-picker";
       flake = false;
@@ -78,6 +83,16 @@
       flake = false;
     };
 
+    hyprpolkitagent = {
+      url = "github:hyprwm/hyprpolkitagent/v0.2.0";
+      flake = false;
+    };
+
+    hyprtoolkit = {
+      url = "github:hyprwm/hyprtoolkit/be487c470a1a10011fb8dccf9fc0f12f1e006cac";
+      flake = false;
+    };
+
     plymouth-theme = {
       url = "github:loeclos/plymouth-theme";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -104,7 +119,7 @@
 
       pinnedPkgs = inputs.pinned-nixpkgs.legacyPackages.${system};
 
-      sf-pro-nerd = pinnedPkgs.callPackage ./derivations/sf-pro-nerd.nix {
+      sf-pro-nerd = pinnedPkgs.callPackage ./packages/builds/sf-pro-nerd.nix {
         src = inputs.sf-pro-dmg;
       };
 
@@ -117,7 +132,7 @@
 
       formatter.${system} = inputs.nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
 
-      # hosts — see lib/mkHost.nix and hosts/common.nix
+      # hosts — one file per machine (hosts/<name>.nix), see lib/mkHost.nix and hosts/common.nix
       nixosConfigurations = {
         desktop = mkHost { hostname = "desktop"; };
         laptop = mkHost { hostname = "laptop"; };

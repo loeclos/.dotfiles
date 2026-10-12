@@ -37,7 +37,7 @@
 
   fonts = {
     sans = "SFProDisplay Nerd Font";
-    mono = "SFMono Nerd Font";
+    mono = "Martian Mono";
     monoAlt = "GeistMono Nerd Font";
     monoAlt2 = "DepartureMono Nerd Font";
     waybar = "DepartureMono Nerd Font";

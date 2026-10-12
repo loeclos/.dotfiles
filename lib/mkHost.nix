@@ -1,4 +1,8 @@
-# lib/mkHost.nix — helper to deduplicate nixosSystem declarations
+# lib/mkHost.nix — hostname → nixosSystem. Thin wiring only.
+# Each host = hosts/common.nix + hosts/<hostname>.nix + home-manager
+# (user env from home.nix) + overlays from ./overlays.nix.
+# Feature config lives in modules/system and modules/home (both
+# auto-imported, see lib/autoimport.nix) — never duplicate that block here.
 { inputs }:
 {
   hostname,
@@ -8,51 +12,35 @@
 inputs.nixpkgs.lib.nixosSystem {
   inherit system;
   specialArgs = { inherit inputs; };
-  modules =
-    [
-      ../hosts/common.nix
-      ../hosts/${hostname}/default.nix
-      inputs.home-manager.nixosModules.home-manager
-      (
-        { config, ... }:
-        {
-          nixpkgs.config.allowUnfree = true;
+  modules = [
+    ../hosts/common.nix
+    ../hosts/${hostname}.nix
+    inputs.home-manager.nixosModules.home-manager
+    (
+      { config, ... }:
+      {
+        nixpkgs.config.allowUnfree = true;
 
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            extraSpecialArgs = {
-              inherit inputs;
-              osConfig = config;
-              theme = import ../lib/theme.nix;
-            };
-            backupFileExtension = "backup";
-            users.loeclos = {
-              imports = [ ../users/loeclos/home.nix ];
-            };
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          extraSpecialArgs = {
+            inherit inputs;
+            osConfig = config;
+            theme = import ./theme.nix;
+            # Flake root, so modules can reference assets/ without
+            # fragile ../../../ chains (e.g. repoRoot + "/assets/wallpaper").
+            repoRoot = inputs.self;
           };
+          backupFileExtension = "backup";
+          users.loeclos = {
+            imports = [ ../home.nix ];
+          };
+        };
 
-          nixpkgs.overlays = [
-            inputs.apple-fonts.overlays.default
-            inputs.plymouth-theme.overlays.default
-            (_final: prev: {
-              hyprsaver = prev.callPackage ../derivations/hyprsaver.nix {
-                src = inputs.hyprsaver;
-              };
-            })
-            (_final: prev: {
-              sf-pro-nerd = prev.callPackage ../derivations/sf-pro-nerd.nix {
-                src = inputs.sf-pro-dmg;
-              };
-            })
-            (_final: prev: {
-              spun = prev.callPackage ../derivations/spun.nix {
-                src = inputs.spun;
-              };
-            })
-          ];
-        }
-      )
-    ]
-    ++ extraModules;
+        nixpkgs.overlays = import ./overlays.nix { inherit inputs; };
+      }
+    )
+  ]
+  ++ extraModules;
 }

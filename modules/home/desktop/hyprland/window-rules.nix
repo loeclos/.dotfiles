@@ -1,0 +1,41 @@
+# modules/home/desktop/hyprland/window-rules.nix — floating window rules
+{
+  window_rule =
+    let
+      mkFloatRule = class: w: h: {
+        match.class = class;
+        float = true;
+        size = [
+          w
+          h
+        ];
+        center = true;
+      };
+    in
+    [
+      (mkFloatRule "nautilus" 1000 700)
+      (mkFloatRule "ghostty.wifi" 1100 700)
+      (mkFloatRule "ghostty.bt" 950 650)
+      # Polkit auth prompt (hyprpolkitagent, appClass "hyprpolkitagent") —
+      # single centered card: no Hyprland border, background dimmed.
+      {
+        match.class = "hyprpolkitagent";
+        float = true;
+        center = true;
+        pin = true;
+        border_size = 0;
+        dim_around = true;
+      }
+      # Quickshell wallpaper picker (FloatingWindow title, see Main.qml) —
+      # plain overlay: no chrome whatsoever.
+      {
+        match.title = "wallpaper-picker";
+        no_blur = true;
+        no_shadow = true;
+        no_anim = true;
+        border_size = 0;
+        rounding = 0;
+        fullscreen = true;
+      }
+    ];
+}
