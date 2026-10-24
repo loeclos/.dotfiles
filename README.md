@@ -4,7 +4,7 @@
 A declarative, reproducible NixOS flake + home-manager setup for multiple machines. One repo builds `desktop` (NVIDIA RTX 5060 Ti) and `laptop` with identical UX: Hyprland (Lua), Waybar, Ghostty, Rofi, and Gruvbox theming from a single source of truth — plus `live-desktop` / `live-laptop` installer ISOs (minimal GNOME + Calamares + recovery tools + `install-nix` guided installer, each embedding this flake so it installs its matching system).
 
 - Full docs: https://deepwiki.com/loeclos/.dotfiles
-- Last updated: 2026-10-24 20:41 UTC
+- Last updated: 2026-10-24 20:53 UTC
 
 Overview
 --------
@@ -22,7 +22,7 @@ What this repo contains
 -----------------------
 - **Flake** (`flake.nix`) — pins `nixpkgs` (unstable + `pinned-nixpkgs` for Apple fonts), `home-manager`, `hyprland`, `nixvim`, `install-nix` (guided ISO installer, ships on the live images via its overlay), `walt` (fast terminal wallpaper picker, hyprpaper backend), `wlctl`, `plymouth-theme` (`mac-style` boot splash via its overlay), etc. Outputs `nixosConfigurations.{desktop,laptop,live-desktop,live-laptop}` and `formatter`.
 - **lib/** — shared code, not config: `lib/theme.nix` (Gruvbox palette, fonts, cursor, display 1920x1080), `lib/mkHost.nix` (thin hostname → nixosSystem wiring, `withHome = false` for ISOs), `lib/overlays.nix` (every overlay in one place), `lib/autoimport.nix` (manifest helper: drop a file in the right folder and it's live).
-- **hosts/** — one file per machine + shared `hosts/common.nix` (timezone, locale, NetworkManager, user). `hosts/desktop.nix` holds the early-KMS RTX logic inline (GRUB `useOSProber` for Windows + `/mnt/ssd` NTFS mount); `hosts/hardware/` holds the generated hardware scans (UUID filesystems — regenerate with `nixos-generate-config`, never hand-edit); `hosts/live.nix` is the shared installer-ISO base (minimal GNOME debloat + recovery tools + `install-nix` + embedded flake, never built directly), `hosts/live-{desktop,laptop}.nix` add per-host quirks (NVIDIA for desktop, `isoImage.edition`).
+- **hosts/** — one file per machine + shared `hosts/common.nix` (timezone, locale, NetworkManager, user). `hosts/desktop.nix` holds the early-KMS RTX logic inline (GRUB `useOSProber` for Windows + `/mnt/ssd` NTFS mount) + desktop-only `openssh`/`ollama` (pinned CUDA); `hosts/hardware/` holds the generated hardware scans (UUID filesystems — regenerate with `nixos-generate-config`, never hand-edit); `hosts/live.nix` is the shared installer-ISO base (minimal GNOME debloat + recovery tools + `install-nix` + embedded flake, never built directly), `hosts/live-{desktop,laptop}.nix` add per-host quirks (NVIDIA for desktop, `isoImage.edition`).
 - **modules/** — every feature as a module, auto-imported by folder: `modules/system/` (boot, hardware, security, desktop, apps) and `modules/home/` (theme, desktop, GUI apps, CLI tools, OS integration).
 - **packages/** — everything built in-repo behind one overlay (`packages/default.nix`, used as `pkgs.<name>`): `builds/` (compiled: `sf-pro-nerd`, `spun`, `ollama-cuda`, `hyprsaver`, `hyprpolkitagent`) + `scripts/` (shell helpers: `hypr-float-toggle`, `wifi-menu`, `bluetooth-menu`, `rofi-keybinds`, `rofi-nixosrebuild`, `usb-sound` — PipeWire fan-out player for USB plug/unplug effects, called from udev).
 - **assets/** — wallpapers (one-word names) + sounds (`assets/sounds/usb-in.mp3`, `usb-out.mp3` — USB stick/drive plug/unplug effects, played via `modules/system/hardware/usb-sound.nix` udev rules) + Ghostty cursor-warp shader (`assets/ghostty/shaders/cursor_warp.glsl`, wired in `apps/terminal.nix`). `spun` (PolyForm Noncommercial CD-shaped player, local playback + 3D players, vinyl default patched in `postPatch`).
@@ -39,7 +39,7 @@ lib/
   autoimport.nix                # manifest helper — drop a .nix in the right folder and it's live
 hosts/
   common.nix                    # shared: timeZone, locale, NM, user groups
-  desktop.nix                   # identity + NVIDIA early-KMS + useOSProber + /mnt/ssd (GRUB base in modules/system/boot.nix)
+  desktop.nix                   # identity + NVIDIA early-KMS + useOSProber + /mnt/ssd + openssh/ollama desktop-only (GRUB base in modules/system/boot.nix)
   laptop.nix
   live.nix                      # installer-ISO shared base (minimal GNOME + recovery + install-nix + /iso/dotfiles, never built directly — no modules/system import)
   live-{desktop,laptop}.nix     # installer ISOs (import live.nix; desktop adds NVIDIA, each sets isoImage.edition)
@@ -51,7 +51,7 @@ modules/
     security/{polkit,keyring}.nix                    # security.polkit (daemon + pkexec setuid wrapper), gnome-keyring
     virtualisation.nix          # docker + libvirt/QEMU-KVM (qemu_kvm, swtpm, spiceUSBRedirection) + virt-manager, groups docker/libvirtd/kvm
     desktop/{hyprland,fonts,login}.nix  # Hyprland+UWSM+portals, fonts, login.nix = greetd/tuigreet TTY greeter + hyprlock PAM
-    apps/{base,ollama}.nix      # base = environment.systemPackages; ollama = pinned CUDA build (pkgs.ollama-cuda)
+    apps/base.nix                 # base = environment.systemPackages (ollama lives in hosts/desktop.nix, pinned CUDA pkgs.ollama-cuda)
   home/                         # user-level (home-manager), auto-imported
     theme/{gtk,cursor}.nix      # gtk+qt+dconf merged, cursor — theme via extraSpecialArgs
     desktop/                    # everything graphical: hyprland/ (only multi-file feature: default+settings+keybinds+window-rules+autostart, Lua, systemd.enable=false — UWSM owns session), waybar.{nix,css}, wallpaper.nix (walt terminal picker + hyprpaper, ghostty.walt 900x650 float), dunst/hypridle/hyprlock/hyprshot/hyprsaver/hyprpolkitagent/rofi.nix (hyprpolkitagent = minimal Allow:+input prompt on translucent dark card, dimmed surroundings, no buttons — Enter/Escape)

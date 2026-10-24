@@ -45,7 +45,7 @@ lib/
   autoimport.nix                # manifest helper — drop a .nix in the right folder and it's live
 hosts/
   common.nix                    # shared: timeZone, locale, NM, user groups
-  {desktop,laptop}.nix          # installed machines (desktop holds NVIDIA early-KMS + useOSProber + /mnt/ssd NTFS mount inline; disk layout via hardware UUID scans, not disko)
+  {desktop,laptop}.nix          # installed machines (desktop holds NVIDIA early-KMS + useOSProber + /mnt/ssd NTFS mount + openssh/ollama desktop-only inline; disk layout via hardware UUID scans, not disko)
   live.nix                      # installer-ISO shared base (minimal GNOME + recovery + install-nix + /iso/dotfiles, never built directly — no modules/system import)
   live-{desktop,laptop}.nix     # installer ISOs (import live.nix; desktop adds NVIDIA, each sets isoImage.edition)
   hardware/{desktop,laptop}.nix # generated scans — don't hand-edit, regenerate with nixos-generate-config (never imported by live-* ISOs)
@@ -56,7 +56,7 @@ modules/
     security/{polkit,keyring}.nix                    # NOT services/: security is security (polkit = daemon + pkexec setuid wrapper)
     virtualisation.nix          # top level, not services/: owns docker + libvirt/QEMU-KVM (qemu_kvm, swtpm, spiceUSBRedirection) + virt-manager, groups docker/libvirtd/kvm
     desktop/{hyprland,fonts,login}.nix  # login.nix = greetd/tuigreet TTY greeter (Hyprland via UWSM) + hyprlock PAM — one purpose, one file, no login/ subfolder
-    apps/{base,ollama}.nix      # base = environment.systemPackages (vague system.nix renamed); ollama = pkgs.ollama-cuda
+    apps/base.nix                 # base = environment.systemPackages (vague system.nix renamed); ollama lives in hosts/desktop.nix (pkgs.ollama-cuda, desktop-only CUDA)
   home/                         # user-level (home-manager), auto-imported
     theme/{gtk,cursor}.nix      # gtk+qt+dconf merged, cursor — theme via extraSpecialArgs
     desktop/                    # EVERYTHING graphical lives here (hyprland is not a sibling): dunst/hypridle/hyprlock/hyprshot/hyprsaver/hyprpolkitagent/rofi/wallpaper/waybar.{nix,css} + hyprland/ (only folder that earns depth: default+settings+keybinds+window-rules+autostart)
