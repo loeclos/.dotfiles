@@ -1000,26 +1000,6 @@
         "type": "github"
       }
     },
-    "notesy": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1792691458,
-        "narHash": "sha256-BeXbOkAQEeQv3cIviku1X5MBSWI1/wpmzuWjl02WDkE=",
-        "owner": "loeclos",
-        "repo": "notesy",
-        "rev": "ca6bf611af4b1be257fc54663e558cf64ce82b98",
-        "type": "github"
-      },
-      "original": {
-        "owner": "loeclos",
-        "repo": "notesy",
-        "type": "github"
-      }
-    },
     "npm-lockfile-fix": {
       "inputs": {
         "nixpkgs": [
@@ -1273,7 +1253,6 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
         "nixvim": "nixvim",
-        "notesy": "notesy",
         "ollama": "ollama",
         "pinned-nixpkgs": "pinned-nixpkgs",
         "plymouth-theme": "plymouth-theme",

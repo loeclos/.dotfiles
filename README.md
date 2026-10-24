@@ -4,7 +4,7 @@
 A declarative, reproducible NixOS flake + home-manager setup for multiple machines. One repo builds `desktop` (NVIDIA RTX 5060 Ti) and `laptop` with identical UX: Hyprland (Lua), Waybar, Ghostty, Rofi, and Gruvbox theming from a single source of truth — plus `live-desktop` / `live-laptop` installer ISOs (minimal GNOME + Calamares + recovery tools + `install-nix` guided installer, each embedding this flake so it installs its matching system).
 
 - Full docs: https://deepwiki.com/loeclos/.dotfiles
-- Last updated: 2026-10-24 18:20 UTC
+- Last updated: 2026-10-24 20:41 UTC
 
 Overview
 --------
@@ -20,7 +20,7 @@ The flake builds and composes machine configurations; home-manager modules expos
 
 What this repo contains
 -----------------------
-- **Flake** (`flake.nix`) — pins `nixpkgs` (unstable + `pinned-nixpkgs` for Apple fonts), `home-manager`, `hyprland`, `nixvim`, `notesy`, `install-nix` (guided ISO installer, ships on the live images via its overlay), `walt` (fast terminal wallpaper picker, hyprpaper backend), `wlctl`, `plymouth-theme` (`mac-style` boot splash via its overlay), etc. Outputs `nixosConfigurations.{desktop,laptop,live-desktop,live-laptop}` and `formatter`.
+- **Flake** (`flake.nix`) — pins `nixpkgs` (unstable + `pinned-nixpkgs` for Apple fonts), `home-manager`, `hyprland`, `nixvim`, `install-nix` (guided ISO installer, ships on the live images via its overlay), `walt` (fast terminal wallpaper picker, hyprpaper backend), `wlctl`, `plymouth-theme` (`mac-style` boot splash via its overlay), etc. Outputs `nixosConfigurations.{desktop,laptop,live-desktop,live-laptop}` and `formatter`.
 - **lib/** — shared code, not config: `lib/theme.nix` (Gruvbox palette, fonts, cursor, display 1920x1080), `lib/mkHost.nix` (thin hostname → nixosSystem wiring, `withHome = false` for ISOs), `lib/overlays.nix` (every overlay in one place), `lib/autoimport.nix` (manifest helper: drop a file in the right folder and it's live).
 - **hosts/** — one file per machine + shared `hosts/common.nix` (timezone, locale, NetworkManager, user). `hosts/desktop.nix` holds the early-KMS RTX logic inline (GRUB `useOSProber` for Windows + `/mnt/ssd` NTFS mount); `hosts/hardware/` holds the generated hardware scans (UUID filesystems — regenerate with `nixos-generate-config`, never hand-edit); `hosts/live.nix` is the shared installer-ISO base (minimal GNOME debloat + recovery tools + `install-nix` + embedded flake, never built directly), `hosts/live-{desktop,laptop}.nix` add per-host quirks (NVIDIA for desktop, `isoImage.edition`).
 - **modules/** — every feature as a module, auto-imported by folder: `modules/system/` (boot, hardware, security, desktop, apps) and `modules/home/` (theme, desktop, GUI apps, CLI tools, OS integration).
@@ -35,7 +35,7 @@ home.nix                        # single home-manager entrypoint (imports module
 lib/
   theme.nix                     # palette, fonts, cursor, display — ONLY place for #1d2021, a99f8f, Martian Mono (terminal), Bibata-Modern-Ice 24, 1920x1080
   mkHost.nix                    # thin wiring: common + hosts/<name>.nix + home-manager (skipped with withHome=false for ISOs) + overlays
-  overlays.nix                  # every overlay: upstream (apple-fonts, plymouth, notesy, install-nix) + packages/ + hyprtoolkit pin
+  overlays.nix                  # every overlay: upstream (apple-fonts, plymouth, install-nix) + packages/ + hyprtoolkit pin
   autoimport.nix                # manifest helper — drop a .nix in the right folder and it's live
 hosts/
   common.nix                    # shared: timeZone, locale, NM, user groups
@@ -55,7 +55,7 @@ modules/
   home/                         # user-level (home-manager), auto-imported
     theme/{gtk,cursor}.nix      # gtk+qt+dconf merged, cursor — theme via extraSpecialArgs
     desktop/                    # everything graphical: hyprland/ (only multi-file feature: default+settings+keybinds+window-rules+autostart, Lua, systemd.enable=false — UWSM owns session), waybar.{nix,css}, wallpaper.nix (walt terminal picker + hyprpaper, ghostty.walt 900x650 float), dunst/hypridle/hyprlock/hyprshot/hyprsaver/hyprpolkitagent/rofi.nix (hyprpolkitagent = minimal Allow:+input prompt on translucent dark card, dimmed surroundings, no buttons — Enter/Escape)
-    apps/{terminal,notesy,opencode,spicetify,spun,typora}.nix  # GUI programs; terminal = ghostty + cursor-warp shader (absolute custom-shader path, animation=always); opencode = tui.json theme + nixos-dotfiles skill (rbld/update/pkexec/hosts, deployed to ~/.config/opencode/skills/)
+    apps/{terminal,opencode,spicetify,spun,typora}.nix  # GUI programs; terminal = ghostty + cursor-warp shader (absolute custom-shader path, animation=always); opencode = tui.json theme + nixos-dotfiles skill (rbld/update/pkexec/hosts, deployed to ~/.config/opencode/skills/)
     cli/{eza,git,github}.nix    # terminal tools (not GUI apps); eza also owns HM programs.bash aliases so ls/ll/la work inside nix-shell (skips /etc/bashrc, sources ~/.bashrc)
     system/{packages,xdg}.nix   # packages = home.packages set (nixpkgs list + pkgs.<script>); xdg = mimeApps (PDF → Papers, images → feh)
 packages/                       # everything built in-repo, one overlay (packages/default.nix → pkgs.<name>)

@@ -41,7 +41,7 @@ home.nix                        # single home-manager entrypoint (imports module
 lib/
   theme.nix                     # palette, fonts, cursor, display — ONLY place for #1d2021, a99f8f, Martian Mono (terminal default; SFMono kept as fallback), Bibata-Modern-Ice 24, 1920x1080
   mkHost.nix                    # thin wiring: common + hosts/<name>.nix + home-manager (skipped with withHome=false for ISOs) + overlays (no feature config here)
-  overlays.nix                  # every overlay: upstream (apple-fonts, plymouth-theme, notesy, install-nix) + packages/ + hyprtoolkit pin
+  overlays.nix                  # every overlay: upstream (apple-fonts, plymouth-theme, install-nix) + packages/ + hyprtoolkit pin
   autoimport.nix                # manifest helper — drop a .nix in the right folder and it's live
 hosts/
   common.nix                    # shared: timeZone, locale, NM, user groups
@@ -60,7 +60,7 @@ modules/
   home/                         # user-level (home-manager), auto-imported
     theme/{gtk,cursor}.nix      # gtk+qt+dconf merged, cursor — theme via extraSpecialArgs
     desktop/                    # EVERYTHING graphical lives here (hyprland is not a sibling): dunst/hypridle/hyprlock/hyprshot/hyprsaver/hyprpolkitagent/rofi/wallpaper/waybar.{nix,css} + hyprland/ (only folder that earns depth: default+settings+keybinds+window-rules+autostart)
-    apps/{terminal,notesy,opencode,spicetify,spun,typora}.nix  # GUI programs only (terminal = ghostty, also hosts `walt` TUI via ghostty.walt float 900x650); spun → pkgs.spun; notesy → pkgs.notesy (overlay from loeclos/notesy flake input); typora + LaTeX-Typora-V2 theme; opencode → tui.json theme=cursor + nixos-dotfiles skill (rbld/update/pkexec/hosts, deployed to ~/.config/opencode/skills/)
+    apps/{terminal,opencode,spicetify,spun,typora}.nix  # GUI programs only (terminal = ghostty, also hosts `walt` TUI via ghostty.walt float 900x650); spun → pkgs.spun; typora + LaTeX-Typora-V2 theme; opencode → tui.json theme=cursor + nixos-dotfiles skill (rbld/update/pkexec/hosts, deployed to ~/.config/opencode/skills/)
     cli/{eza,git,github}.nix    # terminal tools are NOT apps (was apps/shell-eza,vcs-git,vcs-github); eza also owns HM programs.bash aliases so ls/ll/la work inside nix-shell (which skips /etc/bashrc, sources ~/.bashrc)
     system/{packages,xdg}.nix   # OS integration, not apps: packages = home.packages set; xdg = mimeApps
 packages/                       # everything built in-repo, one overlay (packages/default.nix → pkgs.<name>, no callPackage chains in modules)

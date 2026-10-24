@@ -18,11 +18,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    notesy = {
-      url = "github:loeclos/notesy";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     walt = {
       url = "github:gitfudge0/walt";
       inputs.nixpkgs.follows = "nixpkgs";

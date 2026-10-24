@@ -4,7 +4,6 @@
 [
   inputs.apple-fonts.overlays.default
   inputs.plymouth-theme.overlays.default
-  inputs.notesy.overlays.default
   inputs.install-nix.overlays.default
   (import ../packages { inherit inputs; })
 
