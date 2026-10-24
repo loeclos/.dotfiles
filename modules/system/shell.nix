@@ -1,19 +1,22 @@
 { ... }:
 {
+  # eza aliases live in environment.shellAliases (not programs.zsh): it lands
+  # in /etc/bashrc AND /etc/zshrc, so bash shells get eza too. programs.zsh
+  # alone only covered zsh (/etc/zshrc), leaving bash on coreutils ls.
+  environment.shellAliases = {
+    ls = "eza --icons";
+    ll = "eza -l --icons";
+    la = "eza -a --icons";
+    edit = "sudo -e";
+    shell = "nix-shell";
+    dots = "cd ~/.dotfiles";
+  };
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;
     autosuggestions.enable = true;
     syntaxHighlighting.enable = true;
-
-    shellAliases = {
-      ls = "eza --icons";
-      ll = "eza -l --icons";
-      la = "eza -a --icons";
-      edit = "sudo -e";
-      shell = "nix-shell";
-      dots = "cd ~/.dotfiles";
-    };
 
     # rbld [target] — rebuild + switch, with desktop notification.
     # Target accepts: laptop, .#laptop, #laptop. Defaults to current hostname.

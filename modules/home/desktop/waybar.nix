@@ -27,8 +27,8 @@
         modules-right = [
           "group/tray-expander"
           "custom/separator"
-          "bluetooth"
           "network"
+          "bluetooth"
           "pulseaudio"
           "memory"
           "cpu"
@@ -109,6 +109,7 @@
         };
 
         "network" = {
+          interval = 2;
           format-icons = [
             "󰤯"
             "󰤟"
@@ -116,11 +117,11 @@
             "󰤥"
             "󰤨"
           ];
-          format = "{icon}";
-          format-wifi = "{icon}";
-          format-ethernet = "󰌗";
+          format = "󰇚 {bandwidthDownBytes:>} 󰇙 {bandwidthUpBytes:>}  {icon}";
+          format-wifi = "󰇚 {bandwidthDownBytes:>} 󰇙 {bandwidthUpBytes:>}  {icon}";
+          format-ethernet = "󰇚 {bandwidthDownBytes:>} 󰇙 {bandwidthUpBytes:>}  󰌗";
           format-disconnected = "󰤮";
-          tooltip-format = "{ifname} {essid}\n{ipaddr}";
+          tooltip-format = "{ifname} {essid}\n{ipaddr}\n󰇚 {bandwidthDownBytes} 󰇙 {bandwidthUpBytes}";
           on-click = "wifi-menu";
           on-click-right = "nmcli radio wifi toggle";
           # Add more if you had them in the original (tooltip, interval, etc.)

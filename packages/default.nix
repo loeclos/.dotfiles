@@ -23,9 +23,6 @@
     src = inputs.ollama;
     acceleration = "cuda";
   };
-  # Stock nixpkgs quickshell lacks the QtMultimedia QML modules the wallpaper
-  # picker imports — rewrapped binary, explicit name, no global shadowing.
-  quickshell-multimedia = prev.callPackage ./builds/quickshell-multimedia.nix { };
 
   # --- scripts ---
   hypr-float-toggle = prev.callPackage ./scripts/hypr-float-toggle.nix { };
@@ -33,8 +30,5 @@
   bluetooth-menu = prev.callPackage ./scripts/bluetooth-menu.nix { };
   rofi-keybinds = prev.callPackage ./scripts/rofi-keybinds.nix { };
   rofi-nixosrebuild = prev.callPackage ./scripts/rofi-nixosrebuild.nix { };
-  wallpaper-picker = prev.callPackage ./scripts/wallpaper-picker.nix {
-    appSrc = inputs.qs-wallpaper-picker;
-    quickshellBin = "${final.quickshell-multimedia}/bin/quickshell";
-  };
+  usb-sound = prev.callPackage ./scripts/usb-sound.nix { };
 })

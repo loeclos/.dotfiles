@@ -3,6 +3,13 @@
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
+      # browser — ungoogled-chromium
+      "text/html" = "chromium-browser.desktop";
+      "application/xhtml+xml" = "chromium-browser.desktop";
+      "x-scheme-handler/http" = "chromium-browser.desktop";
+      "x-scheme-handler/https" = "chromium-browser.desktop";
+      "x-scheme-handler/about" = "chromium-browser.desktop";
+
       # documents
       "application/pdf" = "org.gnome.Papers.desktop";
       "application/x-bzpdf" = "org.gnome.Papers.desktop";

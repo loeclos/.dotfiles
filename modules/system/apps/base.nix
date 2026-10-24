@@ -31,6 +31,7 @@ in
     wl-clipboard
 
     # ui / theming
+    inputs.walt.packages.${system}.default
     moka-icon-theme
     quickshell
   ];

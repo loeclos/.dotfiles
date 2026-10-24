@@ -23,9 +23,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    qs-wallpaper-picker = {
-      url = "github:loeclos/qs-wallpaper-picker";
-      flake = false;
+    walt = {
+      url = "github:gitfudge0/walt";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     wlctl = {
@@ -97,6 +97,11 @@
       url = "github:loeclos/plymouth-theme";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    install-nix = {
+      url = "github:loeclos/install-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -107,6 +112,7 @@
       nixos-hardware,
       nixvim,
       hyprland,
+      walt,
       wlctl,
       eza,
       spicetify-nix,
@@ -136,9 +142,20 @@
       nixosConfigurations = {
         desktop = mkHost { hostname = "desktop"; };
         laptop = mkHost { hostname = "laptop"; };
-        live = mkHost {
-          hostname = "live";
-          extraModules = [ (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix") ];
+        # Installer ISOs: minimal GNOME + Calamares + recovery tools (see
+        # hosts/live.nix). withHome = false keeps the Hyprland home env out
+        # of the squashfs. Each ISO embeds this flake at /iso/dotfiles and
+        # ships install-nix, so it installs its matching system
+        # (sudo install-nix, or manually nixos-install --flake /iso/dotfiles#<host>).
+        live-desktop = mkHost {
+          hostname = "live-desktop";
+          withHome = false;
+          extraModules = [ (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix") ];
+        };
+        live-laptop = mkHost {
+          hostname = "live-laptop";
+          withHome = false;
+          extraModules = [ (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix") ];
         };
       };
     };

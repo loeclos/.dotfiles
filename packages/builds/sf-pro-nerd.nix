@@ -1,5 +1,5 @@
 { lib, stdenvNoCC, p7zip, parallel, nerd-font-patcher, src
-, pkgName ? "SF Pro Fonts.pkg"
+, pkgName ? "SFProFontsPackage.pkg"
 , fonts ? [
     "SF-Pro-Display-Regular.otf"
     "SF-Pro-Display-RegularItalic.otf"
@@ -28,8 +28,10 @@ stdenvNoCC.mkDerivation {
   unpackPhase = ''
     runHook preUnpack
     7z x $src
-    7z x './*/${pkgName}'
-    7z x 'Payload~'
+    if [ ! -f 'Payload~' ]; then
+      7z x './*/${pkgName}'
+    fi
+    7z x -tcpio 'Payload~'
     runHook postUnpack
   '';
 

@@ -3,12 +3,19 @@
 # HM user service (wanted by graphical-session.target, which UWSM owns) —
 # don't launch via hyprland/autostart.nix: the binary lives in libexec, not bin/.
 #
-# Styling is two layers (hyprtoolkit agent, v0.2.0+):
-# - hypr/hyprtoolkit.conf — Gruvbox palette + fonts, derived from lib/theme.nix
-# - hyprpolkitagent/hyprpolkitagent.conf — compact single-prompt dialog, no details panel
-#   (flip show_details to true to see the action/command being authorized)
-# Placement/chrome (float, center, borderless, dimmed background) is a
-# window rule in desktop/hyprland/window-rules.nix matching the dialog title.
+# Styling is two layers (hyprtoolkit agent, v0.2.0+ minimal patch, see
+# packages/builds/hyprpolkitagent-dialog.cpp):
+# - hypr/hyprtoolkit.conf — Gruvbox palette + fonts, derived from lib/theme.nix.
+#   background is transparent (the patched dialog draws a single translucent
+#   dark card behind Allow:+input instead of an opaque window, so the white
+#   letters stay readable on any wallpaper); base/alternate_base stay opaque
+#   so the password field itself remains visible.
+# - hyprpolkitagent/hyprpolkitagent.conf — minimal floating prompt size.
+#   show_details is kept false (the patched build has no details panel at all).
+# Placement/chrome (float, center, borderless, dimmed surroundings,
+# no blur/shadow) is a window rule in desktop/hyprland/window-rules.nix
+# matching the dialog class.
+# Enter submits, Escape cancels — there are no buttons by design.
 { theme, ... }:
 let
   mkArgb = hex: "0xFF${theme.mkRgb hex}";
@@ -18,7 +25,7 @@ in
 
   xdg.configFile = {
     "hypr/hyprtoolkit.conf".text = ''
-      background = ${mkArgb theme.palette.bg0}
+      background = 0x00000000
       base = ${mkArgb theme.palette.bg}
       text = ${mkArgb theme.palette.fg}
       alternate_base = ${mkArgb theme.palette.surface}
@@ -34,8 +41,8 @@ in
     "hyprpolkitagent/hyprpolkitagent.conf".text = ''
       general {
         password_field_width = 340
-        window_width = 460
-        window_height = 300
+        window_width = 420
+        window_height = 160
         show_details = false
       }
     '';

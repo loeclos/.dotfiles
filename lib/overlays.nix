@@ -5,6 +5,7 @@
   inputs.apple-fonts.overlays.default
   inputs.plymouth-theme.overlays.default
   inputs.notesy.overlays.default
+  inputs.install-nix.overlays.default
   (import ../packages { inherit inputs; })
 
   # hyprtoolkit pin: hyprpolkitagent v0.2.0 needs the exact toolkit rev from

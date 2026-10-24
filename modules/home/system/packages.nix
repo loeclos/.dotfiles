@@ -13,6 +13,7 @@
       # browsers
       brave
       qutebrowser
+      ungoogled-chromium
 
       # chat
       telegram-desktop
@@ -39,6 +40,7 @@
       gnome-sound-recorder
       lufus
       mpv
+      obs-studio
       papers
       playerctl
       yt-dlp
@@ -66,6 +68,5 @@
       bluetooth-menu
       rofi-keybinds
       rofi-nixosrebuild
-      wallpaper-picker
     ]);
 }

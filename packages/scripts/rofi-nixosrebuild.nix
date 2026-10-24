@@ -44,7 +44,8 @@ let
 
   extraEntries = ''
     Current host (switch)   ❯  Rebuild current system via flake
-    Live ISO (build)        ❯  Build live installer ISO
+    Live ISO desktop (build) ❯  Build live-desktop installer ISO
+    Live ISO laptop (build)  ❯  Build live-laptop installer ISO
     GC (cleanup)            ❯  Collect garbage & optimise'';
 
   caseBranches = lib.concatMapStringsSep "\n" (
@@ -72,8 +73,11 @@ pkgs.writeShellScriptBin "rofi-nixosrebuild" ''
     *"Current host (switch)")
       cmd="sudo nixos-rebuild switch --flake $FLAKE_DIR"
       ;;
-    *"Live ISO (build)")
-      cmd="sudo nixos-rebuild build --flake $FLAKE_DIR#live"
+    *"Live ISO desktop (build)")
+      cmd="nix build $FLAKE_DIR#nixosConfigurations.live-desktop.config.system.build.isoImage --out-link /tmp/iso-desktop"
+      ;;
+    *"Live ISO laptop (build)")
+      cmd="nix build $FLAKE_DIR#nixosConfigurations.live-laptop.config.system.build.isoImage --out-link /tmp/iso-laptop"
       ;;
     *"GC (cleanup)")
       cmd="sudo nix-collect-garbage -d && sudo nix-store --optimise"

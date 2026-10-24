@@ -3,11 +3,15 @@
 # (user env from home.nix) + overlays from ./overlays.nix.
 # Feature config lives in modules/system and modules/home (both
 # auto-imported, see lib/autoimport.nix) — never duplicate that block here.
+# Live ISOs (hosts/live-*.nix) pass withHome = false: they boot the
+# installer-cd GNOME stack as user nixos, so the full Hyprland home env
+# is skipped to keep the squashfs minimal.
 { inputs }:
 {
   hostname,
   system ? "x86_64-linux",
   extraModules ? [ ],
+  withHome ? true,
 }:
 inputs.nixpkgs.lib.nixosSystem {
   inherit system;
@@ -15,12 +19,19 @@ inputs.nixpkgs.lib.nixosSystem {
   modules = [
     ../hosts/common.nix
     ../hosts/${hostname}.nix
+    (
+      { ... }:
+      {
+        nixpkgs.config.allowUnfree = true;
+        nixpkgs.overlays = import ./overlays.nix { inherit inputs; };
+      }
+    )
+  ]
+  ++ inputs.nixpkgs.lib.optionals withHome [
     inputs.home-manager.nixosModules.home-manager
     (
       { config, ... }:
       {
-        nixpkgs.config.allowUnfree = true;
-
         home-manager = {
           useGlobalPkgs = true;
           useUserPackages = true;
@@ -37,8 +48,6 @@ inputs.nixpkgs.lib.nixosSystem {
             imports = [ ../home.nix ];
           };
         };
-
-        nixpkgs.overlays = import ./overlays.nix { inherit inputs; };
       }
     )
   ]
