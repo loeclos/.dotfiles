@@ -17,6 +17,15 @@
       (mkFloatRule "ghostty.walt" 900 650)
       (mkFloatRule "ghostty.wifi" 1100 700)
       (mkFloatRule "ghostty.bt" 950 650)
+      # Orbitty screensaver (fullscreen ghostty running orbitty via
+      # pkgs.orbitty-screensaver): no border/blur/shadow, just planets.
+      {
+        match.class = "ghostty.orbitty";
+        fullscreen = true;
+        border_size = 0;
+        no_blur = true;
+        no_shadow = true;
+      }
       # Polkit auth prompt (hyprpolkitagent, appClass "hyprpolkitagent") —
       # minimal patched dialog (Allow: + input only, transparent window):
       # no border, no blur, no shadow — just the floating input, with the

@@ -663,22 +663,6 @@
         "type": "github"
       }
     },
-    "hyprsaver": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1792627304,
-        "narHash": "sha256-13B9r5UC49UpvwhIZKohjfgoz9YXErzVRhBKDEa5RBw=",
-        "owner": "maravexa",
-        "repo": "hyprsaver",
-        "rev": "f33a4fdf46f9fe9e96db465480f32e3e04ab1c42",
-        "type": "github"
-      },
-      "original": {
-        "owner": "maravexa",
-        "repo": "hyprsaver",
-        "type": "github"
-      }
-    },
     "hyprtoolkit": {
       "inputs": {
         "aquamarine": [
@@ -1050,6 +1034,22 @@
         "type": "github"
       }
     },
+    "orbitty": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1777901945,
+        "narHash": "sha256-yutm2W6xygnW7rNbx2NVV38tCV5clFd6N2TlZr+4JDM=",
+        "owner": "aywski",
+        "repo": "orbitty",
+        "rev": "adc729de5c7624b08bdb38002d645c5afc33f795",
+        "type": "github"
+      },
+      "original": {
+        "owner": "aywski",
+        "repo": "orbitty",
+        "type": "github"
+      }
+    },
     "pinned-nixpkgs": {
       "locked": {
         "lastModified": 1792615934,
@@ -1247,13 +1247,13 @@
         "hypr-quick-frame": "hypr-quick-frame",
         "hyprland": "hyprland",
         "hyprpolkitagent": "hyprpolkitagent",
-        "hyprsaver": "hyprsaver",
         "hyprtoolkit": "hyprtoolkit_2",
         "install-nix": "install-nix",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
         "nixvim": "nixvim",
         "ollama": "ollama",
+        "orbitty": "orbitty",
         "pinned-nixpkgs": "pinned-nixpkgs",
         "plymouth-theme": "plymouth-theme",
         "sf-pro-dmg": "sf-pro-dmg",

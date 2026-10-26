@@ -69,7 +69,7 @@ in
     (mkBind "SHIFT + W" (exec "ghostty --class=ghostty.walt -e walt"))
     (mkBind "I" (exec "wifi-menu"))
     (mkBind "SHIFT + B" (exec "bluetooth-menu"))
-    (mkBind "s" (exec "pkill -x hyprsaver || hyprsaver"))
+    (mkBind "s" (exec "orbitty-screensaver"))
     (mkBind "H" (mkLuaInline "hl.dsp.focus({direction = \"left\"})"))
     (mkBind "RIGHT" (mkLuaInline "hl.dsp.focus({workspace = \"+1\", wrap = true})"))
     (mkBind "LEFT" (mkLuaInline "hl.dsp.focus({workspace = \"-1\", wrap = true})"))

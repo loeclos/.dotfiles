@@ -53,8 +53,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprsaver = {
-      url = "github:maravexa/hyprsaver";
+    orbitty = {
+      url = "github:aywski/orbitty";
       flake = false;
     };
 

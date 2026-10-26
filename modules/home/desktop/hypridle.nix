@@ -12,8 +12,8 @@
       listener = [
         {
           timeout = 600;
-          on-timeout = "hyprsaver";
-          on-resume = "hyprsaver --quit";
+          on-timeout = "orbitty-screensaver";
+          on-resume = "orbitty-screensaver --quit";
         }
         {
           timeout = 1200;
