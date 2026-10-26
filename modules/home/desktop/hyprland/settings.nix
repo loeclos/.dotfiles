@@ -14,6 +14,13 @@
       position = "0x0";
       scale = 1;
     }
+    # Laptop panel (shared/ungated — ignored on desktop, no eDP-1 there).
+    {
+      output = "eDP-1";
+      mode = "1920x1080@60.00Hz";
+      position = "auto";
+      scale = 1;
+    }
 
   ];
 
@@ -55,6 +62,19 @@
     cursor = {
       no_hardware_cursors = 1;
       hide_on_key_press = true;
+    };
+    # Mac-like touchpad (shared/ungated — ignored on desktop, no touchpad).
+    input.touchpad = {
+      tap_to_click = true;
+      natural_scroll = true;
+      disable_while_typing = true;
+      clickfinger_behavior = true;
+    };
+    gestures = {
+      workspace_swipe_distance = 300;
+      workspace_swipe_invert = true;
+      workspace_swipe_forever = true;
+      workspace_swipe_create_new = false;
     };
     misc = {
       animate_manual_resizes = true;

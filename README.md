@@ -4,7 +4,7 @@
 A declarative, reproducible NixOS flake + home-manager setup for multiple machines. One repo builds `desktop` (NVIDIA RTX 5060 Ti) and `laptop` with identical UX: Hyprland (Lua), Waybar, Ghostty, Rofi, and Gruvbox theming from a single source of truth — plus `live-desktop` / `live-laptop` installer ISOs (minimal GNOME + Calamares + recovery tools + `install-nix` guided installer, each embedding this flake so it installs its matching system).
 
 - Full docs: https://deepwiki.com/loeclos/.dotfiles
-- Last updated: 2026-10-26 14:21 UTC
+- Last updated: 2026-10-26 14:32 UTC
 
 Overview
 --------
@@ -54,7 +54,7 @@ modules/
     apps/base.nix                 # base = environment.systemPackages (ollama lives in hosts/desktop.nix, pinned CUDA pkgs.ollama-cuda)
   home/                         # user-level (home-manager), auto-imported
     theme/{gtk,cursor}.nix      # gtk+qt+dconf merged, cursor — theme via extraSpecialArgs
-    desktop/                    # everything graphical: hyprland/ (only multi-file feature: default+settings+keybinds+window-rules+autostart, Lua, systemd.enable=false — UWSM owns session), waybar.{nix,css}, wallpaper.nix (walt terminal picker + hyprpaper, ghostty.walt 900x650 float), dunst/hypridle/hyprlock/hyprshot/hyprsaver/hyprpolkitagent/rofi.nix (hyprpolkitagent = minimal Allow:+input prompt on translucent dark card, dimmed surroundings, no buttons — Enter/Escape)
+    desktop/                    # everything graphical: hyprland/ (only multi-file feature: default+settings+keybinds+window-rules+autostart+gestures, Lua, systemd.enable=false — UWSM owns session), waybar.{nix,css}, wallpaper.nix (walt terminal picker + hyprpaper, ghostty.walt 900x650 float), dunst/hypridle/hyprlock/hyprshot/hyprsaver/hyprpolkitagent/rofi.nix (hyprpolkitagent = minimal Allow:+input prompt on translucent dark card, dimmed surroundings, no buttons — Enter/Escape)
     apps/{terminal,opencode,spicetify,spun,typora}.nix  # GUI programs; terminal = ghostty + cursor-warp shader (absolute custom-shader path, animation=always); opencode = tui.json theme + nixos-dotfiles skill (rbld/update/pkexec/hosts, deployed to ~/.config/opencode/skills/)
     cli/{eza,git,github}.nix    # terminal tools (not GUI apps); eza also owns HM programs.bash aliases so ls/ll/la work inside nix-shell (skips /etc/bashrc, sources ~/.bashrc)
     system/{packages,xdg}.nix   # packages = home.packages set (nixpkgs list + pkgs.<script>); xdg = mimeApps (PDF → Papers, images → feh)
@@ -72,7 +72,7 @@ How it fits together
 1. `flake.nix` declares `desktop`, `laptop`, `live-desktop`, `live-laptop` via `lib/mkHost.nix` (ISOs add `installation-cd-graphical-calamares-gnome.nix` + `withHome = false`).
 2. `mkHost` injects `hosts/common.nix`, `hosts/<name>.nix`, `home-manager` (user env from `home.nix`, with `extraSpecialArgs`: `inputs`, `osConfig`, `theme`, `repoRoot` — skipped for ISOs so the squashfs stays minimal), and `lib/overlays.nix` (upstream + `packages/` + `hyprtoolkit` pin; the `install-nix` overlay puts the guided installer on the ISO).
 3. `home.nix` pulls in `modules/home` (auto-imported — every `.nix` in the right folder is live, see `lib/autoimport.nix`).
-4. `modules/system/default.nix` and `modules/home/default.nix` are 3-line manifests (auto-import, never hand-edited). The one exception: a folder with its own `default.nix` is self-contained — only `desktop/hyprland/` earns this (5-file Lua config), its helpers are private. See `AGENTS.md:3.3`.
+4. `modules/system/default.nix` and `modules/home/default.nix` are 3-line manifests (auto-import, never hand-edited). The one exception: a folder with its own `default.nix` is self-contained — only `desktop/hyprland/` earns this (6-file Lua config), its helpers are private. See `AGENTS.md:3.3`.
 5. Boot splash: `plymouth-theme` input exposes `mac-style-plymouth` via its overlay (wired in `lib/overlays.nix`); `modules/system/boot.nix` enables `boot.plymouth` with `theme = "mac-style"` (pairs with existing `quiet splash` kernelParams).
 
 See `AGENTS.md` for the full contributor guide: least-change, clean-code, structure rules, wallpaper naming, and verification.
@@ -122,7 +122,7 @@ Notes
 -----
 - `result` and `*.save` are gitignored; see `.gitignore`.
 - `boot.loader.grub.gfxmodeEfi` and Hyprland `gaps/borders` derive from `lib/theme.nix`.
-- Hyprland uses `configType = "lua"` (required for newer Hyprland). Keep Lua helpers `mkLuaInline`/`mkBind` in `desktop/hyprland/keybinds.nix`.
+- Hyprland uses `configType = "lua"` (required for newer Hyprland). Keep Lua helpers `mkLuaInline`/`mkBind` in `desktop/hyprland/keybinds.nix`. Touchpad is Mac-like (`tap_to_click`, `natural_scroll`, `disable_while_typing`, `clickfinger_behavior` in `desktop/hyprland/settings.nix`) + 3-finger gestures in `desktop/hyprland/gestures.nix` (horizontal → workspace, up/down → special scratchpad, pinch out/in → fullscreen/float) — shared/ungated, ignored on desktop.
 - `hardware.bluetooth` lives only in `system/hardware/bluetooth.nix` (`AGENTS.md:7`).
 - Waybar `network` is icon-only (`{icon}` wifi / `󰌗` ethernet in `desktop/waybar.nix`); `format-disconnected` stays icon-only, `bluetooth` sits right of `network`.
 - Wallpapers are one-word (`road.png`, `dock.jpg`), deployed from `assets/wallpaper/` to `~/.config/wallpapers/`; `Super+Shift+W` opens `walt` (fast terminal picker, `ghostty --class=ghostty.walt -e walt`, hyprpaper backend), boot runs `walt random` else `road.png` via hyprpaper; Ghostty cursor-warp shader lives in `assets/ghostty/shaders/cursor_warp.glsl` (deployed to `~/.config/ghostty/shaders/`, `custom-shader-animation = always`); `satoshi.zip` stays deleted as unused — don't re-add without wiring.

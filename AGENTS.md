@@ -59,7 +59,7 @@ modules/
     apps/base.nix                 # base = environment.systemPackages (vague system.nix renamed); ollama lives in hosts/desktop.nix (pkgs.ollama-cuda, desktop-only CUDA)
   home/                         # user-level (home-manager), auto-imported
     theme/{gtk,cursor}.nix      # gtk+qt+dconf merged, cursor — theme via extraSpecialArgs
-    desktop/                    # EVERYTHING graphical lives here (hyprland is not a sibling): dunst/hypridle/hyprlock/hyprshot/hyprsaver/hyprpolkitagent/rofi/wallpaper/waybar.{nix,css} + hyprland/ (only folder that earns depth: default+settings+keybinds+window-rules+autostart)
+    desktop/                    # EVERYTHING graphical lives here (hyprland is not a sibling): dunst/hypridle/hyprlock/hyprshot/hyprsaver/hyprpolkitagent/rofi/wallpaper/waybar.{nix,css} + hyprland/ (only folder that earns depth: default+settings+keybinds+window-rules+autostart+gestures)
     apps/{terminal,opencode,spicetify,spun,typora}.nix  # GUI programs only (terminal = ghostty, also hosts `walt` TUI via ghostty.walt float 900x650); spun → pkgs.spun; typora + LaTeX-Typora-V2 theme; opencode → tui.json theme=cursor + nixos-dotfiles skill (rbld/update/pkexec/hosts, deployed to ~/.config/opencode/skills/)
     cli/{eza,git,github}.nix    # terminal tools are NOT apps (was apps/shell-eza,vcs-git,vcs-github); eza also owns HM programs.bash aliases so ls/ll/la work inside nix-shell (which skips /etc/bashrc, sources ~/.bashrc)
     system/{packages,xdg}.nix   # OS integration, not apps: packages = home.packages set; xdg = mimeApps
@@ -165,7 +165,7 @@ If you moved files, use `git mv` to preserve history. Ensure `lib/theme.nix` con
 - Entrypoint: `flake.nix` `nixosConfigurations`
 - Theme source: `lib/theme.nix:1`
 - Host helper: `lib/mkHost.nix:1`
-- Hyprland split: `modules/home/desktop/hyprland/{settings,keybinds,window-rules,autostart}.nix`
+- Hyprland split: `modules/home/desktop/hyprland/{settings,keybinds,window-rules,autostart,gestures}.nix`
 - Waybar separator & persistent workspaces: `modules/home/desktop/waybar.nix`
 - Login + lock: `modules/system/desktop/login.nix` (greetd + tuigreet TTY greeter, `/run/current-system/sw/bin/uwsm start hyprland-uwsm.desktop`, + hyprlock PAM) + home `modules/home/desktop/hyprlock.nix` (blurred bg + centered password field, `hypridle` lock_cmd)
 - UWSM owns the session: home `modules/home/desktop/hyprland/default.nix` must keep `systemd.enable = false` — HM integration activates `graphical-session.target` early and `uwsm start` aborts.

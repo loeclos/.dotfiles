@@ -14,6 +14,7 @@ let
   windowRules = import ./window-rules.nix;
   autostart = import ./autostart.nix { inherit theme mkLuaInline; };
   keybinds = import ./keybinds.nix { inherit lib mkLuaInline; };
+  gestures = import ./gestures.nix;
 in
 {
   wayland.windowManager.hyprland = {
@@ -26,6 +27,6 @@ in
     portalPackage =
       inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
 
-    settings = settings // keybinds // windowRules // autostart;
+    settings = settings // keybinds // windowRules // autostart // gestures;
   };
 }
