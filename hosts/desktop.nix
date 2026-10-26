@@ -72,16 +72,6 @@
     ];
   };
 
-  services.openssh = {
-    enable = true;
-    openFirewall = true;
-    settings = {
-      PasswordAuthentication = true;
-      KbdInteractiveAuthentication = true;
-      PermitRootLogin = "no";
-    };
-  };
-
   # Local LLM backend (desktop-only CUDA — laptop has no NVIDIA GPU).
   services.ollama = {
     enable = true;

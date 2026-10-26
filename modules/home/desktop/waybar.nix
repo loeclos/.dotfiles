@@ -109,7 +109,6 @@
         };
 
         "network" = {
-          interval = 2;
           format-icons = [
             "󰤯"
             "󰤟"
@@ -117,11 +116,11 @@
             "󰤥"
             "󰤨"
           ];
-          format = "󰇚 {bandwidthDownBytes:>} 󰇙 {bandwidthUpBytes:>}  {icon}";
-          format-wifi = "󰇚 {bandwidthDownBytes:>} 󰇙 {bandwidthUpBytes:>}  {icon}";
-          format-ethernet = "󰇚 {bandwidthDownBytes:>} 󰇙 {bandwidthUpBytes:>}  󰌗";
+          format = "{icon}";
+          format-wifi = "{icon}";
+          format-ethernet = "󰌗";
           format-disconnected = "󰤮";
-          tooltip-format = "{ifname} {essid}\n{ipaddr}\n󰇚 {bandwidthDownBytes} 󰇙 {bandwidthUpBytes}";
+          tooltip-format = "{ifname} {essid}\n{ipaddr}";
           on-click = "wifi-menu";
           on-click-right = "nmcli radio wifi toggle";
           # Add more if you had them in the original (tooltip, interval, etc.)
