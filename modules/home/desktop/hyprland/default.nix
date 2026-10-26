@@ -13,7 +13,10 @@ let
   settings = import ./settings.nix { inherit theme; };
   windowRules = import ./window-rules.nix;
   autostart = import ./autostart.nix { inherit theme mkLuaInline; };
-  keybinds = import ./keybinds.nix { inherit lib mkLuaInline; };
+  keybinds = import ./keybinds.nix {
+    inherit lib mkLuaInline;
+    isLaptop = osConfig.networking.hostName == "laptop";
+  };
   gestures = import ./gestures.nix;
 in
 {

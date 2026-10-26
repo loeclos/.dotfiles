@@ -1,5 +1,8 @@
-{ lib, ... }:
+{ lib, osConfig, ... }:
 
+let
+  isLaptop = osConfig.networking.hostName == "laptop";
+in
 {
   programs.waybar = {
     enable = true;
@@ -32,6 +35,9 @@
           "pulseaudio"
           "memory"
           "cpu"
+        ]
+        ++ lib.optionals isLaptop [ "power-profiles-daemon" ]
+        ++ [
           "battery"
           "custom/separator"
           "clock"
@@ -185,6 +191,17 @@
             critical = 15;
           };
           # tooltip-format, interval, on-click etc. can be added
+        };
+
+        "power-profiles-daemon" = {
+          format = "{icon}";
+          tooltip-format = "Power profile: {profile}\nDriver: {driver}";
+          format-icons = {
+            default = "⚡";
+            performance = "⚡";
+            balanced = "◐";
+            power-saver = "☾";
+          };
         };
 
         "mpris" = {

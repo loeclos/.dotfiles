@@ -2,6 +2,7 @@
 {
   lib,
   mkLuaInline,
+  isLaptop,
 }:
 let
   mkBind = key: action: {
@@ -128,6 +129,9 @@ in
     (mkBind "SHIFT + Print" (
       exec "mkdir -p ~/Pictures/Screenshots && hyprshot -m output --freeze -o ~/Pictures/Screenshots"
     ))
+  ]
+  ++ lib.optionals isLaptop [
+    (mkBind "CTRL + P" (exec "power-profile-cycle"))
   ]
   ++ wsBindings;
 }

@@ -15,4 +15,6 @@
   ];
 
   networking.hostName = "laptop";
+
+  services.power-profiles-daemon.enable = true;
 }

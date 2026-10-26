@@ -1,7 +1,12 @@
 # modules/home/system/packages.nix — the home package set.
 # Plain nixpkgs packages below; our own builds/scripts come from packages/
 # (single overlay, see packages/default.nix) and are referenced as pkgs.<name>.
-{ pkgs, ... }:
+{
+  pkgs,
+  lib,
+  osConfig,
+  ...
+}:
 {
   home.packages =
     with pkgs;
@@ -67,5 +72,8 @@
       wifi-menu
       bluetooth-menu
       rofi-keybinds
-    ]);
+    ])
+    ++ lib.optionals (osConfig.networking.hostName == "laptop") [
+      pkgs.power-profile-cycle
+    ];
 }

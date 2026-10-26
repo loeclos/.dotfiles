@@ -29,5 +29,6 @@
   wifi-menu = prev.callPackage ./scripts/wifi-menu.nix { };
   bluetooth-menu = prev.callPackage ./scripts/bluetooth-menu.nix { };
   rofi-keybinds = prev.callPackage ./scripts/rofi-keybinds.nix { };
+  power-profile-cycle = prev.callPackage ./scripts/power-profile-cycle.nix { };
   usb-sound = prev.callPackage ./scripts/usb-sound.nix { };
 })

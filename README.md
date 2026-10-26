@@ -4,7 +4,7 @@
 A declarative, reproducible NixOS flake + home-manager setup for multiple machines. One repo builds `desktop` (NVIDIA RTX 5060 Ti) and `laptop` with identical UX: Hyprland (Lua), Waybar, Ghostty, Rofi, and Gruvbox theming from a single source of truth — plus `live-desktop` / `live-laptop` installer ISOs (minimal GNOME + Calamares + recovery tools + `install-nix` guided installer, each embedding this flake so it installs its matching system).
 
 - Full docs: https://deepwiki.com/loeclos/.dotfiles
-- Last updated: 2026-10-26 14:54 UTC
+- Last updated: 2026-10-26 15:05 UTC
 
 Overview
 --------
@@ -22,9 +22,9 @@ What this repo contains
 -----------------------
 - **Flake** (`flake.nix`) — pins `nixpkgs` (unstable + `pinned-nixpkgs` for Apple fonts), `home-manager`, `hyprland`, `nixvim`, `install-nix` (guided ISO installer, ships on the live images via its overlay), `walt` (fast terminal wallpaper picker, hyprpaper backend), `wlctl`, `plymouth-theme` (`mac-style` boot splash via its overlay), etc. Outputs `nixosConfigurations.{desktop,laptop,live-desktop,live-laptop}` and `formatter`.
 - **lib/** — shared code, not config: `lib/theme.nix` (Gruvbox palette, fonts, cursor, display 1920x1080), `lib/mkHost.nix` (thin hostname → nixosSystem wiring, `withHome = false` for ISOs), `lib/overlays.nix` (every overlay in one place), `lib/autoimport.nix` (manifest helper: drop a file in the right folder and it's live).
-- **hosts/** — one file per machine + shared `hosts/common.nix` (timezone, locale, NetworkManager, user). `hosts/desktop.nix` holds the early-KMS RTX logic inline (GRUB `useOSProber` for Windows + `/mnt/ssd` NTFS mount) + desktop-only `ollama` (pinned CUDA); `hosts/hardware/` holds the generated hardware scans (UUID filesystems — regenerate with `nixos-generate-config`, never hand-edit); `hosts/live.nix` is the shared installer-ISO base (minimal GNOME debloat + recovery tools + `install-nix` + embedded flake, never built directly), `hosts/live-{desktop,laptop}.nix` add per-host quirks (NVIDIA for desktop, `isoImage.edition`).
+- **hosts/** — one file per machine + shared `hosts/common.nix` (timezone, locale, NetworkManager, user). `hosts/desktop.nix` holds the early-KMS RTX logic inline (GRUB `useOSProber` for Windows + `/mnt/ssd` NTFS mount) + desktop-only `ollama` (pinned CUDA); `hosts/laptop.nix` enables laptop-only `power-profiles-daemon`; `hosts/hardware/` holds the generated hardware scans (UUID filesystems — regenerate with `nixos-generate-config`, never hand-edit); `hosts/live.nix` is the shared installer-ISO base (minimal GNOME debloat + recovery tools + `install-nix` + embedded flake, never built directly), `hosts/live-{desktop,laptop}.nix` add per-host quirks (NVIDIA for desktop, `isoImage.edition`).
 - **modules/** — every feature as a module, auto-imported by folder: `modules/system/` (boot, hardware, security, desktop, apps) and `modules/home/` (theme, desktop, GUI apps, CLI tools, OS integration).
-- **packages/** — everything built in-repo behind one overlay (`packages/default.nix`, used as `pkgs.<name>`): `builds/` (compiled: `sf-pro-nerd`, `spun`, `ollama-cuda`, `hyprsaver`, `hyprpolkitagent`) + `scripts/` (shell helpers: `hypr-float-toggle`, `wifi-menu`, `bluetooth-menu`, `rofi-keybinds`, `usb-sound` — PipeWire fan-out player for USB plug/unplug effects, called from udev).
+- **packages/** — everything built in-repo behind one overlay (`packages/default.nix`, used as `pkgs.<name>`): `builds/` (compiled: `sf-pro-nerd`, `spun`, `ollama-cuda`, `hyprsaver`, `hyprpolkitagent`) + `scripts/` (shell helpers: `hypr-float-toggle`, `wifi-menu`, `bluetooth-menu`, `rofi-keybinds`, `power-profile-cycle` — cycles through hardware-supported laptop profiles — and `usb-sound` — PipeWire fan-out player for USB plug/unplug effects, called from udev).
 - **assets/** — wallpapers (one-word names) + sounds (`assets/sounds/usb-in.mp3`, `usb-out.mp3` — USB stick/drive plug/unplug effects, played via `modules/system/hardware/usb-sound.nix` udev rules) + Ghostty cursor-warp shader (`assets/ghostty/shaders/cursor_warp.glsl`, wired in `apps/terminal.nix`). `spun` (PolyForm Noncommercial CD-shaped player, local playback + 3D players, vinyl default patched in `postPatch`).
 
 Repository structure
@@ -54,13 +54,13 @@ modules/
     apps/base.nix                 # base = environment.systemPackages (ollama lives in hosts/desktop.nix, pinned CUDA pkgs.ollama-cuda)
   home/                         # user-level (home-manager), auto-imported
     theme/{gtk,cursor}.nix      # gtk+qt+dconf merged, cursor — theme via extraSpecialArgs
-    desktop/                    # everything graphical: hyprland/ (only multi-file feature: default+settings+keybinds+window-rules+autostart+gestures, Lua, systemd.enable=false — UWSM owns session), waybar.{nix,css}, wallpaper.nix (walt terminal picker + hyprpaper, ghostty.walt 900x650 float), dunst/hypridle/hyprlock/hyprshot/hyprsaver/hyprpolkitagent/rofi.nix (hyprpolkitagent = minimal Allow:+input prompt on translucent dark card, dimmed surroundings, no buttons — Enter/Escape)
+    desktop/                    # everything graphical: hyprland/ (only multi-file feature: default+settings+keybinds+window-rules+autostart+gestures, Lua, systemd.enable=false — UWSM owns session; laptop power-profile cycle on SUPER+CTRL+P), waybar.{nix,css} (laptop PPD profile indicator/click cycling), wallpaper.nix (walt terminal picker + hyprpaper, ghostty.walt 900x650 float), dunst/hypridle/hyprlock/hyprshot/hyprsaver/hyprpolkitagent/rofi.nix (hyprpolkitagent = minimal Allow:+input prompt on translucent dark card, dimmed surroundings, no buttons — Enter/Escape)
     apps/{terminal,opencode,spicetify,spun,typora}.nix  # GUI programs; terminal = ghostty + cursor-warp shader (absolute custom-shader path, animation=always); opencode = tui.json theme + nixos-dotfiles skill (rbld/update/pkexec/hosts, deployed to ~/.config/opencode/skills/)
     cli/{eza,git,github}.nix    # terminal tools (not GUI apps); eza also owns HM programs.bash aliases so ls/ll/la work inside nix-shell (skips /etc/bashrc, sources ~/.bashrc)
     system/{packages,xdg}.nix   # packages = home.packages set (nixpkgs list + pkgs.<script>); xdg = mimeApps (PDF → Papers, images → feh)
 packages/                       # everything built in-repo, one overlay (packages/default.nix → pkgs.<name>)
   builds/{hyprsaver,hyprpolkitagent,ollama,sf-pro-nerd,spun}.nix  # hyprpolkitagent: v0.2.0 (nixpkgs ships themeless 0.1.3) + pinned hyprtoolkit (needs abseil-cpp) + minimal Allow:-only Dialog.cpp patch (transparent, no buttons/details); sf-pro-nerd: custom 7-font Display subset, handles both Apple DMG layouts (Payload~ directly or via SFProFontsPackage.pkg) with 7z -tcpio
-  scripts/{hypr-float-toggle,wifi-menu,bluetooth-menu,rofi-keybinds,usb-sound}.nix
+  scripts/{hypr-float-toggle,wifi-menu,bluetooth-menu,rofi-keybinds,power-profile-cycle,usb-sound}.nix
 assets/wallpaper/               # one-word names only
 assets/sounds/{usb-in,usb-out}.mp3  # USB stick/drive plug/unplug effects (see system/hardware/usb-sound.nix)
 assets/ghostty/shaders/cursor_warp.glsl  # Neovide-like cursor trail (see apps/terminal.nix)
@@ -82,6 +82,7 @@ Key design choices
 - **Theme as data**: `lib/theme.nix:3` is the only place for `#1d2021`, `a99f8f`, `Martian Mono` (terminal default; `SFMono Nerd Font` kept as fallback), `Bibata-Modern-Ice 24`, `1920x1080`. Change once, rebuild everywhere.
 - **Generate > copy-paste**: `desktop/waybar.nix` `"*" = lib.range 1 9` (monitor-keyed persistent workspaces), `desktop/hyprland/window-rules.nix` `mkFloatRule`.
 - **Hyprland media keys**: `desktop/hyprland/keybinds.nix` pairs F2/F3 and F5/F6 with XF86 volume and monitor-brightness keys; XF86AudioMute toggles mute.
+- **Laptop power modes**: `hosts/laptop.nix` enables `power-profiles-daemon`; `Super+Ctrl+P` cycles only through profiles supported by the device, and Waybar displays the active mode (clicking the module also cycles modes).
 - **Packages are referenced, not wired**: consumers use `pkgs.<name>` (one overlay in `packages/default.nix`); asset dirs use `repoRoot + "/assets/..."` (flake root via `extraSpecialArgs`). No `callPackage ../../../` chains.
 - **Host = common + overlay**: No duplication of `networkmanager`, `timeZone`, or `home-manager` blocks.
 - **Breaking polish**: `custom/seperator` → `custom/separator` (waybar + CSS) intentionally breaking to fix typo consistently.
