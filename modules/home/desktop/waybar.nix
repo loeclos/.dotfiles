@@ -77,17 +77,6 @@ in
           tooltip = false;
         };
 
-        "power-profile-daemon" = {
-          format = "{icon}";
-          tooltip = true;
-          tooltip-format = "Power profile: {profile}\nClick to change";
-          format-icons = {
-            performance = "";
-            balanced = "";
-            power-saver = "";
-          };
-        };
-
         "cpu" = {
           interval = 10;
           format = "CPU {usage}%";
@@ -197,10 +186,10 @@ in
           format = "{icon}";
           tooltip-format = "Power profile: {profile}\nDriver: {driver}";
           format-icons = {
-            default = "⚡";
-            performance = "⚡";
-            balanced = "◐";
-            power-saver = "☾";
+            default = "";
+            performance = "";
+            balanced = "";
+            power-saver = "";
           };
         };
 
