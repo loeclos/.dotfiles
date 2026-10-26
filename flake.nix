@@ -53,8 +53,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    orbitty = {
-      url = "github:aywski/orbitty";
+    watershot = {
+      url = "github:Kirottu/watershot";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    hyprsaver = {
+      url = "github:maravexa/hyprsaver";
       flake = false;
     };
 

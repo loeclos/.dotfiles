@@ -12,8 +12,8 @@
       listener = [
         {
           timeout = 600;
-          on-timeout = "orbitty-screensaver";
-          on-resume = "orbitty-screensaver --quit";
+          on-timeout = "hyprsaver";
+          on-resume = "hyprsaver --quit";
         }
         {
           timeout = 1200;
@@ -21,8 +21,8 @@
         }
         {
           timeout = 1500;
-          on-timeout = "hyprctl dispatch dpms off";
-          on-resume = "hyprctl dispatch dpms on";
+          on-timeout = ''hyprctl dispatch "hl.dsp.dpms({mode = 'off'})"'';
+          on-resume = ''hyprctl dispatch "hl.dsp.dpms({mode = 'on'})"'';
         }
       ];
     };

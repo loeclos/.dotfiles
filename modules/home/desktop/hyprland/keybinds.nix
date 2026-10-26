@@ -69,7 +69,7 @@ in
     (mkBind "SHIFT + W" (exec "ghostty --class=ghostty.walt -e walt"))
     (mkBind "I" (exec "wifi-menu"))
     (mkBind "SHIFT + B" (exec "bluetooth-menu"))
-    (mkBind "s" (exec "orbitty-screensaver"))
+    (mkBind "s" (exec "pkill -x hyprsaver || hyprsaver"))
     (mkBind "H" (mkLuaInline "hl.dsp.focus({direction = \"left\"})"))
     (mkBind "RIGHT" (mkLuaInline "hl.dsp.focus({workspace = \"+1\", wrap = true})"))
     (mkBind "LEFT" (mkLuaInline "hl.dsp.focus({workspace = \"-1\", wrap = true})"))
@@ -118,16 +118,7 @@ in
       ];
     }
     (mkBindRaw "Print" (
-      exec "mkdir -p ~/Pictures/Screenshots && hyprshot -m region --freeze -o ~/Pictures/Screenshots"
-    ))
-    (mkBind "Print" (
-      exec "mkdir -p ~/Pictures/Screenshots && hyprshot -m window --freeze -o ~/Pictures/Screenshots"
-    ))
-    (mkBindRaw "SHIFT + Print" (
-      exec "mkdir -p ~/Pictures/Screenshots && hyprshot -m output -m active -o ~/Pictures/Screenshots"
-    ))
-    (mkBind "SHIFT + Print" (
-      exec "mkdir -p ~/Pictures/Screenshots && hyprshot -m output --freeze -o ~/Pictures/Screenshots"
+      exec "mkdir -p ~/Pictures/Screenshots && watershot -c directory ~/Pictures/Screenshots"
     ))
   ]
   ++ lib.optionals isLaptop [

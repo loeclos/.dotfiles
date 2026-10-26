@@ -61,9 +61,7 @@
       tree
       ncdu
 
-      # screenshot (hyprshot + grim/slurp)
-      grim
-      slurp
+      # screenshot (watershot: Print selects, saves + copies)
       wl-clipboard
       libnotify
     ]

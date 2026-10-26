@@ -5,8 +5,8 @@
 { inputs }:
 (final: prev: {
   # --- builds ---
-  orbitty = prev.callPackage ./builds/orbitty.nix {
-    src = inputs.orbitty;
+  hyprsaver = prev.callPackage ./builds/hyprsaver.nix {
+    src = inputs.hyprsaver;
   };
   sf-pro-nerd = prev.callPackage ./builds/sf-pro-nerd.nix {
     src = inputs.sf-pro-dmg;
@@ -26,7 +26,6 @@
 
   # --- scripts ---
   hypr-float-toggle = prev.callPackage ./scripts/hypr-float-toggle.nix { };
-  orbitty-screensaver = prev.callPackage ./scripts/orbitty-screensaver.nix { };
   wifi-menu = prev.callPackage ./scripts/wifi-menu.nix { };
   bluetooth-menu = prev.callPackage ./scripts/bluetooth-menu.nix { };
   rofi-keybinds = prev.callPackage ./scripts/rofi-keybinds.nix { };

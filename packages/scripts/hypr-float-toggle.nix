@@ -4,7 +4,7 @@ pkgs.writeShellScriptBin "hypr-float-toggle" ''
   class="$1"
   shift
   if hyprctl clients -j | jq -e --arg c "$class" 'any(.[]; .class == $c)' >/dev/null; then
-    hyprctl dispatch closewindow "class:^$(printf '%s' "$class" | sed 's/\./\\./g')$"
+    hyprctl dispatch "hl.dsp.window.close({window = 'class:$class'})"
   else
     ghostty --class="$class" -e "$@"
   fi

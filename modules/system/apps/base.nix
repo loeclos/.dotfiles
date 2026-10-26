@@ -23,7 +23,6 @@ in
 
     # tools
     eza
-    grim
     imagemagick
     qemu
     quickemu
