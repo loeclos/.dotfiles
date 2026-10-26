@@ -77,7 +77,6 @@ in
     (mkBind "CTRL + SHIFT + H" (mkLuaInline "hl.dsp.window.resize({x = -50, y = 0, relative = true})"))
     (mkBind "CTRL + SHIFT + L" (mkLuaInline "hl.dsp.window.resize({x = 50, y = 0, relative = true})"))
     (mkBind "CTRL + K" (exec "rofi-keybinds"))
-    (mkBind "SHIFT + R" (exec "rofi-nixosrebuild"))
     (mkBind "CTRL + SHIFT + K" (mkLuaInline "hl.dsp.window.resize({x = 0, y = -50, relative = true})"))
     (mkBind "CTRL + SHIFT + J" (mkLuaInline "hl.dsp.window.resize({x = 0, y = 50, relative = true})"))
     {

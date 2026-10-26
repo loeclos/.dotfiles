@@ -4,7 +4,7 @@
 A declarative, reproducible NixOS flake + home-manager setup for multiple machines. One repo builds `desktop` (NVIDIA RTX 5060 Ti) and `laptop` with identical UX: Hyprland (Lua), Waybar, Ghostty, Rofi, and Gruvbox theming from a single source of truth — plus `live-desktop` / `live-laptop` installer ISOs (minimal GNOME + Calamares + recovery tools + `install-nix` guided installer, each embedding this flake so it installs its matching system).
 
 - Full docs: https://deepwiki.com/loeclos/.dotfiles
-- Last updated: 2026-10-26 14:32 UTC
+- Last updated: 2026-10-26 14:34 UTC
 
 Overview
 --------
@@ -24,7 +24,7 @@ What this repo contains
 - **lib/** — shared code, not config: `lib/theme.nix` (Gruvbox palette, fonts, cursor, display 1920x1080), `lib/mkHost.nix` (thin hostname → nixosSystem wiring, `withHome = false` for ISOs), `lib/overlays.nix` (every overlay in one place), `lib/autoimport.nix` (manifest helper: drop a file in the right folder and it's live).
 - **hosts/** — one file per machine + shared `hosts/common.nix` (timezone, locale, NetworkManager, user). `hosts/desktop.nix` holds the early-KMS RTX logic inline (GRUB `useOSProber` for Windows + `/mnt/ssd` NTFS mount) + desktop-only `ollama` (pinned CUDA); `hosts/hardware/` holds the generated hardware scans (UUID filesystems — regenerate with `nixos-generate-config`, never hand-edit); `hosts/live.nix` is the shared installer-ISO base (minimal GNOME debloat + recovery tools + `install-nix` + embedded flake, never built directly), `hosts/live-{desktop,laptop}.nix` add per-host quirks (NVIDIA for desktop, `isoImage.edition`).
 - **modules/** — every feature as a module, auto-imported by folder: `modules/system/` (boot, hardware, security, desktop, apps) and `modules/home/` (theme, desktop, GUI apps, CLI tools, OS integration).
-- **packages/** — everything built in-repo behind one overlay (`packages/default.nix`, used as `pkgs.<name>`): `builds/` (compiled: `sf-pro-nerd`, `spun`, `ollama-cuda`, `hyprsaver`, `hyprpolkitagent`) + `scripts/` (shell helpers: `hypr-float-toggle`, `wifi-menu`, `bluetooth-menu`, `rofi-keybinds`, `rofi-nixosrebuild`, `usb-sound` — PipeWire fan-out player for USB plug/unplug effects, called from udev).
+- **packages/** — everything built in-repo behind one overlay (`packages/default.nix`, used as `pkgs.<name>`): `builds/` (compiled: `sf-pro-nerd`, `spun`, `ollama-cuda`, `hyprsaver`, `hyprpolkitagent`) + `scripts/` (shell helpers: `hypr-float-toggle`, `wifi-menu`, `bluetooth-menu`, `rofi-keybinds`, `usb-sound` — PipeWire fan-out player for USB plug/unplug effects, called from udev).
 - **assets/** — wallpapers (one-word names) + sounds (`assets/sounds/usb-in.mp3`, `usb-out.mp3` — USB stick/drive plug/unplug effects, played via `modules/system/hardware/usb-sound.nix` udev rules) + Ghostty cursor-warp shader (`assets/ghostty/shaders/cursor_warp.glsl`, wired in `apps/terminal.nix`). `spun` (PolyForm Noncommercial CD-shaped player, local playback + 3D players, vinyl default patched in `postPatch`).
 
 Repository structure
@@ -60,7 +60,7 @@ modules/
     system/{packages,xdg}.nix   # packages = home.packages set (nixpkgs list + pkgs.<script>); xdg = mimeApps (PDF → Papers, images → feh)
 packages/                       # everything built in-repo, one overlay (packages/default.nix → pkgs.<name>)
   builds/{hyprsaver,hyprpolkitagent,ollama,sf-pro-nerd,spun}.nix  # hyprpolkitagent: v0.2.0 (nixpkgs ships themeless 0.1.3) + pinned hyprtoolkit (needs abseil-cpp) + minimal Allow:-only Dialog.cpp patch (transparent, no buttons/details); sf-pro-nerd: custom 7-font Display subset, handles both Apple DMG layouts (Payload~ directly or via SFProFontsPackage.pkg) with 7z -tcpio
-  scripts/{hypr-float-toggle,wifi-menu,bluetooth-menu,rofi-keybinds,rofi-nixosrebuild,usb-sound}.nix
+  scripts/{hypr-float-toggle,wifi-menu,bluetooth-menu,rofi-keybinds,usb-sound}.nix
 assets/wallpaper/               # one-word names only
 assets/sounds/{usb-in,usb-out}.mp3  # USB stick/drive plug/unplug effects (see system/hardware/usb-sound.nix)
 assets/ghostty/shaders/cursor_warp.glsl  # Neovide-like cursor trail (see apps/terminal.nix)
@@ -80,7 +80,7 @@ See `AGENTS.md` for the full contributor guide: least-change, clean-code, struct
 Key design choices
 -----------------
 - **Theme as data**: `lib/theme.nix:3` is the only place for `#1d2021`, `a99f8f`, `Martian Mono` (terminal default; `SFMono Nerd Font` kept as fallback), `Bibata-Modern-Ice 24`, `1920x1080`. Change once, rebuild everywhere.
-- **Generate > copy-paste**: `desktop/waybar.nix` `"*" = lib.range 1 9` (monitor-keyed persistent workspaces), `desktop/hyprland/window-rules.nix` `mkFloatRule`, `packages/scripts/rofi-nixosrebuild.nix` `genAttrs` for hosts×actions.
+- **Generate > copy-paste**: `desktop/waybar.nix` `"*" = lib.range 1 9` (monitor-keyed persistent workspaces), `desktop/hyprland/window-rules.nix` `mkFloatRule`.
 - **Packages are referenced, not wired**: consumers use `pkgs.<name>` (one overlay in `packages/default.nix`); asset dirs use `repoRoot + "/assets/..."` (flake root via `extraSpecialArgs`). No `callPackage ../../../` chains.
 - **Host = common + overlay**: No duplication of `networkmanager`, `timeZone`, or `home-manager` blocks.
 - **Breaking polish**: `custom/seperator` → `custom/separator` (waybar + CSS) intentionally breaking to fix typo consistently.
@@ -99,7 +99,7 @@ sudo nixos-rebuild build --flake .#laptop
 nix build .#nixosConfigurations.live-desktop.config.system.build.isoImage
 nix build .#nixosConfigurations.live-laptop.config.system.build.isoImage
 
-# switch via Rofi (Super+Shift+R) or CLI
+# switch via CLI
 sudo nixos-rebuild switch --flake .#desktop
 ```
 

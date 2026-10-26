@@ -19,7 +19,7 @@
       output = "eDP-1";
       mode = "1920x1080@60.00Hz";
       position = "auto";
-      scale = 1;
+      scale = 1.2;
     }
 
   ];

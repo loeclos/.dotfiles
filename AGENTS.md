@@ -22,7 +22,7 @@ sudo nixos-rebuild build --flake .#laptop
 nix build .#nixosConfigurations.live-desktop.config.system.build.isoImage
 nix build .#nixosConfigurations.live-laptop.config.system.build.isoImage
 
-# switch (or Super+Shift+R → rofi-nixosrebuild)
+# switch
 sudo nixos-rebuild switch --flake .#desktop
 
 # update inputs (pin in flake.lock)
@@ -65,7 +65,7 @@ modules/
     system/{packages,xdg}.nix   # OS integration, not apps: packages = home.packages set; xdg = mimeApps
 packages/                       # everything built in-repo, one overlay (packages/default.nix → pkgs.<name>, no callPackage chains in modules)
   builds/{sf-pro-nerd,hyprsaver,hyprpolkitagent,ollama,spun}.nix  # sf-pro-nerd: custom 7-font Display subset (pkgName SFProFontsPackage.pkg, skip 2nd 7z when Payload~ already extracted, 7z -tcpio for cpio Payload); spun: PolyForm Noncommercial flake=false, local playback (no Cider), vinyl default patched in postPatch; hyprpolkitagent: v0.2.0 (nixpkgs ships config-less Qt 0.1.3) + pinned hyprtoolkit (needs abseil-cpp) + minimal Allow:-only Dialog.cpp patch (postPatch cp ./hyprpolkitagent-dialog.cpp, transparent window, no buttons/details); ollama exposed as ollama-cuda (never shadow pkgs.ollama)
-  scripts/{hypr-float-toggle,wifi-menu,bluetooth-menu,rofi-keybinds,rofi-nixosrebuild,usb-sound}.nix
+  scripts/{hypr-float-toggle,wifi-menu,bluetooth-menu,rofi-keybinds,usb-sound}.nix
 assets/wallpaper/               # one-word names only
 assets/sounds/{usb-in,usb-out}.mp3  # USB stick/drive plug/unplug effects (see system/hardware/usb-sound.nix, one-word like wallpapers)
 assets/ghostty/shaders/cursor_warp.glsl  # Neovide-like cursor trail (see apps/terminal.nix, via repoRoot — never a relative ../../assets path)
@@ -83,7 +83,7 @@ Do the smallest diff that solves the task. Don't reformat the world, don't move 
 - `with pkgs;` for package *lists*, `pkgs.<name>` everywhere else. `callPackage` appears only in `packages/default.nix` (the one overlay) and once in `flake.nix` (pinned `sf-pro-nerd`) — never in modules. If you catch yourself writing `pkgs.callPackage ../...` in a module, add the package to `packages/` instead.
 - No dead/commented blocks — use `git log` for history, not `# foo` leftovers.
 - No duplicate constants — colors/fonts/resolutions go in `lib/theme.nix`, not hardcoded `rgb(a99f8f)` in 5 places. Hyprland gaps/borders, bootloader `resolution`, terminal font, dunst colors all derive from `theme`.
-- Helpers over copy-paste: `mkBind`/`mkExec` in `desktop/hyprland/keybinds.nix:4`, `mkFloatRule` in `window-rules.nix:4`, `"*" = lib.range 1 9` (monitor-keyed persistent workspaces) in `desktop/waybar.nix`, `lib.genAttrs` in `rofi-nixosrebuild.nix:6`.
+- Helpers over copy-paste: `mkBind`/`mkExec` in `desktop/hyprland/keybinds.nix:4`, `mkFloatRule` in `window-rules.nix:4`, `"*" = lib.range 1 9` (monitor-keyed persistent workspaces) in `desktop/waybar.nix`.
 
 ### 3.3 Follow Structure — Fit Into Current Categories, Otherwise Create New
 1. Search existing category first:

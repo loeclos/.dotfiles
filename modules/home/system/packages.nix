@@ -67,6 +67,5 @@
       wifi-menu
       bluetooth-menu
       rofi-keybinds
-      rofi-nixosrebuild
     ]);
 }

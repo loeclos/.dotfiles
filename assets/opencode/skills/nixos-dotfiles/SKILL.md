@@ -56,7 +56,7 @@ Rules:
    nix fmt                      # opt-in formatter, 2-space nixfmt-rfc-style
    sudo nixos-rebuild build --flake .#desktop --dry-run
    ```
-4. Rebuild (interactive): `rbld desktop` or `sudo nixos-rebuild switch --flake .#desktop`. From an agent: `pkexec` form above. Rofi: `Super+Shift+R` (`rofi-nixosrebuild`).
+4. Rebuild (interactive): `rbld desktop` or `sudo nixos-rebuild switch --flake .#desktop`. From an agent: `pkexec` form above.
 5. ISOs: `nix build .#nixosConfigurations.live-desktop.config.system.build.isoImage`. Install: `sudo install-nix` (guided installer on the ISO; manual fallback `sudo nixos-install --flake /iso/dotfiles#desktop`).
 
 ## When editing ~/.dotfiles itself
