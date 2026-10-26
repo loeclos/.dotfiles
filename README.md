@@ -4,7 +4,7 @@
 A declarative, reproducible NixOS flake + home-manager setup for multiple machines. One repo builds `desktop` (NVIDIA RTX 5060 Ti) and `laptop` with identical UX: Hyprland (Lua), Waybar, Ghostty, Rofi, and Gruvbox theming from a single source of truth — plus `live-desktop` / `live-laptop` installer ISOs (minimal GNOME + Calamares + recovery tools + `install-nix` guided installer, each embedding this flake so it installs its matching system).
 
 - Full docs: https://deepwiki.com/loeclos/.dotfiles
-- Last updated: 2026-10-26 14:34 UTC
+- Last updated: 2026-10-26 14:54 UTC
 
 Overview
 --------
@@ -81,6 +81,7 @@ Key design choices
 -----------------
 - **Theme as data**: `lib/theme.nix:3` is the only place for `#1d2021`, `a99f8f`, `Martian Mono` (terminal default; `SFMono Nerd Font` kept as fallback), `Bibata-Modern-Ice 24`, `1920x1080`. Change once, rebuild everywhere.
 - **Generate > copy-paste**: `desktop/waybar.nix` `"*" = lib.range 1 9` (monitor-keyed persistent workspaces), `desktop/hyprland/window-rules.nix` `mkFloatRule`.
+- **Hyprland media keys**: `desktop/hyprland/keybinds.nix` pairs F2/F3 and F5/F6 with XF86 volume and monitor-brightness keys; XF86AudioMute toggles mute.
 - **Packages are referenced, not wired**: consumers use `pkgs.<name>` (one overlay in `packages/default.nix`); asset dirs use `repoRoot + "/assets/..."` (flake root via `extraSpecialArgs`). No `callPackage ../../../` chains.
 - **Host = common + overlay**: No duplication of `networkmanager`, `timeZone`, or `home-manager` blocks.
 - **Breaking polish**: `custom/seperator` → `custom/separator` (waybar + CSS) intentionally breaking to fix typo consistently.
