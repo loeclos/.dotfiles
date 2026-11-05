@@ -1,11 +1,11 @@
 # lib/overlays.nix — every nixpkgs overlay in one place (consumed by mkHost).
 # Upstream overlays first, then our packages/, then version pins.
-{ inputs }:
+{ inputs, apps }:
 [
   inputs.apple-fonts.overlays.default
   inputs.plymouth-theme.overlays.default
   inputs.install-nix.overlays.default
-  (import ../packages { inherit inputs; })
+  (import ../packages { inherit inputs apps; })
 
   # hyprtoolkit pin: hyprpolkitagent v0.2.0 needs the exact toolkit rev from
   # its flake.lock (abseil-cpp joins buildInputs for that rev). nixpkgs ships

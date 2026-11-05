@@ -7,6 +7,9 @@
 # installer-cd GNOME stack as user nixos, so the full Hyprland home env
 # is skipped to keep the squashfs minimal.
 { inputs }:
+let
+  apps = import ./apps.nix;
+in
 {
   hostname,
   system ? "x86_64-linux",
@@ -15,7 +18,7 @@
 }:
 inputs.nixpkgs.lib.nixosSystem {
   inherit system;
-  specialArgs = { inherit inputs; };
+  specialArgs = { inherit inputs apps; };
   modules = [
     ../hosts/common.nix
     ../hosts/${hostname}.nix
@@ -23,7 +26,7 @@ inputs.nixpkgs.lib.nixosSystem {
       { ... }:
       {
         nixpkgs.config.allowUnfree = true;
-        nixpkgs.overlays = import ./overlays.nix { inherit inputs; };
+        nixpkgs.overlays = import ./overlays.nix { inherit inputs apps; };
       }
     )
   ]
@@ -36,7 +39,7 @@ inputs.nixpkgs.lib.nixosSystem {
           useGlobalPkgs = true;
           useUserPackages = true;
           extraSpecialArgs = {
-            inherit inputs;
+            inherit inputs apps;
             osConfig = config;
             theme = import ./theme.nix;
             # Flake root, so modules can reference assets/ without

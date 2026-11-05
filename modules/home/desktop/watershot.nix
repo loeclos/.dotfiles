@@ -1,9 +1,6 @@
-{ inputs, pkgs, ... }:
-let
-  system = pkgs.stdenv.hostPlatform.system;
-in
+{ pkgs, ... }:
 {
   home.packages = [
-    inputs.watershot.packages.${system}.default
+    pkgs.watershot
   ];
 }

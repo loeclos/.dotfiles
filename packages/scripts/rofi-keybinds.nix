@@ -1,14 +1,19 @@
-{ pkgs }:
-# Generated from modules/home/desktop/hyprland/keybinds.nix — keep in sync if you change binds
+{ pkgs, apps }:
+# Generated from modules/home/desktop/hyprland/keybinds.nix + lib/apps.nix —
+# keep in sync if you change binds or the selected apps
 pkgs.writeShellScriptBin "rofi-keybinds" ''
   #!/usr/bin/env bash
   binds="Print                         ❯  Screenshot (select region, file+clipboard to ~/Pictures/Screenshots)
-  SUPER + ENTER                 ❯  Open Terminal
-  SUPER + B                     ❯  Open Browser
-  SUPER + E                     ❯  Open File Manager (Nautilus)
+  SUPER + ENTER                 ❯  Open Terminal (${apps.terminal.label})
+  SUPER + A                     ❯  Open Agent (${apps.agent.label})
+  SUPER + B                     ❯  Open Browser (${apps.browser.label})
+  SUPER + E                     ❯  Open File Manager (${apps.fileManager.label})
   SUPER + I                     ❯  WiFi Menu
   SUPER + SHIFT + B             ❯  Bluetooth Menu
-  SUPER + N                     ❯  Open Neovim
+  SUPER + N                     ❯  Open Editor (${apps.editor.label})
+  SUPER + S                     ❯  Open Spotify
+  SUPER + CTRL + S              ❯  Toggle Screensaver
+  SUPER + CTRL + B              ❯  System Monitor (btop)
   SUPER + Q                     ❯  Close Window
   SUPER + F                     ❯  Toggle Fullscreen
   SUPER + W                     ❯  Toggle Float
@@ -20,7 +25,6 @@ pkgs.writeShellScriptBin "rofi-keybinds" ''
   SUPER + ESC                   ❯  Logout Menu
   SUPER + SHIFT + SPACE         ❯  Toggle Waybar
   SUPER + SHIFT + W             ❯  Terminal (Walt)
-  SUPER + S                     ❯  Toggle Screensaver
   SUPER + H                     ❯  Focus Left
   SUPER + L                     ❯  Focus Right
   SUPER + K                     ❯  Focus Up
@@ -29,11 +33,11 @@ pkgs.writeShellScriptBin "rofi-keybinds" ''
   SUPER + SHIFT + L             ❯  Swap Right
   SUPER + SHIFT + K             ❯  Swap Up
   SUPER + SHIFT + J             ❯  Swap Down
-  SUPER + CTRL + K              ❯  Keybinds Menu
-  SUPER + CTRL + SHIFT + H      ❯  Resize Left
-  SUPER + CTRL + SHIFT + L      ❯  Resize Right
-  SUPER + CTRL + SHIFT + K      ❯  Resize Up
-  SUPER + CTRL + SHIFT + J      ❯  Resize Down
+  SUPER + /                     ❯  Keybinds Menu
+  SUPER + CTRL + H              ❯  Resize Left
+  SUPER + CTRL + L              ❯  Resize Right
+  SUPER + CTRL + K              ❯  Resize Up
+  SUPER + CTRL + J              ❯  Resize Down
   SUPER + TAB                   ❯  Toggle Layout
   SUPER + 1                     ❯  Workspace 1
   SUPER + 2                     ❯  Workspace 2

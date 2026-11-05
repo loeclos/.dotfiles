@@ -23,6 +23,7 @@
 
   # Walt (inputs.walt, system package in modules/system/apps/base.nix) is a
   # fast terminal picker for Hyprland (hyprpaper backend). Bound to SUPER+SHIFT+W
-  # (see desktop/hyprland/keybinds.nix) as `ghostty --class=ghostty.walt -e walt`;
-  # autostart runs `walt random` after hyprpaper (restores random wallpaper).
+  # (see desktop/hyprland/keybinds.nix) as `<terminal> --class=<terminal>.walt -e walt`
+  # (terminal = lib/apps.nix selection); autostart runs `walt random` after
+  # hyprpaper (restores random wallpaper).
 }

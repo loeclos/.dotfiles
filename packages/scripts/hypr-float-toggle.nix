@@ -1,4 +1,4 @@
-{ pkgs }:
+{ pkgs, apps }:
 pkgs.writeShellScriptBin "hypr-float-toggle" ''
   #!/usr/bin/env bash
   class="$1"
@@ -6,6 +6,6 @@ pkgs.writeShellScriptBin "hypr-float-toggle" ''
   if hyprctl clients -j | jq -e --arg c "$class" 'any(.[]; .class == $c)' >/dev/null; then
     hyprctl dispatch "hl.dsp.window.close({window = 'class:$class'})"
   else
-    ghostty --class="$class" -e "$@"
+    ${apps.terminal.command} --class="$class" -e "$@"
   fi
 ''

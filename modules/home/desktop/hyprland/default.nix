@@ -5,16 +5,17 @@
   inputs,
   osConfig,
   theme,
+  apps,
   ...
 }:
 
 let
   inherit (lib.generators) mkLuaInline;
   settings = import ./settings.nix { inherit theme; };
-  windowRules = import ./window-rules.nix;
+  windowRules = import ./window-rules.nix { inherit apps; };
   autostart = import ./autostart.nix { inherit theme mkLuaInline; };
   keybinds = import ./keybinds.nix {
-    inherit lib mkLuaInline;
+    inherit lib mkLuaInline apps;
     isLaptop = osConfig.networking.hostName == "laptop";
   };
   gestures = import ./gestures.nix;

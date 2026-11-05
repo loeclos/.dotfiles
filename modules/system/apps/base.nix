@@ -1,12 +1,24 @@
-{ pkgs, inputs, ... }:
+{
+  pkgs,
+  inputs,
+  apps,
+  ...
+}:
 let
   system = pkgs.stdenv.hostPlatform.system;
+  # Editor package: nixpkgs attr (packageAttr) or flake build (flakeInput,
+  # e.g. the nixvim-built neovim). Only consumer — no shared helper needed.
+  editorPkg =
+    if apps.editor ? flakeInput then
+      inputs.${apps.editor.flakeInput}.packages.${system}.default
+    else
+      builtins.getAttr apps.editor.packageAttr pkgs;
 in
 {
   environment.systemPackages = with pkgs; [
     # apps
-    inputs.nixvim.packages.${system}.default
-    ghostty
+    editorPkg
+    (builtins.getAttr apps.terminal.packageAttr pkgs)
     vifm
     wlogout
 

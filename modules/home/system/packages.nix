@@ -5,26 +5,15 @@
   pkgs,
   lib,
   osConfig,
+  apps,
   ...
 }:
 {
   home.packages =
     with pkgs;
     [
-      # ai
-      opencode
-      code-cursor
-
-      # browsers
-      brave
-      qutebrowser
-      ungoogled-chromium
-
       # chat
       telegram-desktop
-      (discord.override {
-        withVencord = true;
-      })
 
       # dev
       gh
@@ -56,20 +45,28 @@
       cachix
       gnome-disk-utility
       jq
-      nautilus
       nmap
       tree
       ncdu
 
-      # screenshot (watershot: Print selects, saves + copies)
+      # screenshot (pkgs.screenshot: Print selects via watershot, saves + wl-copy)
       wl-clipboard
       libnotify
     ]
+    # essentials — selected in lib/apps.nix (switch once, propagates everywhere)
+    # default browser stays default for keybinds/xdg; extraBrowsers install alongside
+    ++ [
+      (builtins.getAttr apps.browser.packageAttr pkgs)
+      (builtins.getAttr apps.agent.packageAttr pkgs)
+      (builtins.getAttr apps.fileManager.packageAttr pkgs)
+    ]
+    ++ map (name: builtins.getAttr apps.browsers.${name}.packageAttr pkgs) apps.extraBrowsers
     ++ (with pkgs; [
       hypr-float-toggle
       wifi-menu
       bluetooth-menu
       rofi-keybinds
+      screenshot
     ])
     ++ lib.optionals (osConfig.networking.hostName == "laptop") [
       pkgs.power-profile-cycle

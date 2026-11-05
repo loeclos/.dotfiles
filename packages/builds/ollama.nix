@@ -151,6 +151,8 @@ goBuild (finalAttrs: {
   pname = "ollama";
   inherit version src vendorHash;
   proxyVendor = true;
+  # Skip the Go test suite on release builds — pure overhead, no value here.
+  doCheck = false;
 
   env =
     lib.optionalAttrs enableRocm {

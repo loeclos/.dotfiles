@@ -2,6 +2,7 @@
   config,
   theme,
   repoRoot,
+  apps,
   ...
 }:
 {
@@ -12,7 +13,9 @@
     repoRoot + "/assets/ghostty/shaders/cursor_warp.glsl";
 
   programs.ghostty = {
-    enable = true;
+    # Only the selected terminal (lib/apps.nix) gets HM config; the package
+    # itself is installed via modules/system/apps/base.nix.
+    enable = apps.terminalName == "ghostty";
 
     installVimSyntax = true;
 

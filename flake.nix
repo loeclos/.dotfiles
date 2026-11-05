@@ -1,5 +1,5 @@
 {
-  description = "my nixos+home manager+flakes config";
+  description = "mononix — NixOS + home-manager flake (desktop, laptop, live ISOs)";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -55,7 +55,7 @@
 
     watershot = {
       url = "github:Kirottu/watershot";
-      inputs.nixpkgs.follows = "nixpkgs";
+      flake = false;
     };
 
     hyprsaver = {
