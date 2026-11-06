@@ -1,5 +1,5 @@
 <!--
-last-updated: 2026-11-04 00:00 UTC
+last-updated: 2026-11-05 00:00 UTC
 agent-guide: AGENTS.md — must be updated alongside README.md after every structural change
 -->
 
