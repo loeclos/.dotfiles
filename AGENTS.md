@@ -1,4 +1,4 @@
-# AGENTS.md — Contributor & Agent Guide for mononix (loeclos/.dotfiles)
+# AGENTS.md — Contributor & Agent Guide for (loeclos/.dotfiles)
 
 > **Read this first.** This repo (`mononix`) is a declarative NixOS flake that builds `desktop`, `laptop`, and `live-{desktop,laptop}` installer ISOs from one source of truth. Follow the structure, do the least change that works, and keep docs in sync.
 
@@ -42,7 +42,7 @@ lib/
   theme.nix                     # palette, fonts, cursor, display — ONLY place for #1d2021, a99f8f, Martian Mono (terminal default; SFMono kept as fallback), Bibata-Modern-Ice 24, 1920x1080
   apps.nix                      # essential apps — ONLY place for browser/terminal/agent/file-manager/editor picks + catalogs (packageAttr/command/desktopId, or flakeInput for the nixvim-built editor); switch once, packages/keybinds/xdg/scripts follow
   mkHost.nix                    # thin wiring: common + hosts/<name>.nix + home-manager (skipped with withHome=false for ISOs) + overlays (apps via specialArgs + extraSpecialArgs, no feature config here)
-  overlays.nix                  # every overlay: upstream (apple-fonts, plymouth-theme, install-nix) + packages/ (scripts take apps) + hyprtoolkit pin
+  overlays.nix                  # every overlay: upstream (apple-fonts, plymouth-theme, install-nix) + packages/ (scripts take apps) + hyprtoolkit/opencode pins
   autoimport.nix                # manifest helper — drop a .nix in the right folder and it's live
 hosts/
   common.nix                    # shared: timeZone, locale, NM, user groups
@@ -78,15 +78,18 @@ Manifests `modules/system/default.nix` and `modules/home/default.nix` are 3-line
 ## 3. Principles — How to Change
 
 ### 3.1 Least Change
+
 Do the smallest diff that solves the task. Don't reformat the world, don't move files unless the structure demands it, don't add deps for a one-line fix. Prefer editing one file over touching five.
 
 ### 3.2 Clean Code
-- `with pkgs;` for package *lists*, `pkgs.<name>` everywhere else. `callPackage` appears only in `packages/default.nix` (the one overlay) and once in `flake.nix` (pinned `sf-pro-nerd`) — never in modules. If you catch yourself writing `pkgs.callPackage ../...` in a module, add the package to `packages/` instead.
+
+- `with pkgs;` for package _lists_, `pkgs.<name>` everywhere else. `callPackage` appears only in `packages/default.nix` (the one overlay) and once in `flake.nix` (pinned `sf-pro-nerd`) — never in modules. If you catch yourself writing `pkgs.callPackage ../...` in a module, add the package to `packages/` instead.
 - No dead/commented blocks — use `git log` for history, not `# foo` leftovers.
 - No duplicate constants — colors/fonts/resolutions go in `lib/theme.nix`, essential-app picks go in `lib/apps.nix` (browser/terminal/agent/file-manager/editor + catalogs), not hardcoded `chromium`/`ghostty`/`nautilus` in 5 places. Hyprland gaps/borders, bootloader `resolution`, terminal font, dunst colors all derive from `theme`; packages, xdg defaults, keybinds, float rules, and picker scripts all derive from `apps`.
 - Helpers over copy-paste: `mkBind`/`mkExec` in `desktop/hyprland/keybinds.nix:4`, `mkFloatRule` in `window-rules.nix:4`, `"*" = lib.range 1 9` (monitor-keyed persistent workspaces) in `desktop/waybar.nix`.
 
 ### 3.3 Follow Structure — Fit Into Current Categories, Otherwise Create New
+
 1. Search existing category first:
    - System theme/display → `lib/theme.nix` + `modules/system/{boot,nix,shell}.nix`
    - Essential apps (browser/terminal/agent/file-manager/editor) → `lib/apps.nix` (switch `*Name`, extend the matching catalog with `packageAttr`/`command`/`desktopId` — or `flakeInput` for flake-built packages like the nixvim editor; never hardcode app names in modules/scripts)
@@ -99,11 +102,13 @@ Do the smallest diff that solves the task. Don't reformat the world, don't move 
 3. New hosts: add `hosts/<name>.nix` (import `hardware/<name>.nix` + `../modules/system`), then wire in `flake.nix` via `mkHost { hostname = "<name>"; }`. See `lib/mkHost.nix:1` for overlay/home-manager injection — don't duplicate that block. Generated scans live in `hosts/hardware/` — regenerate with `nixos-generate-config`, don't hand-edit. Live ISOs are the exception: `hosts/live.nix` is a shared base (no `../modules/system`, no hardware scans), `hosts/live-{desktop,laptop}.nix` import it and add only ISO quirks (NVIDIA for desktop, `isoImage.edition`), wired with `withHome = false` + `installation-cd-graphical-calamares-gnome.nix` in `flake.nix`.
 
 ### 3.4 File Naming
+
 - `modules/system/apps/base.nix` = `environment.systemPackages`, `modules/home/system/packages.nix` = `home.packages` — extend those lists, don't create new package files.
 - Use kebab-case, one-word where possible (wallpapers already normalized). `default.nix` exists only for the two auto-import manifests + self-contained feature folders; feature files are `hypridle.nix`, `virtualisation.nix`, not `base/` subfolders.
 
 ### 3.5 Task Tracking
-- Always create a `TodoWrite` todo list at the start of *every* task — even one-liners / "trivial" fixes. Break work into steps, keep exactly one `in_progress` at a time, mark completed as you go. No execution without todos.
+
+- Always create a `TodoWrite` todo list at the start of _every_ task — even one-liners / "trivial" fixes. Break work into steps, keep exactly one `in_progress` at a time, mark completed as you go. No execution without todos.
 
 ## 4. Making Changes — Checklist
 
@@ -111,7 +116,7 @@ Do the smallest diff that solves the task. Don't reformat the world, don't move 
 2. **Edit:** Keep `configType = "lua"` for Hyprland (`desktop/hyprland/default.nix`) — newer Hyprland requires it. Use `theme`/`apps`/`repoRoot` via `extraSpecialArgs` (injected by `lib/mkHost.nix`, `apps` also via system `specialArgs`), so home modules take `{ theme, ... }:` / `{ apps, ... }:` / `{ repoRoot, ... }:` — never `import ../../../lib/theme.nix`, never `import ../../../lib/apps.nix`, never a relative `../../assets/...` path.
 3. **Scripts:** If you add a `writeShellScriptBin`, put it in `packages/scripts/<name>.nix` and expose it as `pkgs.<name>` in `packages/default.nix` — consumers reference the attr, never `callPackage` it. Same for compiled derivations → `packages/builds/<name>.nix`.
 4. **Wallpapers:** One word, lowercase, keep extension. Boot default `road.png` lives in `modules/home/desktop/wallpaper.nix` (`services.hyprpaper.settings.wallpaper`) — update there if changing default.
-5. **Todos:** Create a `TodoWrite` todo list at the start of *every* task — even one-liners. Keep exactly one `in_progress`, mark completed as you go.
+5. **Todos:** Create a `TodoWrite` todo list at the start of _every_ task — even one-liners. Keep exactly one `in_progress`, mark completed as you go.
 
 ## 5. Verification (Do This Before PR)
 
@@ -124,25 +129,29 @@ sudo nixos-rebuild build --flake .#desktop --dry-run
 
 If you moved files, use `git mv` to preserve history. Ensure `lib/theme.nix` consumers use `theme.palette`/`theme.mkRgb` not hardcoded hex.
 
-## 6. Docs — MANDATORY / BLOCKING — YOU MUST UPDATE BOTH DOCS AFTER *EVERY* CHANGE
+## 6. Docs — MANDATORY / BLOCKING — YOU MUST UPDATE BOTH DOCS AFTER _EVERY_ CHANGE
 
 > **BLOCKING REQUIREMENT — PRs WILL BE REJECTED AND BUILDS CONSIDERED BROKEN IF DOCS ARE STALE. NO EXCEPTIONS.**
 > **If you touched code, you touch docs. No docs = incomplete change. Do not skip even for one-line / "trivial" fixes.**
 
-**STOP — DO NOT SKIP THIS SECTION. For *EVERY* change you must:**
+**STOP — DO NOT SKIP THIS SECTION. For _EVERY_ change you must:**
 
 - **`README.md` — REQUIRED** — keep `Repository structure` tree, `What this repo contains`, `How it fits together`, and `Build & deploy` in sync with the actual `flake.nix` / `lib/mkHost.nix` / `modules/*/default.nix` state. **MUST** bump `last-updated: YYYY-MM-DD HH:MM UTC` inside the top `<!-- ... -->` metadata comment to today (UTC) on every commit (keep it in the HTML comment so it stays hidden on the rendered website) — today is `2026-08-27 00:00 UTC` as baseline, update to the current date and time. Date without time is rejected.
 - **`AGENTS.md` (this file) — REQUIRED** — if you add/rename/move a category or file, change the `theme`/`mkHost` contract, or alter the wallpaper/derivation/script layout, update sections 2 and 3 immediately. Keep the `lib/theme.nix` palette/fonts table accurate. Stale AGENTS.md causes future agents/humans to make wrong changes.
-- **`TodoWrite` — REQUIRED** — create a todo list at the start of *every* task (even one-liners) and keep it updated. Keep exactly one `in_progress` at a time. No todos = incomplete workflow.
+- **`TodoWrite` — REQUIRED** — create a todo list at the start of _every_ task (even one-liners) and keep it updated. Keep exactly one `in_progress` at a time. No todos = incomplete workflow.
 
 **NEVER SHIP — not even a 1-line fix — WITHOUT ALL FOUR (reviewers must request changes if any is missing):**
+
 ```bash
 # 1. README.md: update tree + hidden last-updated: YYYY-MM-DD HH:MM UTC comment ← REQUIRED
 # 2. AGENTS.md: update architecture/categories/principles ← REQUIRED
 # 3. TodoWrite: todos created and tracked for every task  ← REQUIRED
 # 4. nix flake check --no-build passes                   ← REQUIRED
 ```
+
 **Missing docs = change is NOT DONE. Treat this as a build failure.**
+
+- **Short-term / one-time fixes:** if you add a workaround, stub, pin, temporary hack, or "until upstream fixes it" guard, add an entry to the "Short-term / one-time fixes" list above (section 7) stating what it is, why it exists, where it lives, and the removal condition. Leaving such a fix undocumented is treated as a build failure.
 
 ## 7. Common Pitfalls
 
@@ -157,6 +166,7 @@ If you moved files, use `git mv` to preserve history. Ensure `lib/theme.nix` con
 - Essential apps live only in `lib/apps.nix` (`browserName`/`terminalName`/`agentName`/`fileManagerName`/`editorName` + catalogs) — never hardcode `chromium`/`ghostty`/`nautilus`/`opencode` in modules or scripts; resolve via `apps.<role>.command` (bin), `apps.<role>.packageAttr` (with `builtins.getAttr ... pkgs`) or `apps.<role>.flakeInput` (flake-built packages, e.g. the nixvim editor — resolved in `modules/system/apps/base.nix`, the only package consumer), `apps.<role>.desktopId` (xdg). Picker scripts (`hypr-float-toggle`, `wifi-menu`, `bluetooth-menu`) take `apps` through the overlay (`packages/default.nix`, wired in `lib/overlays.nix`) and assume the terminal honors `--class=<class> -e <cmd>` (ghostty/kitty style) — an alacritty-class terminal may need float-rule tweaks. Ghostty HM config (`apps/terminal.nix`) is gated on `terminalName == "ghostty"`; alternative terminals get package-only (no HM config) until someone wires `programs.kitty`/`programs.alacritty`. TUI agents (`inTerminal = true`) launch as `<terminal> -e <agent>` on the `SUPER+A` bind; GUI agents launch directly. Single-purpose launchers stay hardcoded, not roles: `SUPER+S` spotify (spicetify).
 - Screensaver is `hyprsaver` (flake input `github:maravexa/hyprsaver`, `flake = false`, built in `packages/builds/hyprsaver.nix` as `pkgs.hyprsaver` — fractal shaders on wlr-layer-shell overlays, needs the `LD_LIBRARY_PATH` wrap for libGL/mesa in `modules/home/desktop/hyprsaver.nix`). Pinned to the `tesla` shader only (`shader = "tesla"` in `xdg.configFile."hypr/hyprsaver.toml"`); palette still cycles. `SUPER+CTRL+S` toggles it (`desktop/hyprland/keybinds.nix`: `pkill -x hyprsaver || hyprsaver`), hypridle launches it after 10min idle and quits it on activity via `hyprsaver --quit` (own IPC, no hyprctl involved) in `desktop/hypridle.nix`. `SUPER+S` is Spotify (spicetify), `SUPER+CTRL+B` is a centered floating btop (`<terminal>.btop` 1200x800 rule in `desktop/hyprland/window-rules.nix`) — don't move the screensaver back onto `SUPER+S`.
 - Hyprland 0.56 only accepts Lua-style dispatch from the shell (`hl.dsp.*`) — old bare `hyprctl dispatch closewindow class:…` / `dpms off` forms fail with a Lua parse error, so every shell-side dispatch (`hypr-float-toggle` closewindow, hypridle dpms off/on) must use the `hl.dsp.*` form, and Lua string args can't contain regex backslash escapes (`\.` is an invalid Lua escape — match plain class names); `hyprctl clients -j` is unaffected.
+- Only Hyprland window blur is kept (`decoration:blur` in `desktop/hyprland/settings.nix`). No client/layer blur: Ghostty is opaque (`background-opacity = 1` in `apps/terminal.nix`, no `background-blur`), Waybar is opaque (`@background` in `desktop/waybar.css`, no `layer_rule`), and hyprlock uses a plain screenshot background. Don't re-add `layer_rule` blur or translucent surfaces.
 - Screenshots are `watershot` (flake input `github:Kirottu/watershot`, `flake = false`, built in `packages/builds/watershot.nix` as `pkgs.watershot` — upstream's std flake doesn't evaluate against our nixpkgs, same story as hyprsaver; home package in `modules/home/desktop/watershot.nix`, it wraps its own `grim` via `-g`, so no system/home `grim` needed; window preselect stubbed via postPatch since the pinned hyprland crate predates current Hyprland IPC and `get_all_windows()` runs unconditionally — region select unaffected, don't try to re-enable it without bumping the crate). Single bind only: bare `Print` in `desktop/hyprland/keybinds.nix` runs `pkgs.screenshot` (`packages/scripts/screenshot.nix`: `watershot -c -s directory ~/Pictures/Screenshots` piped through `wl-copy --type image/png`, so the region select is both saved and clipboard-copied; cancel leaves the clipboard untouched — watershot's own `-c` fork alone is unreliable from a Hyprland bind). Don't re-add `hyprshot`/`grim`/`slurp` or the SUPER/SHIFT + Print variants.
 - Waybar workspaces must use `format = "{name}"` + `sort-by = "name"` + `persistent-only = true` (see `desktop/waybar.nix`) — Hyprland 0.56 dropped `id` from its workspaces IPC, so Waybar sees every real workspace as id 0: `{id}` renders as `0` and real workspaces duplicate the persistent buttons. Don't revert to `{id}` / drop `persistent-only` until upstream Waybar handles the id-less IPC.
 - Waybar network is icon-only (`desktop/waybar.nix`): `{icon}` for wifi, `󰌗` for ethernet, `format-disconnected` icon-only, `bluetooth` sits right of `network` in `modules-right`. Don't re-add `{bandwidthDownBytes}/{bandwidthUpBytes}` (plus `interval = 2` + `:>` fixed-width) unless speeds are wanted back in the bar.
@@ -165,9 +175,24 @@ If you moved files, use `git mv` to preserve history. Ensure `lib/theme.nix` con
 - QEMU/OVMF: upstream removed the `virtualisation.libvirtd.qemu.ovmf` submodule (all OVMF images ship with QEMU by default) — don't re-add an `ovmf = { enable = ...; packages = ...; }` block, it fails `nix flake check`. UEFI guests work out of the box; only `swtpm.enable` needs setting for TPM.
 - Privilege escalation lives in `system/security/polkit.nix` (`security.polkit.enable` + `enablePkexecWrapper` → `/run/wrappers/bin/pkexec`; enabling polkit alone is NOT enough, the wrapper is required since store binaries can't be setuid). The GUI agent is `services.hyprpolkitagent` (`modules/home/desktop/hyprpolkitagent.nix`, HM user service under UWSM-owned `graphical-session.target` — don't exec it from `desktop/hyprland/autostart.nix`: the binary lives in `libexec/`, not `bin/`, so it's not on PATH). Agents (e.g. opencode) run password-protected commands via `pkexec` — the GUI prompt appears on the user's screen, no TTY needed: `pkexec nixos-rebuild switch --flake /home/loeclos/.dotfiles#desktop`, `pkexec nix-collect-garbage -d`, `pkexec <anything-root-needs>`. Always use the absolute flake path (relative `.` fails: pkexec runs as root, which resolves `.` against `/root`, not the repo). A dismissed prompt reports `Not authorized / This incident has been reported` — expected, not a broken setup.
 - hyprpolkitagent version skew: nixpkgs ships Qt-based 0.1.3 (no `hyprpolkitagent.conf`/`hyprtoolkit.conf` support, unthemable) — the overlay pins v0.2.0 (hyprtoolkit, config + theming) plus the exact `hyprtoolkit` rev from its flake.lock (needs `abseil-cpp` added to the override's `buildInputs`). Don't drop the pins until nixpkgs catches up; v0.2.0 also fixes session resolution for headless (`User.Display` fallback), which agent-invoked pkexec relies on. Upstream v0.2.0 hardcodes a full card (title/identity/message/$-box/buttons/details/background) with no config knobs to hide them — the minimal floating prompt (`Allow: <command>` + input only, transparent window, Enter submits / Escape cancels) lives in `packages/builds/hyprpolkitagent-dialog.cpp` (copied over `src/ui/Dialog.cpp` in `postPatch`); home `modules/home/desktop/hyprpolkitagent.nix` keeps `background = 0x00000000` + compact `420x160` geometry (the patch draws its own translucent bg0 card at 80% so white text reads on any wallpaper) and the window rule dims the screen around it (`dim_around`, no blur/shadow). Agents prefix privileged commands with `pkexec` directly (GUI prompt every time, no credential caching unlike sudo) — never add a wheel→`YES` polkit rule or `NOPASSWD` sudo rule to "fix" prompts.
+- opencode hash pin: nixpkgs 2.2.5 ships a stale `node_modules` outputHash, so `lib/overlays.nix` overrides just that inner fixed-output derivation with the fetched hash. The pin is guarded on `version == "2.2.5"` — drop it when nixpkgs moves past 2.2.5 (still broken upstream as of 2026-11-06, so `nix flake lock --update-input nixpkgs` does not fix it).
 - Live ISOs: `hosts/live.nix` must never import `../modules/system` (GRUB/greetd/Hyprland conflict with the installer-cd stack — ISO would set `boot.loader.grub.enable = true` and drag the full desktop into the squashfs). `live-{desktop,laptop}.nix` must never import `hardware/<name>.nix` (filesystem UUIDs describe the installed machine, not bootable media) — duplicate only the driver bits (NVIDIA for desktop). ISOs need `withHome = false` in `flake.nix` or the Hyprland home env bloats the image. The flake is embedded at `/iso/dotfiles` (`isoImage.contents` in `live.nix`) — install via `sudo install-nix` (guided: picks drive, partitions, refreshes hardware UUIDs, runs nixos-install; lives in `hosts/live.nix` systemPackages via the `install-nix` overlay), manual fallback `sudo nixos-install --flake /iso/dotfiles#desktop` (or `#laptop`), never via Calamares (which installs generic NixOS).
 - USB sounds live in `system/hardware/usb-sound.nix` (udev `ACTION=="add/remove"`, `SUBSYSTEM=="block"`, `KERNEL=="sd*[!0-9]"`, `SUBSYSTEMS=="usb"` → `pkgs.usb-sound` with `inputs.self + "/assets/sounds/usb-{in,out}.mp3"`). Whole-disk `sd*[!0-9]` = one sound per stick (partitions like `sda1` would double-fire); `SUBSYSTEMS=="usb"` (parent walk) keeps NVMe/SATA silent on both add and remove (where `ENV{ID_BUS}` can be missing). udev runs as root with no PipeWire, so `pkgs.usb-sound` (`packages/scripts/usb-sound.nix`) fans out to every `/run/user/<uid>=1000+` via `runuser` + `mpv --no-video --really-quiet`, backgrounded (`&`) so udev never blocks — don't play inline, don't use `paplay`/`aplay` (no mp3 decode), don't match `DEVTYPE=="disk"` alone (unreliable on remove).
 - Obsidian 1.14.5 may render a blank window after the Electron 43.8.3 update with `webFrame` / `defineProperty` errors because of stale Electron caches. After closing Obsidian, move or remove `~/.config/obsidian/Cache`, `Code Cache`, and `GPUCache`; these are disposable caches, not vault data. The user-confirmed workaround is documented in nixpkgs issues [#578970](https://github.com/NixOS/nixpkgs/issues/578970) and [#581876](https://github.com/NixOS/nixpkgs/issues/581876). Don't attribute this symptom to NVIDIA GPU sandboxing or add a custom Obsidian wrapper for it.
+
+### Short-term / one-time fixes (temporary — remove when upstream resolves)
+
+Track every workaround, stub, pin, or temporary hack here so it is not forgotten.
+Each entry: what it is, why it exists, where it lives, and the condition for removing it.
+
+- **ollama LD_LIBRARY_PATH wrap** (`packages/builds/ollama.nix:120-124`): llama-cpp binaries embedded by ollama are unaffected by the ollama binary's DT_RUNPATH, so `--suffix LD_LIBRARY_PATH` is required for GPU use. Remove once those binaries can have their runpath patched.
+- **NVIDIA beta driver for Blackwell** (`hosts/desktop.nix:42`): `package = config.boot.kernelPackages.nvidiaPackages.beta` is required for RTX 5060 Ti (GB206) on linux 6.18. Drop to stable once nixpkgs' stable NVIDIA package supports Blackwell.
+- **NTFS mountpoint single declaration** (`hosts/desktop.nix:57-73`): one `fileSystems."/mnt/ssd"` declaration owns the whole lifecycle; do not split into systemd.mounts/systemd.automounts plus a generated autofs stub (a dangling mountpoint silently collects writes on the root filesystem).
+- **watershot window preselect stubbed** (`packages/builds/watershot.nix:43-47`): pinned hyprland crate predates current Hyprland IPC; `get_all_windows()` runs unconditionally, so window preselect is stubbed. Region select unaffected. Don't re-enable without bumping the crate.
+- **hyprpolkitagent Dialog.cpp patch** (`packages/builds/hyprpolkitagent-dialog.cpp`): minimal Allow:-only prompt (transparent window, no buttons/details). Remove if upstream adds config knobs.
+- **hyprtoolkit pin** (`lib/overlays.nix:10-20`): v0.2.0 needs exact toolkit rev + abseil-cpp. Drop when nixpkgs ships hyprpolkitagent >= 0.2.0.
+- **opencode hash pin** (`lib/overlays.nix:22-36`): guarded on 2.2.5; drop when nixpkgs moves past 2.2.5.
+- **sf-pro-nerd custom build** (`packages/builds/sf-pro-nerd.nix`, `flake.nix`): custom 7-font Display subset. Remove if nixpkgs ships an equivalent.
 
 ## 8. References
 
@@ -177,7 +202,7 @@ If you moved files, use `git mv` to preserve history. Ensure `lib/theme.nix` con
 - Host helper: `lib/mkHost.nix:1`
 - Hyprland split: `modules/home/desktop/hyprland/{settings,keybinds,window-rules,autostart,gestures}.nix`
 - Waybar separator & persistent workspaces: `modules/home/desktop/waybar.nix`
-- Login + lock: `modules/system/desktop/login.nix` (greetd + tuigreet TTY greeter, `/run/current-system/sw/bin/uwsm start hyprland-uwsm.desktop`, + hyprlock PAM) + home `modules/home/desktop/hyprlock.nix` (blurred bg + centered password field, `hypridle` lock_cmd)
+- Login + lock: `modules/system/desktop/login.nix` (greetd + tuigreet TTY greeter, `/run/current-system/sw/bin/uwsm start hyprland-uwsm.desktop`, + hyprlock PAM) + home `modules/home/desktop/hyprlock.nix` (screenshot bg, no blur + centered password field, `hypridle` lock_cmd)
 - UWSM owns the session: home `modules/home/desktop/hyprland/default.nix` must keep `systemd.enable = false` — HM integration activates `graphical-session.target` early and `uwsm start` aborts.
 - Wallpaper default + picker: `modules/home/desktop/wallpaper.nix` (hyprpaper `road.png` + `walt`), `walt` binary from `inputs.walt` (system package in `modules/system/apps/base.nix`)
 - Live ISOs: `hosts/live.nix` (shared GNOME + recovery base) + `hosts/live-{desktop,laptop}.nix` (per-host quirks), wired in `flake.nix` with `installation-cd-graphical-calamares-gnome.nix` + `withHome = false`

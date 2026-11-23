@@ -1,5 +1,6 @@
 { pkgs, theme, ... }:
 {
+
   home.pointerCursor = {
     enable = true;
     package = pkgs.bibata-cursors;
@@ -7,4 +8,5 @@
     size = theme.cursor.size;
     gtk.enable = true;
   };
+
 }

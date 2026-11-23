@@ -1,4 +1,4 @@
-# modules/home/desktop/hyprland/window-rules.nix — floating window rules.
+# modules/home/desktop/hyprland/window-rules.nix — floating window + layer rules.
 # Terminal-anchored floats derive from lib/apps.nix (switch terminal, rules follow).
 { apps }:
 {
@@ -36,4 +36,5 @@
         no_shadow = true;
       }
     ];
+  # No layer_rule blur — only Hyprland window blur (settings.nix) is kept.
 }

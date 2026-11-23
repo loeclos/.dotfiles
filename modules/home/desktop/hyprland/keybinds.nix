@@ -35,7 +35,7 @@ let
     builtins.genList (
       i:
       let
-        n = toString (i + 1);
+        n = toString (i + 0);
       in
       [
         {
@@ -85,8 +85,6 @@ in
     (mkBind "I" (exec "wifi-menu"))
     (mkBind "SHIFT + B" (exec "bluetooth-menu"))
     (mkBind "H" (mkLuaInline "hl.dsp.focus({direction = \"left\"})"))
-    (mkBind "RIGHT" (mkLuaInline "hl.dsp.focus({workspace = \"+1\", wrap = true})"))
-    (mkBind "LEFT" (mkLuaInline "hl.dsp.focus({workspace = \"-1\", wrap = true})"))
     (mkBind "L" (mkLuaInline "hl.dsp.focus({direction = \"right\"})"))
     (mkBind "K" (mkLuaInline "hl.dsp.focus({direction = \"up\"})"))
     (mkBind "J" (mkLuaInline "hl.dsp.focus({direction = \"down\"})"))
@@ -94,11 +92,6 @@ in
     (mkBind "SHIFT + L" (mkLuaInline "hl.dsp.window.swap({direction = \"right\"})"))
     (mkBind "SHIFT + K" (mkLuaInline "hl.dsp.window.swap({direction = \"up\"})"))
     (mkBind "SHIFT + J" (mkLuaInline "hl.dsp.window.swap({direction = \"down\"})"))
-    (mkBind "slash" (exec "rofi-keybinds"))
-    (mkHold "CTRL + H" (mkLuaInline "hl.dsp.window.resize({x = -50, y = 0, relative = true})"))
-    (mkHold "CTRL + L" (mkLuaInline "hl.dsp.window.resize({x = 50, y = 0, relative = true})"))
-    (mkHold "CTRL + K" (mkLuaInline "hl.dsp.window.resize({x = 0, y = -50, relative = true})"))
-    (mkHold "CTRL + J" (mkLuaInline "hl.dsp.window.resize({x = 0, y = 50, relative = true})"))
     {
       _args = [
         (mkLuaInline "mod .. \" + Tab\"")

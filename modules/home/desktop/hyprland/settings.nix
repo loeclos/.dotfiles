@@ -38,23 +38,23 @@
   config = {
     general = {
       gaps_in = 2;
-      gaps_out = 3;
+      gaps_out = 2;
       border_size = 1;
       col.active_border = "rgb(${theme.palette.borderActiveRgb})";
       col.inactive_border = "rgb(${theme.palette.borderInactiveRgb})";
     };
     decoration = {
-      active_opacity = 0.85;
-      inactive_opacity = 0.82;
+
+      active_opacity = 1;
+      inactive_opacity = 0.97;
       rounding = 12;
 
       blur = {
         enabled = true;
-        size = 9;
+        size = 3;
         passes = 3;
         new_optimizations = true;
         noise = 0.02;
-        popups = true;
       };
 
     };

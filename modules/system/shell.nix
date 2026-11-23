@@ -8,7 +8,7 @@
     ll = "eza -l --icons";
     la = "eza -a --icons";
     edit = "sudo -e";
-    shell = "nix-shell";
+    shll = "nix-shell";
     dots = "cd ~/.dotfiles";
   };
 
@@ -18,10 +18,6 @@
     autosuggestions.enable = true;
     syntaxHighlighting.enable = true;
 
-    # rbld [target] — rebuild + switch, with desktop notification.
-    # Target accepts: laptop, .#laptop, #laptop. Defaults to current hostname.
-    # notify-send runs as the user (not under sudo) so it keeps the DBUS
-    # session dunst needs; failures never mask the rebuild exit code.
     interactiveShellInit = ''
             rbld() {
               local target="''${1:-$(hostname)}"

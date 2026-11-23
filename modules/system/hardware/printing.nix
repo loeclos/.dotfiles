@@ -1,5 +1,6 @@
 { pkgs, ... }:
 {
+
   services.avahi = {
     enable = true;
     nssmdns4 = true;
@@ -13,4 +14,5 @@
       cups-browsed
     ];
   };
+
 }

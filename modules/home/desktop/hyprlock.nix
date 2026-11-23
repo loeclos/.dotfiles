@@ -14,8 +14,6 @@
         {
           monitor = "";
           path = "screenshot";
-          blur_passes = 3;
-          blur_size = 8;
         }
       ];
 
@@ -40,7 +38,7 @@
           font_color = "rgb(${theme.mkRgb theme.palette.fgAlt})";
           check_color = "rgb(${theme.mkRgb theme.palette.border})";
           fail_color = "rgb(${theme.mkRgb theme.palette.brightRed})";
-          fail_text = "FAILED";
+          fail_text = "TYPE BETTER";
           placeholder_text = ''<span foreground="#${theme.palette.muted}">PASSWORD</span>'';
         }
       ];

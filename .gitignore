@@ -4,3 +4,6 @@ result-*
 .venv/
 *.save
 *.backup
+./modules/home/cli/git.nix
+./modules/home/cli/github.nix
+./hosts/hardware/*.nix

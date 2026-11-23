@@ -3,6 +3,7 @@ let
   spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in
 {
+
   imports = [ inputs.spicetify-nix.homeManagerModules.default ];
 
   programs.spicetify = {
@@ -10,18 +11,14 @@ in
 
     enabledExtensions = with spicePkgs.extensions; [
       adblock
-      hidePodcasts
       shuffle
     ];
-    enabledCustomApps = with spicePkgs.apps; [
-      newReleases
-      ncsVisualizer
-    ];
+
     enabledSnippets = with spicePkgs.snippets; [
-      rotatingCoverart
       pointer
     ];
 
     theme = spicePkgs.themes.text;
   };
+
 }

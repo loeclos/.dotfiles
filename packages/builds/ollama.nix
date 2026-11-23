@@ -1,3 +1,5 @@
+# NOTE: Currently not used.
+
 {
   lib,
   buildGoModule,

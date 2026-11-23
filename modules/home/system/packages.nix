@@ -1,6 +1,3 @@
-# modules/home/system/packages.nix — the home package set.
-# Plain nixpkgs packages below; our own builds/scripts come from packages/
-# (single overlay, see packages/default.nix) and are referenced as pkgs.<name>.
 {
   pkgs,
   lib,
@@ -17,6 +14,7 @@
 
       # dev
       gh
+      t3code # desktop (t3code-desktop) + CLI (t3); Nix owns updates, not `t3 update`
 
       # general
       gnome-calculator
@@ -34,11 +32,9 @@
       gnome-sound-recorder
       lufus
       mpv
-      obs-studio
       papers
       playerctl
-      yt-dlp
-      krita
+      blender
 
       # system / utils
       btop
@@ -48,27 +44,26 @@
       nmap
       tree
       ncdu
-
-      # screenshot (pkgs.screenshot: Print selects via watershot, saves + wl-copy)
       wl-clipboard
       libnotify
     ]
-    # essentials — selected in lib/apps.nix (switch once, propagates everywhere)
-    # default browser stays default for keybinds/xdg; extraBrowsers install alongside
+
     ++ [
       (builtins.getAttr apps.browser.packageAttr pkgs)
       (builtins.getAttr apps.agent.packageAttr pkgs)
       (builtins.getAttr apps.fileManager.packageAttr pkgs)
     ]
-    ++ map (name: builtins.getAttr apps.browsers.${name}.packageAttr pkgs) apps.extraBrowsers
+    ++ map (name: builtins.getAttr apps.browsers.${name}.packageAttr pkgs) apps.extraBrowsers j
+
     ++ (with pkgs; [
       hypr-float-toggle
       wifi-menu
       bluetooth-menu
-      rofi-keybinds
       screenshot
     ])
+
     ++ lib.optionals (osConfig.networking.hostName == "laptop") [
       pkgs.power-profile-cycle
     ];
+
 }

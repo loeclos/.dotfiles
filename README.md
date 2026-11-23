@@ -1,9 +1,9 @@
 <!--
-last-updated: 2026-11-05 00:00 UTC
+last-updated: 2026-11-07 03:29 UTC
 agent-guide: AGENTS.md — must be updated alongside README.md after every structural change
 -->
 
-# mononix — NixOS configuration (`~/.dotfiles`)
+# NixOS configuration (`~/.dotfiles`)
 
 A declarative NixOS flake and Home Manager setup that drives my machines from a single source of truth. One repo builds `desktop` (NVIDIA RTX 5060 Ti) and `laptop` with the same environment—Hyprland (Lua), Waybar, Ghostty, Rofi, and Gruvbox theming—plus matching `live-desktop` and `live-laptop` installer ISOs with this flake embedded.
 
@@ -45,7 +45,7 @@ lib/
   theme.nix                     # Gruvbox palette, fonts (Martian Mono), Bibata cursor, 1920x1080
   apps.nix                      # default browser/terminal/agent/file-manager/editor + catalogs
   mkHost.nix                    # host builder: common + host + home-manager + overlays
-  overlays.nix                  # upstream overlays + local packages/ + hyprtoolkit pin
+  overlays.nix                  # upstream overlays + local packages/ + hyprtoolkit/opencode pins
   autoimport.nix                # directory auto-import helper
 hosts/
   common.nix                    # shared timezone, locale, NetworkManager, user groups
@@ -100,6 +100,7 @@ assets/
   - **Screensaver**: `hyprsaver` (pinned to the `tesla` shader) toggles with `Super+Ctrl+S` and starts automatically after 10 minutes of idle.
   - **Laptop power profiles**: `Super+Ctrl+P` (or clicking the Waybar indicator) cycles through hardware-supported `power-profiles-daemon` modes.
   - **Touchpad & media keys**: Mac-style touchpad settings and 3-finger gestures in Hyprland, plus F2/F3 and F5/F6 paired with XF86 volume and brightness keys.
+  - **Transparency & blur**: only Hyprland window blur (`decoration:blur` in `desktop/hyprland/settings.nix`) is kept — Ghostty, Waybar, rofi, notifications, and hyprlock are opaque with no client/layer blur.
   - **USB audio feedback**: udev rules trigger `pkgs.usb-sound` on whole-disk USB stick insertion/removal, playing `usb-in.mp3` / `usb-out.mp3` across active user PipeWire sessions.
 
 ## Build & deploy

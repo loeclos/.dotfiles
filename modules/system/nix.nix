@@ -1,5 +1,6 @@
 { pkgs, ... }:
 {
+
   nix.settings = {
     experimental-features = [
       "nix-command"
@@ -23,4 +24,5 @@
 
   users.defaultUserShell = pkgs.zsh;
   system.stateVersion = "26.05";
+
 }

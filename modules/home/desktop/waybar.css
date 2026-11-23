@@ -38,9 +38,8 @@ window#waybar {
 }
 
 #waybar > box {
-  border-radius: 0px 0px 12px 12px;
   margin: 0px;
-  border-bottom: 1.5px solid alpha(@foreground, 0.1);
+  border-top: 1.5px solid alpha(@foreground, 0.1);
   background-color: @background;
   min-height: 20px;
   transition-property: background-color;
@@ -206,7 +205,7 @@ tooltip {
   background: @background-alt;
   font-size: 10px;
   border: 1.5px solid alpha(@foreground, 0.6);
-  border-radius: 8px;
+  border-radius: 0;
 }
 
 tooltip label {

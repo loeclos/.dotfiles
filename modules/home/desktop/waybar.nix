@@ -12,7 +12,7 @@ in
     settings = {
       mainBar = {
         layer = "top";
-        position = "top";
+        position = "bottom";
         margin-top = 0;
         margin-bottom = 0;
         spacing = 0;
@@ -57,19 +57,6 @@ in
           format = "{name}";
           sort-by = "name";
           persistent-only = true;
-          persistent-workspaces = {
-            "*" = [
-              1
-              2
-              3
-              4
-              5
-              6
-              7
-              8
-              9
-            ];
-          };
         };
 
         "custom/separator" = {
@@ -88,8 +75,8 @@ in
         };
 
         "clock" = {
-          format = "{:%d/%m - %H:%M}";
-          format-alt = "{:L%d %B W%V %Y}"; # use format-alt if you want toggle
+          format = "{:%m/%d - %H:%M}";
+          format-alt = "{:L%d %B W%V %Y}";
           tooltip-format = "<span>{calendar}</span>";
           calendar = {
             mode = "month";
@@ -118,7 +105,6 @@ in
           tooltip-format = "{ifname} {essid}\n{ipaddr}";
           on-click = "wifi-menu";
           on-click-right = "nmcli radio wifi toggle";
-          # Add more if you had them in the original (tooltip, interval, etc.)
         };
 
         "bluetooth" = {
@@ -179,7 +165,6 @@ in
             warning = 30;
             critical = 15;
           };
-          # tooltip-format, interval, on-click etc. can be added
         };
 
         "power-profiles-daemon" = {
@@ -196,7 +181,7 @@ in
         "mpris" = {
           format = "{player_icon} {status_icon} {artist} - {title}";
           format-paused = "{player_icon} {status_icon} {artist} - {title}";
-          max-length = 50; # adjust as needed
+          max-length = 50;
           player-icons = {
             default = "";
             spotify = "";
@@ -209,13 +194,11 @@ in
           on-click = "playerctl play-pause";
         };
 
-        # Group for expandable tray (very common pattern)
         "group/tray-expander" = {
           orientation = "inherit";
           drawer = {
             transition-duration = 600;
             children-class = "tray-group-item";
-            # transition-left-to-right = false; # optional
           };
           modules = [
             "custom/expand-icon"
@@ -229,7 +212,7 @@ in
         };
 
         "tray" = {
-          icon-size = 16; # or 12-20 depending on your theme
+          icon-size = 16;
           spacing = 8;
           show-passive-items = true;
         };

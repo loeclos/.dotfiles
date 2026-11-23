@@ -1,5 +1,5 @@
 {
-  description = "mononix — NixOS + home-manager flake (desktop, laptop, live ISOs)";
+  description = "comfortable minimalism";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -23,23 +23,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    wlctl = {
-      url = "github:aashish-thapa/wlctl";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    hermes-agent = {
-      url = "github:NousResearch/hermes-agent";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     hyprland = {
       url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    eza = {
-      url = "github:eza-community/eza";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -73,29 +58,9 @@
       flake = false;
     };
 
-    ollama = {
-      url = "github:ollama/ollama/v0.32.7";
-      flake = false;
-    };
-
-    spun = {
-      url = "github:yappologistic/Spun";
-      flake = false;
-    };
-
-    hyprpolkitagent = {
-      url = "github:hyprwm/hyprpolkitagent/v0.2.0";
-      flake = false;
-    };
-
     hyprtoolkit = {
       url = "github:hyprwm/hyprtoolkit/be487c470a1a10011fb8dccf9fc0f12f1e006cac";
       flake = false;
-    };
-
-    plymouth-theme = {
-      url = "github:loeclos/plymouth-theme";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     install-nix = {
@@ -113,13 +78,12 @@
       nixvim,
       hyprland,
       walt,
-      wlctl,
-      eza,
       spicetify-nix,
       hypr-quick-frame,
       apple-fonts,
       ...
     }@inputs:
+
     let
       system = "x86_64-linux";
 
@@ -132,31 +96,18 @@
       mkHost = import ./lib/mkHost.nix { inherit inputs; };
     in
     {
+
       packages.${system} = {
         inherit sf-pro-nerd;
       };
 
       formatter.${system} = inputs.nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
 
-      # hosts — one file per machine (hosts/<name>.nix), see lib/mkHost.nix and hosts/common.nix
       nixosConfigurations = {
         desktop = mkHost { hostname = "desktop"; };
         laptop = mkHost { hostname = "laptop"; };
-        # Installer ISOs: minimal GNOME + Calamares + recovery tools (see
-        # hosts/live.nix). withHome = false keeps the Hyprland home env out
-        # of the squashfs. Each ISO embeds this flake at /iso/dotfiles and
-        # ships install-nix, so it installs its matching system
-        # (sudo install-nix, or manually nixos-install --flake /iso/dotfiles#<host>).
-        live-desktop = mkHost {
-          hostname = "live-desktop";
-          withHome = false;
-          extraModules = [ (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix") ];
-        };
-        live-laptop = mkHost {
-          hostname = "live-laptop";
-          withHome = false;
-          extraModules = [ (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix") ];
-        };
       };
+
     };
+
 }

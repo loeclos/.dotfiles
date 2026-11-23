@@ -3,7 +3,6 @@
 { inputs, apps }:
 [
   inputs.apple-fonts.overlays.default
-  inputs.plymouth-theme.overlays.default
   inputs.install-nix.overlays.default
   (import ../packages { inherit inputs apps; })
 

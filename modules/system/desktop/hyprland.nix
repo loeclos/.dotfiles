@@ -3,6 +3,7 @@ let
   hyprlandPkgs = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
 in
 {
+
   programs.hyprland = {
     enable = true;
 
@@ -19,4 +20,5 @@ in
       pkgs.xdg-desktop-portal-gtk
     ];
   };
+
 }

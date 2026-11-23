@@ -19,11 +19,6 @@
           timeout = 1200;
           on-timeout = "loginctl lock-session";
         }
-        {
-          timeout = 1500;
-          on-timeout = ''hyprctl dispatch "hl.dsp.dpms({mode = 'off'})"'';
-          on-resume = ''hyprctl dispatch "hl.dsp.dpms({mode = 'on'})"'';
-        }
       ];
     };
   };

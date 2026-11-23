@@ -4,7 +4,7 @@
   programs.rofi = {
     enable = true;
 
-    extraConfig = {
+    settings = {
       modi = "drun,run";
       show-icons = false; # Disabled for a clean, text-driven TUI aesthetic
       display-drun = "❯"; # Minimalist prompt arrow
