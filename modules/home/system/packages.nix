@@ -53,7 +53,7 @@
       (builtins.getAttr apps.agent.packageAttr pkgs)
       (builtins.getAttr apps.fileManager.packageAttr pkgs)
     ]
-    ++ map (name: builtins.getAttr apps.browsers.${name}.packageAttr pkgs) apps.extraBrowsers j
+    ++ map (name: builtins.getAttr apps.browsers.${name}.packageAttr pkgs) apps.extraBrowsers
 
     ++ (with pkgs; [
       hypr-float-toggle
