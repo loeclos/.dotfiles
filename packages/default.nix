@@ -14,9 +14,6 @@
   sf-pro-nerd = prev.callPackage ./builds/sf-pro-nerd.nix {
     src = inputs.sf-pro-dmg;
   };
-  hyprpolkitagent = prev.callPackage ./builds/hyprpolkitagent.nix {
-    src = inputs.hyprpolkitagent;
-  };
 
   hypr-float-toggle = prev.callPackage ./scripts/hypr-float-toggle.nix { inherit apps; };
   wifi-menu = prev.callPackage ./scripts/wifi-menu.nix { inherit apps; };

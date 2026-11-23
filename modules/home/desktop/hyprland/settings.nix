@@ -14,7 +14,6 @@
       position = "0x0";
       scale = 1;
     }
-    # Laptop panel (shared/ungated — ignored on desktop, no eDP-1 there).
     {
       output = "eDP-1";
       mode = "1920x1080@60.00Hz";
@@ -36,18 +35,19 @@
   };
 
   config = {
+
     general = {
-      gaps_in = 2;
-      gaps_out = 2;
+      gaps_in = 0;
+      gaps_out = 0;
       border_size = 1;
       col.active_border = "rgb(${theme.palette.borderActiveRgb})";
       col.inactive_border = "rgb(${theme.palette.borderInactiveRgb})";
     };
-    decoration = {
 
-      active_opacity = 1;
-      inactive_opacity = 0.97;
-      rounding = 12;
+    decoration = {
+      active_opacity = 0.98;
+      inactive_opacity = 0.95;
+      rounding = 0;
 
       blur = {
         enabled = true;
@@ -58,24 +58,27 @@
       };
 
     };
+
     dwindle.preserve_split = true;
     cursor = {
       no_hardware_cursors = 1;
       hide_on_key_press = true;
     };
-    # Mac-like touchpad (shared/ungated — ignored on desktop, no touchpad).
+
     input.touchpad = {
       tap_to_click = true;
       natural_scroll = true;
       disable_while_typing = true;
       clickfinger_behavior = true;
     };
+
     gestures = {
       workspace_swipe_distance = 300;
       workspace_swipe_invert = true;
       workspace_swipe_forever = true;
       workspace_swipe_create_new = false;
     };
+
     misc = {
       animate_manual_resizes = true;
       animate_mouse_windowdragging = true;
@@ -83,6 +86,7 @@
       focus_on_activate = true;
       disable_hyprland_logo = true;
     };
+
   };
 
   curve = {

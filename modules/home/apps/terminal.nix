@@ -6,8 +6,6 @@
   ...
 }:
 {
-  xdg.configFile."ghostty/shaders/cursor_warp.glsl".source =
-    repoRoot + "/assets/ghostty/shaders/cursor_warp.glsl";
 
   programs.ghostty = {
     enable = apps.terminalName == "ghostty";

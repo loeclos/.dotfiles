@@ -12,7 +12,7 @@ in
     settings = {
       mainBar = {
         layer = "top";
-        position = "bottom";
+        position = "top";
         margin-top = 0;
         margin-bottom = 0;
         spacing = 0;
@@ -46,17 +46,26 @@ in
         # === Modules configuration ===
 
         "hyprland/workspaces" = {
+
           disable-scroll = true;
           all-outputs = false;
-          # Hyprland 0.56 dropped `id` from IPC (hyprctl workspaces -j has
-          # address/name only), so Waybar sees every real workspace as id 0:
-          # {id} renders as 0 and real workspaces never merge with persistents.
-          # Workaround: {name} + persistent-only (active highlight + window
-          # counts already match by name in Waybar 0.15.0; clicks dispatch
-          # numeric ids which Hyprland still accepts).
           format = "{name}";
           sort-by = "name";
           persistent-only = true;
+          persistent-workspaces = {
+            "*" = [
+              1
+              2
+              3
+              4
+              5
+              6
+              7
+              8
+              9
+            ];
+          };
+
         };
 
         "custom/separator" = {
